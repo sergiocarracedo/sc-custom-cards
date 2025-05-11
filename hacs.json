@@ -4,6 +4,6 @@
   "domains": ["lovelace"],
   "country": ["*"],
   "file_name": "sergio-cards.js",
-  "homeassistant": "2021.12.0",
+  "homeassistant": "2024.7.0",
   "render_readme": true
 }

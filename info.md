@@ -13,4 +13,4 @@ Room Card is a custom Lovelace card for Home Assistant that displays detailed in
 3. Add the card to your Lovelace dashboard.
 
 ## Configuration
-Refer to the [README](../README.md) for detailed configuration options.
+Refer to the [README](README.md) for detailed configuration options.

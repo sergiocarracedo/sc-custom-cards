@@ -1,9 +1,13 @@
 {
-  "name": "room-card",
+  "name": "sc-custom-cards",
   "version": "1.0.0",
   "description": "Configurable room card for Home Assistant",
-  "main": "room-card.js",
+  "main": "sergio-cards.js",
   "type": "module",
+  "author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+  "bugs": {
+    "url": "https://github.com/sergiocarracedo/sc-custom-cards/issues"
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
