@@ -22,7 +22,6 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-
       - name: Install dependencies
         run: pnpm i
 
