@@ -3,7 +3,7 @@
   "content_in_root": false,
   "domains": ["lovelace"],
   "country": ["*"],
-  "file_name": "sergio-cards.js",
+  "file_name": "sc-custom-cards.js",
   "homeassistant": "2024.7.0",
   "render_readme": true
 }

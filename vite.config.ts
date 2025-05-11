@@ -32,7 +32,7 @@ function copyToHA() {
       }
       console.log('Copying files to Home Assistant...')
       spawnSync('scp', [
-        'dist/sergio-cards.js',
+        'dist/sc-custom-cards.js',
         process.env.HA_SCP_TARGET
       ])
       console.log('Files copied to Home Assistant.')
@@ -58,7 +58,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
-      fileName: 'sergio-cards',
+      fileName: 'sc-custom-cards',
     },
   },
 })
