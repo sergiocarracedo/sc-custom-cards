@@ -135,7 +135,9 @@ export class TempHumChart extends LitElement {
   render(): TemplateResult | false {
     return html`
       ${this.tempHumStats.length > 0 &&
-      html`<echarts-wrapper .options=${this.chartOptions} height=${this.height}></echarts-wrapper>`}
-    `
+      html`<echarts-wrapper 
+        .options=${this.chartOptions} 
+        height=${this.height}
+      ></echarts-wrapper>`}`
   }
 }
