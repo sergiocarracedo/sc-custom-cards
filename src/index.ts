@@ -5,7 +5,7 @@ await loadHaComponents([...DEFAULT_HA_COMPONENTS, 'hui-sensor-card'])
 
 declare global {
   interface Window {
-    customCards: Array<Object>
+    customCards: Array<object>
   }
 }
 

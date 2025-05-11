@@ -1,6 +1,6 @@
-import { LitElement, html, css, type PropertyValues } from 'lit'
-import { property, customElement } from 'lit/decorators.js'
-import * as echarts from 'echarts'
+import { css, html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import * as echarts from "echarts";
 
 @customElement('echarts-wrapper')
 export class EChartsWrapper extends LitElement {
@@ -45,8 +45,6 @@ export class EChartsWrapper extends LitElement {
 
   connectedCallback() {
     super.connectedCallback()
-    const container = this.renderRoot?.querySelector('.chart-container') as HTMLElement | null
-
     // Check if the container is already initialized
     this.init()
   }

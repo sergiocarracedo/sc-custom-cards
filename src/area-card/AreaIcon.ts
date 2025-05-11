@@ -1,8 +1,7 @@
 import { html, css, LitElement } from 'lit'
 import type { TemplateResult } from 'lit'
 import { property, customElement } from 'lit/decorators.js'
-import type { HomeAssistant } from 'custom-card-helpers'
-import { getBaseColor } from '@/utils.ts'
+import { getBaseColor } from '@/utils'
 
 @customElement('area-icon')
 export class AreaIcon extends LitElement {

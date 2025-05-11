@@ -1,10 +1,10 @@
-import type { PropertyValues, TemplateResult } from 'lit'
-import { html, LitElement } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
-import type { HomeAssistant } from 'custom-card-helpers'
-import '../echarts-wrapper'
-import { graphic } from 'echarts'
-import { getBaseColor } from '@/utils.ts'
+import type { TemplateResult } from "lit";
+import { html, LitElement } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+import type { HomeAssistant } from "custom-card-helpers";
+import "../echarts-wrapper";
+import { graphic } from "echarts";
+import { getBaseColor } from "@/utils";
 
 @customElement('temp-hum-chart')
 export class TempHumChart extends LitElement {

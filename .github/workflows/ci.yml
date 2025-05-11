@@ -26,7 +26,7 @@ jobs:
         run: pnpm install
 
       - name: Lint the code
-        run: pnpm run lint --if-present
+        run: pnpm run lint
   build:
     runs-on: ubuntu-latest
 
@@ -49,4 +49,4 @@ jobs:
         run: pnpm install
 
       - name: Build the project
-        run: pnpm run build --if-present
+        run: pnpm run build

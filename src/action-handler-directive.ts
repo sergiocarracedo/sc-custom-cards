@@ -1,18 +1,13 @@
-import { noChange } from 'lit'
-import {
-  type AttributePart,
-  directive,
-  Directive,
-  type DirectiveParameters,
-} from 'lit/directive.js'
+import { noChange } from "lit";
+import { type AttributePart, directive, Directive, type DirectiveParameters } from "lit/directive.js";
 
-import type { ActionHandlerDetail, ActionHandlerOptions } from 'custom-card-helpers'
-import { fireEvent } from 'custom-card-helpers'
+import type { ActionHandlerDetail, ActionHandlerOptions } from "custom-card-helpers";
+import { fireEvent } from "custom-card-helpers";
 
 const isTouch =
   'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.maxTouchPoints > 0
 
-interface ActionHandler extends HTMLElement {
+interface IActionHandler extends HTMLElement {
   holdTime: number
   bind(element: Element, options): void
 }
@@ -26,7 +21,7 @@ declare global {
   }
 }
 
-class ActionHandler extends HTMLElement implements ActionHandler {
+class ActionHandler extends HTMLElement implements IActionHandler {
   public holdTime = 500
 
   public ripple: any
@@ -171,23 +166,23 @@ class ActionHandler extends HTMLElement implements ActionHandler {
 // TODO You need to replace all instances of "action-handler-boilerplate" with "action-handler-<your card name>"
 customElements.define('action-handler-boilerplate', ActionHandler)
 
-const getActionHandler = (): ActionHandler => {
+const getActionHandler = (): IActionHandler => {
   const body = document.body
   if (body.querySelector('action-handler-boilerplate')) {
-    return body.querySelector('action-handler-boilerplate') as ActionHandler
+    return body.querySelector('action-handler-boilerplate') as IActionHandler
   }
 
   const actionhandler = document.createElement('action-handler-boilerplate')
   body.appendChild(actionhandler)
 
-  return actionhandler as ActionHandler
+  return actionhandler as IActionHandler
 }
 
 export const actionHandlerBind = (
   element: ActionHandlerElement,
   options?: ActionHandlerOptions,
 ): void => {
-  const actionhandler: ActionHandler = getActionHandler()
+  const actionhandler: IActionHandler = getActionHandler()
   if (!actionhandler) {
     return
   }
