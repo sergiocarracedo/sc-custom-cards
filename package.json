@@ -34,6 +34,7 @@
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.9",
     "@vitest/eslint-plugin": "^1.1.36",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
     "dotenv": "^16.5.0",
     "eslint": "^9.21.0",
     "eslint-config-love": "^119.0.0",
