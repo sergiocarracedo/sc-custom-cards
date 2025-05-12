@@ -63,7 +63,7 @@ The cards provides predefined entity groups for `lights`, `doors`, `windows`, an
 Below is an example configuration:
 
 ```yaml
-type: custom:room-card
+type: custom:sc-area-card
 area: living_room
 summary:
   - name: Lights
