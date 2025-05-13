@@ -1,1 +1,1 @@
-export * from "./AreaCard.ts"
+export * from './AreaCard'

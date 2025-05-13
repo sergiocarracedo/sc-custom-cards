@@ -15,3 +15,10 @@ export const getBaseColor = (el: Element, color: string): string => {
 
   return normalizeHexColor(value)
 }
+
+export function toArray<T>(value: T | T[] | undefined): T[] {
+  if (value === undefined) {
+    return []
+  }
+  return Array.isArray(value) ? value : [value]
+}

@@ -1,16 +1,16 @@
-import { html, css, LitElement, nothing } from 'lit'
 import type { TemplateResult } from 'lit'
-import { property, customElement } from 'lit/decorators.js'
+import { css, html, LitElement, nothing } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
 import type { HomeAssistant } from 'custom-card-helpers'
 
 @customElement('temp-hum')
 export class TempHum extends LitElement {
-  @property({ type: String }) public temperatureEntityId: string | undefined
-  @property({ type: String }) public humidityEntityId: string | undefined
+  @property({ type: String }) public temperatureEntityId: string | undefined | null
+  @property({ type: String }) public humidityEntityId: string | undefined | null
   @property({ type: Object }) public hass!: HomeAssistant
 
-  get tempState(): HomeAssistant['states'] | undefined {
-    return this.hass.states[this.temperatureEntityId]
+  get tempState(): HomeAssistant['states'][0] | undefined {
+    return (this.temperatureEntityId && this.hass.states[this.temperatureEntityId]) || undefined
   }
 
   get temperature(): number | undefined {
@@ -22,8 +22,8 @@ export class TempHum extends LitElement {
     return this.tempState?.attributes.unit_of_measurement
   }
 
-  get humState(): HomeAssistant['states'] | undefined {
-    return this.hass.states[this.humidityEntityId]
+  get humState(): HomeAssistant['states'][0] | undefined {
+    return (this.humidityEntityId && this.hass.states[this.humidityEntityId]) || undefined
   }
 
   get humidity(): number | undefined {

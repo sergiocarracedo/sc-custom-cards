@@ -1,20 +1,21 @@
-import { html, css, LitElement, nothing, type TemplateResult } from 'lit'
+import { css, html, LitElement, nothing, type TemplateResult } from 'lit'
 import { classMap } from 'lit/directives/class-map.js'
-import { state, customElement } from 'lit/decorators.js'
+import { customElement, state } from 'lit/decorators.js'
 import {
-  handleAction,
-  type HomeAssistant,
-  hasAction,
   type ActionHandlerEvent,
+  handleAction,
+  hasAction,
+  type HomeAssistant,
 } from 'custom-card-helpers'
 import type { Area } from '@/types.ts'
-import { areaColors } from '../area-colors.ts'
-import type { ScAreaCardConfig, EntityTypeSummary } from './types.ts'
-import { actionHandler } from '../action-handler-directive.ts'
+import { areaColors } from '@/area-colors'
+import type { EntityTypeSummary, ScAreaCardConfig } from './types.ts'
+import { actionHandler } from '@/action-handler-directive'
 import './TempHum.ts'
-import './AreaIcon.ts'
+import '../components/Icon.ts'
 import './TempHumChart.ts'
 import './EntityTypeStatus.ts'
+import { toArray } from '@/utils'
 
 @customElement('sc-area-card')
 export class ScAreaCard extends LitElement {
@@ -193,7 +194,7 @@ export class ScAreaCard extends LitElement {
                 ${summaries.map(
                   (type) => html`
                     <entities-type-status
-                      .entities=${type.entities}
+                      .entities=${toArray(type.entities)}
                       .hass=${this.hass}
                       .icon=${type.icon}
                       .name=${type.name}
@@ -205,11 +206,13 @@ export class ScAreaCard extends LitElement {
               </aside>`
             : nothing}
 
-          <area-icon
+          <sc-icon
             class="area-card__icon"
             .icon=${area.icon}
             .color=${this.areaColor}
-          ></area-icon>
+            size="100"
+            iconSize="40"
+          ></sc-icon>
           ${(area.temperature_entity_id || area.humidity_entity_id) &&
           html`<div class="area-card__chart">
             <temp-hum-chart

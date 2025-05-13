@@ -1,6 +1,6 @@
-import { html, css, LitElement } from 'lit'
 import type { TemplateResult } from 'lit'
-import { property, customElement } from 'lit/decorators.js'
+import { css, html, LitElement } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
 import type { HomeAssistant } from 'custom-card-helpers'
 
 type Status = null | number
@@ -22,9 +22,7 @@ export class EntitiesTypeStatus extends LitElement {
   private get activeEntities(): string[] {
     return this.entities.filter((entity) => {
       const state = this.hass.states[entity]
-      if (state && state.state === 'on') {
-        return true
-      }
+      return state && state.state === 'on'
     })
   }
 
@@ -53,7 +51,7 @@ export class EntitiesTypeStatus extends LitElement {
         })}
       </ha-list>`
 
-    return html` <ha-tooltip content="${title}">
+    return html` <ha-tooltip .content="${title}">
       <div
         class="entities-type-status ${this.activeEntities.length > 0
           ? 'entities-type-status--active'

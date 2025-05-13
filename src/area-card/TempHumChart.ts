@@ -1,16 +1,17 @@
-import type { TemplateResult } from "lit";
-import { html, LitElement } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
-import type { HomeAssistant } from "custom-card-helpers";
-import "../echarts-wrapper";
-import { graphic } from "echarts";
-import { getBaseColor } from "@/utils";
+import type { TemplateResult } from 'lit'
+import { html, LitElement } from 'lit'
+import { customElement, property, state } from 'lit/decorators.js'
+import type { HomeAssistant } from 'custom-card-helpers'
+import '../echarts-wrapper'
+import { EChartsOption, graphic } from 'echarts'
+import { getBaseColor } from '@/utils'
+import { cache } from '@/cache'
 
 @customElement('temp-hum-chart')
 export class TempHumChart extends LitElement {
   @property({ type: Object }) public hass!: HomeAssistant
-  @property({ type: String }) public temperatureEntityId!: string
-  @property({ type: String }) public humidityEntityId!: string
+  @property({ type: String }) public temperatureEntityId: string | null = null
+  @property({ type: String }) public humidityEntityId: string | null = null
   @property({ type: String }) public color: string = '#666' // Default color
   @property({ type: Number }) public height: number = 90
 
@@ -20,11 +21,17 @@ export class TempHumChart extends LitElement {
     humidity: number | undefined
   }[] = []
 
+  private get cacheKey() {
+    return `temp-hum-chart-${this.temperatureEntityId}-${this.humidityEntityId}`
+  }
+
   private getTempHumStats() {
-    if (this.tempHumStats.length > 0) {
+    // Check if we have already retrieved the statistics
+    const cachedStats = cache.get(this.cacheKey)
+    if (cachedStats) {
+      this.tempHumStats = cachedStats
       return
     }
-    // TODO: Needs a cache
     // Issue statistics retrieval call
     const tempEntityId = this.temperatureEntityId
     const humidityEntityId = this.humidityEntityId
@@ -40,13 +47,22 @@ export class TempHumChart extends LitElement {
     type Result = { [x: string]: { start: string; mean: number }[] }
     this.hass.callWS(d).then(
       (result) => {
-        this.tempHumStats = (result as Result)[tempEntityId].map((d, index) => {
-          return {
-            time: new Date(d.start),
-            temp: d.mean,
-            humidity: (result as Result)[humidityEntityId][index].mean,
-          }
-        })
+        const id = tempEntityId || humidityEntityId
+        if (id) {
+          const stats = (result as Result)[id].map((d, index) => {
+            return {
+              time: new Date(d.start),
+              temp: tempEntityId ? (result as Result)[tempEntityId][index].mean : undefined,
+              humidity: humidityEntityId
+                ? (result as Result)[humidityEntityId][index].mean
+                : undefined,
+            }
+          })
+
+          this.tempHumStats = cache.set(this.cacheKey, stats)
+        } else {
+          this.tempHumStats = cache.set(this.cacheKey, [])
+        }
       },
       (error) => {
         console.error(error)
@@ -133,11 +149,10 @@ export class TempHumChart extends LitElement {
   }
 
   render(): TemplateResult | false {
-    return html`
-      ${this.tempHumStats.length > 0 &&
-      html`<echarts-wrapper 
-        .options=${this.chartOptions} 
-        height=${this.height}
-      ></echarts-wrapper>`}`
+    return html`${this.tempHumStats.length > 0 &&
+    html`<echarts-wrapper
+      .options=${this.chartOptions as EChartsOption}
+      height=${this.height}
+    ></echarts-wrapper>`}`
   }
 }

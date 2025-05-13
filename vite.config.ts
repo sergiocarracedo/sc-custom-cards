@@ -24,26 +24,22 @@ function copyToHA() {
       if (process.env.HA_SCP_TARGET) {
         console.log(`Copying files to Home Assistant enabled...: ${process.env.HA_SCP_TARGET}`)
       }
-
     },
     closeBundle: async () => {
       if (!enabled || !process.env.HA_SCP_TARGET) {
         return
       }
       console.log('Copying files to Home Assistant...')
-      spawnSync('scp', [
-        'dist/sc-custom-cards.js',
-        process.env.HA_SCP_TARGET
-      ])
+      spawnSync('scp', ['dist/sc-custom-cards.js', process.env.HA_SCP_TARGET])
       console.log('Files copied to Home Assistant.')
     },
   }
 }
 
 export default defineConfig({
-  // define: {
-  //   'process.env': {},
-  // },
+  define: {
+    'process.env': {},
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

@@ -1,6 +1,6 @@
-import { css, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import * as echarts from "echarts";
+import { css, html, LitElement } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
+import * as echarts from 'echarts'
 
 @customElement('echarts-wrapper')
 export class EChartsWrapper extends LitElement {
@@ -56,9 +56,15 @@ export class EChartsWrapper extends LitElement {
     this.resizeObserver?.disconnect()
     this.chartInstance?.dispose()
     // Clean up the chart and observer references as litelement
-    // does destroy the component if is recreated inmmediately
+    // does destroy the component if is recreated inmediately
     this.chartInstance = null
     this.resizeObserver = null
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    if (changedProperties.has('options')) {
+      this.updateChart()
+    }
   }
 
   private updateChart() {
