@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.2.0...v1.3.0) (2025-05-18)
+
+### Features
+
+* sc-bars-card ([65c4de8](https://github.com/sergiocarracedo/sc-custom-cards/commit/65c4de87839a3fdc61d804547cb9f314b2a8e0bb))
+
 ## [1.1.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.0.1...v1.1.0) (2025-05-18)
 
 ### Features
