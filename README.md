@@ -158,7 +158,6 @@ To use the History Bars Card, add it to your Lovelace dashboard. `type: custom:s
 | `entities[].thresholds[].value` | `number` | Yes      | The threshold value for the entity.                                             |
 | `entities[].thresholds[].color` | `string` | Yes      | The color to use for the entity threshold (e.g., `#f90`, `var(--red)`).         |
 
-
 #### Example Configuration
 Below is an example configuration:
 
