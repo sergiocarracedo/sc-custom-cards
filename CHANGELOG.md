@@ -20,6 +20,17 @@
 
 * fix docs ([7dfe295](https://github.com/sergiocarracedo/sc-custom-cards/commit/7dfe295a6f00400607a2a7d538ac9adf556841fe))
 
+## [1.1.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.0.1...v1.1.0) (2025-05-18)
+
+### Features
+
+* history-bars-card ([d471387](https://github.com/sergiocarracedo/sc-custom-cards/commit/d4713876c2e163f745b101e83141b74c6ba53e7e))
+* sc-bars-card beta ([2e8e0d9](https://github.com/sergiocarracedo/sc-custom-cards/commit/2e8e0d9f05e1ee2cd9636b8bb02bb66bf346e858))
+
+### Documentation
+
+* fix docs ([7dfe295](https://github.com/sergiocarracedo/sc-custom-cards/commit/7dfe295a6f00400607a2a7d538ac9adf556841fe))
+
 ## [1.0.1](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.0.0...v1.0.1) (2025-05-11)
 
 ### Bug Fixes
