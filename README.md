@@ -198,7 +198,5 @@ entities:
 - Check the browser console for errors if the card does not load.
 - Verify that the entity IDs in your configuration exist in your Home Assistant setup.
 
-
-
 ## Support
 For issues or feature requests, please visit the [GitHub repository](https://github.com/sergiocarracedo/sc-custom-cards) and open an issue.
