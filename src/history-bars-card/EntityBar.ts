@@ -18,7 +18,7 @@ export class EntityBar extends LitElement {
   @property({ type: Object }) public config!: EntityBarConfig
   @property({ type: Number }) public height: number = 30
   @property({ type: Number }) public max?: number
-  @property({ type: Array }) public defaultThresholds: Threshold[] = []
+  @property({ type: Array }) public defaultThresholds?: Threshold[] = []
 
   @state() private entityStats: EntityStats = []
 
@@ -27,7 +27,7 @@ export class EntityBar extends LitElement {
   }
   private get thresholds(): Threshold[] {
     console.log(this.defaultThresholds)
-    return (this.config.thresholds || this.defaultThresholds)
+    return (this.config.thresholds || this.defaultThresholds || [])
       .filter((value) => value !== undefined)
       .sort((a, b) => a.value - b.value)
   }
@@ -217,8 +217,8 @@ export class EntityBar extends LitElement {
       right: 0;
       top: 0;
       bottom: 0;
-      mask-image: linear-gradient(to right, transparent, transparent 30px, black 60px);
-      -webkit-mask-image: linear-gradient(to right, transparent, transparent 30px, black 60px);
+      mask-image: linear-gradient(to right, transparent, transparent 15px, black 40px);
+      -webkit-mask-image: linear-gradient(to right, transparent, transparent 15px, black 40px);
       pointer-events: none;
     }
 
