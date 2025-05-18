@@ -3,6 +3,19 @@
 ### Features
 
 * history-bars-card ([d471387](https://github.com/sergiocarracedo/sc-custom-cards/commit/d4713876c2e163f745b101e83141b74c6ba53e7e))
+* sc-bars-card ([2cfccaa](https://github.com/sergiocarracedo/sc-custom-cards/commit/2cfccaa4a632ff71827a55001547c9e3a4fc4b21))
+* sc-bars-card beta ([2e8e0d9](https://github.com/sergiocarracedo/sc-custom-cards/commit/2e8e0d9f05e1ee2cd9636b8bb02bb66bf346e858))
+
+### Documentation
+
+* fix bars-card example ([bbd326e](https://github.com/sergiocarracedo/sc-custom-cards/commit/bbd326e9e5dbd4f16a0ecd820560ad6e6f57c584))
+* fix docs ([7dfe295](https://github.com/sergiocarracedo/sc-custom-cards/commit/7dfe295a6f00400607a2a7d538ac9adf556841fe))
+
+## [1.1.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.0.1...v1.1.0) (2025-05-18)
+
+### Features
+
+* history-bars-card ([d471387](https://github.com/sergiocarracedo/sc-custom-cards/commit/d4713876c2e163f745b101e83141b74c6ba53e7e))
 * sc-bars-card beta ([2e8e0d9](https://github.com/sergiocarracedo/sc-custom-cards/commit/2e8e0d9f05e1ee2cd9636b8bb02bb66bf346e858))
 
 ### Documentation
