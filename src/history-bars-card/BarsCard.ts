@@ -65,6 +65,7 @@ export class ScBarsCard extends LitElement {
                 .config=${entity}
                 @action=${this.handleAction}
                 .max=${this.config?.max}
+                .defaultThresholds=${this.config?.thresholds}
               ></entity-bar>
             `
           })}

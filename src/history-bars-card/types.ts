@@ -1,5 +1,10 @@
 import type { ActionConfig, LovelaceCardConfig } from 'custom-card-helpers'
 
+export interface Threshold {
+  value: number
+  color: string
+}
+
 export interface EntityBarConfig {
   entity: string
   name: string
@@ -8,15 +13,13 @@ export interface EntityBarConfig {
   max?: number
   min?: number
 
-  thresholds?: {
-    value: number
-    color: string
-  }[]
+  thresholds?: Threshold[]
 }
 
 export interface ScBarsCardConfig extends LovelaceCardConfig {
   entities: EntityBarConfig[]
   max: number
+  thresholds?: Threshold[]
   tap_action?: ActionConfig
   hold_action?: ActionConfig
   double_tap_action?: ActionConfig

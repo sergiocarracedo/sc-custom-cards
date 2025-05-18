@@ -1,8 +1,8 @@
 import { css, html, LitElement, nothing, TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import { EntityBarConfig } from '@/history-bars-card/types'
+import { EntityBarConfig, Threshold } from '@/history-bars-card/types'
 import { HomeAssistant } from 'custom-card-helpers'
-import { getBaseColor } from '@/utils'
+import { contrast, getBaseColor } from '@/utils'
 import '../echarts-wrapper'
 import { EChartsOption, graphic } from 'echarts'
 import { cache } from '@/cache'
@@ -18,11 +18,18 @@ export class EntityBar extends LitElement {
   @property({ type: Object }) public config!: EntityBarConfig
   @property({ type: Number }) public height: number = 30
   @property({ type: Number }) public max?: number
+  @property({ type: Array }) public defaultThresholds: Threshold[] = []
 
   @state() private entityStats: EntityStats = []
 
   private get cacheKey() {
     return `entity-bar-${this.config.entity}`
+  }
+  private get thresholds(): Threshold[] {
+    console.log(this.defaultThresholds)
+    return (this.config.thresholds || this.defaultThresholds)
+      .filter((value) => value !== undefined)
+      .sort((a, b) => a.value - b.value)
   }
 
   private get baseColor() {
@@ -38,7 +45,6 @@ export class EntityBar extends LitElement {
     if (this.entityStats.length > 0) {
       return
     }
-    // TODO: Needs a cache
     const entityId = this.config.entity
 
     const d = {
@@ -123,23 +129,60 @@ export class EntityBar extends LitElement {
     const value = parseFloat(this.hass.states[this.config.entity].state)
     const units = this.hass.states[this.config.entity].attributes.unit_of_measurement
 
-    const instantLineStyle = !this.max ? '' : `left: ${((value || 0) / this.max) * 100}%;`
+    const neutralColor = `var(--primary-text-color)`
+
+    const instantColor = this.thresholds.reduce((acc, threshold) => {
+      if (+value > +threshold.value) {
+        return threshold.color
+      }
+      return acc
+    }, neutralColor)
+
+    const instantLineStyle = [
+      !this.max ? '' : `left: ${((value || 0) / this.max) * 100}%`,
+      ` --arrow-color: ${instantColor}`,
+    ]
+      .filter(Boolean)
+      .join(';')
+
+    console.log(instantColor, contrast(this, instantColor, '#fff'))
+    const lightText = contrast(this, instantColor, '#fff') > 2
+    const valueStyle = [
+      ...(instantColor !== neutralColor
+        ? [
+            `background: ${getBaseColor(this, instantColor)}DD`,
+            `color: ${lightText ? '#fff' : '#333'}`,
+            `--value-text-shadow-color: ${lightText ? '#333' : 'transparent'}`,
+          ]
+        : []),
+    ]
+      .filter(Boolean)
+      .join(';')
 
     return this.config.icon
       ? html`<div class="entity-bar">
-          <div class="entity-bar__icon">
-            ${icon
-              ? html`<sc-icon .icon=${icon} .color=${this.baseColor} size="30"></sc-icon>`
-              : nothing}
-          </div>
-          <div class="entity-bar__chart-wrapper">
+          <div class="entity-bar__content">
+            <div class="entity-bar__icon">
+              ${icon
+                ? html`<sc-icon
+                    .icon=${icon}
+                    .color=${this.baseColor}
+                    size="30"
+                    icon-size="15"
+                  ></sc-icon>`
+                : nothing}
+            </div>
+
             <div class="entity-bar__chart-titles">
               <h3 class="entity-bar__name">${name}</h3>
-              <div class="entity-bar__value">
+              <div class="entity-bar__value" style=${valueStyle}>
                 ${isNaN(value) ? '-' : value.toFixed(2)}${units || ''}
               </div>
               <span class="entity-bar__instant" style=${instantLineStyle}></span>
             </div>
+          </div>
+
+          <div class="entity-bar__chart-wrapper">
             <echarts-wrapper
               .options=${this.chartOptions as EChartsOption}
               height=${this.height}
@@ -156,35 +199,54 @@ export class EntityBar extends LitElement {
 
   static styles = css`
     .entity-bar {
+      position: relative;
+    }
+
+    .entity-bar__content {
+      z-index: 1;
+      position: relative;
       display: flex;
+      align-items: center;
       gap: 10px;
     }
 
     .entity-bar__chart-wrapper {
-      position: relative;
-      flex: 1;
+      position: absolute;
+      z-index: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      mask-image: linear-gradient(to right, transparent, transparent 30px, black 60px);
+      -webkit-mask-image: linear-gradient(to right, transparent, transparent 30px, black 60px);
+      pointer-events: none;
+    }
+
+    .entity-bar__chart-wrapper echarts-wrapper {
+      mask-image: linear-gradient(to left, transparent, transparent 10px, black 40px);
+      -webkit-mask-image: linear-gradient(to left, transparent, transparent 10px, black 40px);
     }
 
     .entity-bar__chart-titles {
       display: flex;
       align-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1;
+      flex: 1;
+      position: relative;
     }
 
     .entity-bar__name {
-      font-weight: 200;
+      font-weight: 400;
       flex: 1;
+      text-shadow: 0 0 2px #000;
+      margin: 0;
     }
 
     .entity-bar__value {
       text-align: right;
       font-weight: 400;
-      text-shadow: 0 0 2px #000;
+      text-shadow: 0 0 2px var(--value-text-shadow-color);
+      padding: 1px 5px;
+      border-radius: 50px;
     }
 
     .entity-bar__instant {
