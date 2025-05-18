@@ -162,6 +162,7 @@ To use the History Bars Card, add it to your Lovelace dashboard. `type: custom:s
 #### Example Configuration
 Below is an example configuration:
 
+```yaml
 type: custom:sc-bars-card
 max: 4000
 thresholds:
@@ -189,9 +190,9 @@ entities:
       color: var(--info-color)
     - value: 201
       color: var(--warning-color)
-      - value: 301
-        color: var(--error-color)
-
+    - value: 301
+      color: var(--error-color)
+```
 
 ## Troubleshooting
 - Ensure the card is installed correctly and added as a resource in your Lovelace configuration.
