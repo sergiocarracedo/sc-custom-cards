@@ -1,3 +1,5 @@
+import { ActionConfig } from 'custom-card-helpers'
+
 export interface Area {
   aliases: string[]
   area_id: string
@@ -10,4 +12,10 @@ export interface Area {
   name: string
   picture: string | null
   temperature_entity_id: string | null
+}
+
+export interface Actions {
+  tap_action?: ActionConfig
+  hold_action?: ActionConfig
+  double_tap_action?: ActionConfig
 }

@@ -12,7 +12,9 @@ export interface EntityBarConfig {
   color: string
   max?: number
   min?: number
-
+  tap_action?: ActionConfig
+  hold_action?: ActionConfig
+  double_tap_action?: ActionConfig
   thresholds?: Threshold[]
 }
 
