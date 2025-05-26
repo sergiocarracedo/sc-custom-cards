@@ -1,3 +1,9 @@
+## [1.4.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.3.0...v1.4.0) (2025-05-26)
+
+### Features
+
+* icon and bars actions ([83f59dc](https://github.com/sergiocarracedo/sc-custom-cards/commit/83f59dc71c328f73bc14408842723f59c3f6dc78))
+
 ## [1.3.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.2.0...v1.3.0) (2025-05-18)
 
 ### Features
