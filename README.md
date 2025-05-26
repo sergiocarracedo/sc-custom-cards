@@ -60,21 +60,26 @@ Using `style: header` the card will render in a header style, showing the room n
 To use the Room Card, add it to your Lovelace dashboard. `type: custom:sc-area-card`
 
 #### Configuration Options
-| Option                | Type       | Required | Description                                                          |
-|-----------------------|------------|----------|----------------------------------------------------------------------|
-| `area`                | `string`   | Yes      | The area or room to display information for.                         |
-| `style`               | `string`   | No       | The style of the card (e.g., `header`, `full`).  (`full` by default) |
-| `color`               | `string`   | No       | The color of the card (e.g., `#f90`, `var(--green)`).                |
-| `summary`             | `array`    | No       | A list of entity groups to summarize (e.g., lights, doors, windows). |
-| `summary[].name`      | `string`   | Yes      | The name of the entity group.                                        |
-| `summary[].icon`      | `string`   | Yes      | The icon to represent the entity group.                              |
-| `summary[].entities`  | `array`    | Yes      | A list of entity IDs for the group.                                  |
-| `summary[].alarm_entities` | `array` | No       | A list of of entities to show as alarms.                             |
-| `tap_action`         | `ActionConfig`   | No       | Action to perform on tap (e.g., navigate to another view).           |
-| `hold_action`        | `ActionConfig`   | No       | Action to perform on hold (e.g., show more details).                 |
-| `double_tap_action`  | `ActionConfig`   | No       | Action to perform on double tap (e.g., toggle a device).             |
+| Option                        | Type           | Required | Description                                                           |
+|-------------------------------|----------------|----------|-----------------------------------------------------------------------|
+| `area`                        | `string`       | Yes      | The area or room to display information for.                          |
+| `style`                       | `string`       | No       | The style of the card (e.g., `header`, `full`).  (`full` by default)  |
+| `color`                       | `string`       | No       | The color of the card (e.g., `#f90`, `var(--green)`).                 |
+| `summary`                     | `array`        | No       | A list of entity groups to summarize (e.g., lights, doors, windows).  |
+| `summary[].name`              | `string`       | Yes      | The name of the entity group.                                         |
+| `summary[].icon`              | `string`       | Yes      | The icon to represent the entity group.                               |
+| `summary[].entities`          | `array`        | Yes      | A list of entity IDs for the group.                                   |
+| `summary[].alarm_entities`    | `array`        | No       | A list of of entities to show as alarms.                              |
+| `summary[].tap_action`        | `ActionConfig` | No       | Action to perform on tap in summary (e.g., navigate to another view). |
+| `summary[].hold_action`       | `ActionConfig` | No       | Action to perform on hold in summary (e.g., show more details).       |
+| `summary[].double_tap_action` | `ActionConfig` | No       | Action to perform on double tap in summary(e.g., toggle a device).    |
+| `tap_action`                  | `ActionConfig` | No       | Action to perform on tap in card (e.g., navigate to another view).    |
+| `hold_action`                 | `ActionConfig` | No       | Action to perform on hold in card (e.g., show more details).                  |
+| `double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in card (e.g., toggle a device).              |
 
 The cards provides predefined entity groups for `lights`, `doors`, `windows`, and `alarms`.
+
+> NOTE: The summary actions related to entities like toogle will be applied to all entities defined for the summary.
 
 #### ActionConfig
 | Option                | Type       | Required | Description                                                          |
@@ -157,6 +162,10 @@ To use the History Bars Card, add it to your Lovelace dashboard. `type: custom:s
 | `entities[].thresholds` | `array` | No       | A list of thresholds for coloring the entity bar (overwrites the common values. |
 | `entities[].thresholds[].value` | `number` | Yes      | The threshold value for the entity.                                             |
 | `entities[].thresholds[].color` | `string` | Yes      | The color to use for the entity threshold (e.g., `#f90`, `var(--red)`).         |
+| `entities[].tap_action`                  | `ActionConfig` | No       | Action to perform on tap in bar (e.g., navigate to another view).               |
+| `entities[].hold_action`                 | `ActionConfig` | No       | Action to perform on hold in bar (e.g., show more details).                     |
+| `entities[].double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in bar (e.g., toggle a device).                 |
+
 
 #### Example Configuration
 Below is an example configuration:

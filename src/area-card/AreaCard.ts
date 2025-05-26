@@ -109,6 +109,9 @@ export class ScAreaCard extends LitElement {
         icon: type.icon || 'mdi:help-circle',
         entities: this.toArray(type.entities),
         alarm_entities: this.toArray(type.alarm_entities),
+        tap_action: type.tap_action,
+        hold_action: type.hold_action,
+        double_tap_action: type.double_tap_action,
       }
     })
 
@@ -200,6 +203,11 @@ export class ScAreaCard extends LitElement {
                       .name=${type.name}
                       .bgColor=${this.areaColor}
                       .color=${'var(--black2)'}
+                      .actions=${{
+                        tap_action: type.tap_action,
+                        hold_action: type.hold_action,
+                        double_tap_action: type.double_tap_action,
+                      }}
                     ></entities-type-status>
                   `,
                 )}

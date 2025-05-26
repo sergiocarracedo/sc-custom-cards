@@ -1,12 +1,19 @@
 import { css, html, LitElement, nothing, TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { EntityBarConfig, Threshold } from '@/history-bars-card/types'
-import { HomeAssistant } from 'custom-card-helpers'
 import { contrast, getBaseColor } from '@/utils'
 import '../echarts-wrapper'
 import { EChartsOption, graphic } from 'echarts'
 import { cache } from '@/cache'
 import '../components/Icon'
+import { Actions } from '@/types'
+import { actionHandler } from '@/action-handler-directive'
+import {
+  type ActionHandlerEvent,
+  handleAction,
+  hasAction,
+  type HomeAssistant,
+} from 'custom-card-helpers'
 
 type EntityStats = {
   time: Date
@@ -19,6 +26,7 @@ export class EntityBar extends LitElement {
   @property({ type: Number }) public height: number = 30
   @property({ type: Number }) public max?: number
   @property({ type: Array }) public defaultThresholds?: Threshold[] = []
+  @property({ type: Object }) public actions?: Actions
 
   @state() private entityStats: EntityStats = []
 
@@ -26,7 +34,6 @@ export class EntityBar extends LitElement {
     return `entity-bar-${this.config.entity}`
   }
   private get thresholds(): Threshold[] {
-    console.log(this.defaultThresholds)
     return (this.config.thresholds || this.defaultThresholds || [])
       .filter((value) => value !== undefined)
       .sort((a, b) => a.value - b.value)
@@ -123,6 +130,31 @@ export class EntityBar extends LitElement {
     }
   }
 
+  private handleAction(ev: ActionHandlerEvent) {
+    ev.stopPropagation()
+    ev.preventDefault()
+    if (!this.hass) return
+    handleAction(
+      this,
+      this.hass,
+      {
+        entity: this.config.entity,
+        hold_action: this.actions?.hold_action,
+        tap_action: this.actions?.tap_action,
+        double_tap_action: this.actions?.double_tap_action,
+      },
+      ev.detail.action,
+    )
+  }
+
+  private get hasAction(): boolean {
+    return (
+      hasAction(this.actions?.tap_action) ||
+      hasAction(this.actions?.hold_action) ||
+      hasAction(this.actions?.double_tap_action)
+    )
+  }
+
   protected render(): TemplateResult | typeof nothing {
     const icon = this.config.icon || this.hass.states[this.config.entity].attributes.icon
     const name = this.config.name || this.hass.states[this.config.entity].attributes.friendly_name
@@ -145,7 +177,6 @@ export class EntityBar extends LitElement {
       .filter(Boolean)
       .join(';')
 
-    console.log(instantColor, contrast(this, instantColor, '#fff'))
     const lightText = contrast(this, instantColor, '#fff') > 2
     const valueStyle = [
       ...(instantColor !== neutralColor
@@ -160,7 +191,15 @@ export class EntityBar extends LitElement {
       .join(';')
 
     return this.config.icon
-      ? html`<div class="entity-bar">
+      ? html`<div
+          class="entity-bar"
+          @action=${this.handleAction}
+          tabindex="0"
+          .actionHandler=${actionHandler({
+            hasHold: hasAction(this.actions?.hold_action),
+            hasDoubleClick: hasAction(this.actions?.double_tap_action),
+          })}
+        >
           <div class="entity-bar__content">
             <div class="entity-bar__icon">
               ${icon
@@ -200,6 +239,7 @@ export class EntityBar extends LitElement {
   static styles = css`
     .entity-bar {
       position: relative;
+      cursor: pointer;
     }
 
     .entity-bar__content {

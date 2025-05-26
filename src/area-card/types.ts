@@ -1,10 +1,13 @@
-import type { LovelaceCardConfig, ActionConfig } from 'custom-card-helpers'
+import type { ActionConfig, LovelaceCardConfig } from 'custom-card-helpers'
 
 export type EntityTypeSummary = {
   name: string
   icon: string
   entities: string | string[]
   alarm_entities?: string | string[]
+  tap_action?: ActionConfig
+  hold_action?: ActionConfig
+  double_tap_action?: ActionConfig
 }
 
 export interface ScAreaCardConfig extends LovelaceCardConfig {

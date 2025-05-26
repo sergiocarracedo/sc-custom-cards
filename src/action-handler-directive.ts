@@ -1,8 +1,13 @@
-import { noChange } from "lit";
-import { type AttributePart, directive, Directive, type DirectiveParameters } from "lit/directive.js";
+import { noChange } from 'lit'
+import {
+  type AttributePart,
+  directive,
+  Directive,
+  type DirectiveParameters,
+} from 'lit/directive.js'
 
-import type { ActionHandlerDetail, ActionHandlerOptions } from "custom-card-helpers";
-import { fireEvent } from "custom-card-helpers";
+import type { ActionHandlerDetail, ActionHandlerOptions } from 'custom-card-helpers'
+import { fireEvent } from 'custom-card-helpers'
 
 const isTouch =
   'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.maxTouchPoints > 0
@@ -104,6 +109,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     const end = (ev: Event): void => {
       // Prevent mouse event if touch event
       ev.preventDefault()
+      ev.stopPropagation()
       if (['touchend', 'touchcancel'].includes(ev.type) && this.timer === undefined) {
         return
       }

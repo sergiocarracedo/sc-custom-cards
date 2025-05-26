@@ -1,7 +1,14 @@
 import type { TemplateResult } from 'lit'
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import type { HomeAssistant } from 'custom-card-helpers'
+import { actionHandler } from '@/action-handler-directive'
+import {
+  type ActionHandlerEvent,
+  handleAction,
+  hasAction,
+  type HomeAssistant,
+} from 'custom-card-helpers'
+import { Actions } from '@/types'
 
 type Status = null | number
 
@@ -14,6 +21,7 @@ export class EntitiesTypeStatus extends LitElement {
   @property({ type: String }) public color!: string
   @property({ type: Number }) public size: number = 36
   @property({ type: Object }) public hass!: HomeAssistant
+  @property({ type: Object }) public actions?: Actions
 
   /**
    * Get the active entities that are on or null no entities to check
@@ -38,6 +46,33 @@ export class EntitiesTypeStatus extends LitElement {
     return activeEntities.length
   }
 
+  private handleAction(ev: ActionHandlerEvent) {
+    ev.stopPropagation()
+    ev.preventDefault()
+    if (!this.hass) return
+    this.entities.forEach((entity) => {
+      handleAction(
+        this,
+        this.hass,
+        {
+          entity,
+          hold_action: this.actions?.hold_action,
+          tap_action: this.actions?.tap_action || { action: 'none' },
+          double_tap_action: this.actions?.double_tap_action,
+        },
+        ev.detail.action,
+      )
+    })
+  }
+
+  private get hasAction(): boolean {
+    return (
+      hasAction(this.actions?.tap_action) ||
+      hasAction(this.actions?.hold_action) ||
+      hasAction(this.actions?.double_tap_action)
+    )
+  }
+
   protected render(): TemplateResult {
     const title = html`<h3 class="entities-type-status__header">
         ${this.name} (${this.activeCount()})
@@ -51,11 +86,17 @@ export class EntitiesTypeStatus extends LitElement {
         })}
       </ha-list>`
 
-    return html` <ha-tooltip .content="${title}">
+    return html`<ha-tooltip .content="${title}">
       <div
         class="entities-type-status ${this.activeEntities.length > 0
           ? 'entities-type-status--active'
-          : ''}"
+          : ''} ${this.hasAction ? 'entities-type-status--has-action' : ''}"
+        @action=${this.handleAction}
+        tabindex="0"
+        .actionHandler=${actionHandler({
+          hasHold: hasAction(this.actions?.hold_action),
+          hasDoubleClick: hasAction(this.actions?.double_tap_action),
+        })}
       >
         <div
           class="entities-type-status__icon"
@@ -74,6 +115,17 @@ export class EntitiesTypeStatus extends LitElement {
 
     .entities-type-status--active {
       opacity: 1;
+    }
+
+    .entities-type-status--has-action {
+      cursor: pointer;
+    }
+
+    .entities-type-status--has-action.entities-type-status--active:hover {
+      opacity: 0.9;
+    }
+    .entities-type-status--has-action:hover {
+      opacity: 0.4;
     }
 
     h3.entities-type-status__header {
