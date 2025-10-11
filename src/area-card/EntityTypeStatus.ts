@@ -1,14 +1,14 @@
-import type { TemplateResult } from 'lit'
-import { css, html, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
 import { actionHandler } from '@/action-handler-directive'
+import { Actions } from '@/types'
 import {
   type ActionHandlerEvent,
   handleAction,
   hasAction,
   type HomeAssistant,
 } from 'custom-card-helpers'
-import { Actions } from '@/types'
+import type { TemplateResult } from 'lit'
+import { css, html, LitElement } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
 
 type Status = null | number
 
@@ -74,6 +74,7 @@ export class EntitiesTypeStatus extends LitElement {
   }
 
   protected render(): TemplateResult {
+    const id = `entities-type-status-${this.name.replace(/\s+/g, '-').toLowerCase()}`
     const title = html`<h3 class="entities-type-status__header">
         ${this.name} (${this.activeCount()})
       </h3>
@@ -86,8 +87,8 @@ export class EntitiesTypeStatus extends LitElement {
         })}
       </ha-list>`
 
-    return html`<ha-tooltip .content="${title}">
-      <div
+    return html` <div
+        id="${id}"
         class="entities-type-status ${this.activeEntities.length > 0
           ? 'entities-type-status--active'
           : ''} ${this.hasAction ? 'entities-type-status--has-action' : ''}"
@@ -104,8 +105,9 @@ export class EntitiesTypeStatus extends LitElement {
             .size}px; --icon-size: ${this.size / 1.7}px"
         >
           <ha-icon icon="${this.icon}"></ha-icon>
-        </div></div
-    ></ha-tooltip>`
+        </div>
+      </div>
+      <ha-tooltip for="${id}">${title}</ha-tooltip>`
   }
 
   static styles = css`

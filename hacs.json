@@ -1,9 +1,9 @@
 {
-  "name": "SC Custom Room Card",
+  "name": "SC Custom Cards",
   "content_in_root": false,
   "domains": ["lovelace"],
   "country": ["*"],
   "file_name": "sc-custom-cards.js",
-  "homeassistant": "2024.7.0",
+  "homeassistant": "2025.10.0",
   "render_readme": true
 }
