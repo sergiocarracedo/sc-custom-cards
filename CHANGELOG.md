@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.4.0...v1.4.1) (2025-10-11)
+
+### Bug Fixes
+
+* ha-toolbar in HA 2025.10.0 that know uses Webawesome ([9759c6d](https://github.com/sergiocarracedo/sc-custom-cards/commit/9759c6d5b36a197a3183d617fc46cc6b7627467d))
+
 ## [1.4.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.3.0...v1.4.0) (2025-05-26)
 
 ### Features
