@@ -1,0 +1,53 @@
+.translations/es.json
+  975e98f88c24c21d 1-59
+README.md
+  975e98f88c24c21d 6,8-9,25,28-29,31-32,42-101,117,124,128,152-155,162,193,199,206,215,220-236,239,275,281
+.translations/de.json
+  975e98f88c24c21d 1-59
+src/history-bars-card/EntityBar.ts
+  975e98f88c24c21d 216-217
+src/history-bars-card/BarsCardEditor.ts
+  975e98f88c24c21d 1-411
+.translations/en.json
+  975e98f88c24c21d 2-58
+.translations/fr.json
+  975e98f88c24c21d 1-59
+src/actions-card/ActionsCard.ts
+  975e98f88c24c21d 101-118,122-124
+src/history-bars-card/types.ts
+  975e98f88c24c21d 19
+.translations/gl.json
+  975e98f88c24c21d 1-59
+src/area-card/AreaCard.ts
+  975e98f88c24c21d 241,245-248
+src/index.ts
+  975e98f88c24c21d 2,4-5,21-22,28-36
+src/history-bars-card/BarsCard.ts
+  975e98f88c24c21d 80-82,85-86
+.translations/ca.json
+  975e98f88c24c21d 1-59
+src/area-card/AreaCardEditor.ts
+  975e98f88c24c21d 1-353
+.translations/eu.json
+  975e98f88c24c21d 1-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "00bb124f552da14e5e51a9f052b44a50aef9e2f0",
+  "prompts": {
+    "975e98f88c24c21d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_366dc526fffeilnXY1Hvfgb04a",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 2019,
+      "total_deletions": 741,
+      "accepted_lines": 1326,
+      "overriden_lines": 3
+    }
+  }
+}
