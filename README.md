@@ -2,9 +2,11 @@
 
 Provides multiple custom cards for Home Assistant, including a room card and a bars card.
 
-
 ## Table of Contents
+
 - [Installation](#installation)
+- [Visual Editor](#visual-editor)
+- [Supported Languages](#supported-languages)
 - [Room Card](#room-card)
   - [Features](#features)
   - [Configuration](#configuration)
@@ -19,22 +21,84 @@ Provides multiple custom cards for Home Assistant, including a room card and a b
 - [Troubleshooting](#troubleshooting)
 - [Support](#support)
 
-
 ## Installation
+
 1. **Install via HACS**:
-  - Add this repository to HACS.
-  - Search for "SC Custom Cards" in the HACS store and install it.
+
+- Add this repository to HACS.
+- Search for "SC Custom Cards" in the HACS store and install it.
+
 2. **Manual Installation**:
-  - Download the latest release from the GitHub repository.
-  - Place the files in your Home Assistant `www` folder.
-  - Add the resource to your Lovelace configuration:
-    ```yaml
-    resources:
-      - url: /local/sc-custom-cards/sc-custom-cards.js
-        type: module
-    ```
 
+- Download the latest release from the GitHub repository.
+- Place the files in your Home Assistant `www` folder.
+- Add the resource to your Lovelace configuration:
+  ```yaml
+  resources:
+    - url: /local/sc-custom-cards/sc-custom-cards.js
+      type: module
+  ```
 
+## Visual Editor
+
+All cards include a **visual configuration editor** that allows you to configure the cards without writing YAML. The visual editor provides:
+
+- **Interactive Forms**: Configure card options through intuitive forms with dropdowns, color pickers, and entity selectors
+- **Drag and Drop**: Reorder entities, thresholds, and summary items easily
+- **Inline Editing**: Click the edit button on any item to modify its properties
+- **Real-time Preview**: See changes immediately in the card preview
+
+To use the visual editor:
+
+1. Add a card to your dashboard
+2. Search for "SC Custom Cards" and select the card type
+3. Use the visual editor interface to configure your card
+4. Switch to "Show Code Editor" anytime to view or edit the YAML configuration
+
+> **Note**: The visual editor supports all card features. Some advanced configurations may still require YAML editing.
+
+## Supported Languages
+
+SC Custom Cards includes translations for the following languages:
+
+- 🇺🇸 **English** (en)
+- 🇪🇸 **Spanish** (es) - Español
+- 🇫🇷 **French** (fr) - Français
+- 🇩🇪 **German** (de) - Deutsch
+- 🇮🇹 **Italian** (it) - Italiano
+- 🇳🇱 **Dutch** (nl) - Nederlands
+- 🇵🇱 **Polish** (pl) - Polski
+- 🇸🇪 **Swedish** (sv) - Svenska
+- 🇳🇴 **Norwegian** (no) - Norsk
+- 🇫🇮 **Finnish** (fi) - Suomi
+- 🇩🇰 **Danish** (da) - Dansk
+- 🇨🇿 **Czech** (cs) - Čeština
+- 🇭🇺 **Hungarian** (hu) - Magyar
+- 🇷🇴 **Romanian** (ro) - Română
+- 🇧🇬 **Bulgarian** (bg) - Български
+- 🇬🇷 **Greek** (el) - Ελληνικά
+- 🇷🇺 **Russian** (ru) - Русский
+- 🇺🇦 **Ukrainian** (uk) - Українська
+- 🇹🇷 **Turkish** (tr) - Türkçe
+- 🇰🇷 **Korean** (ko) - 한국어
+- 🇯🇵 **Japanese** (ja) - 日本語
+- 🇨🇳 **Chinese** (zh) - 中文
+- 🇧🇷 **Portuguese (BR)** (pt-BR) - Português (Brasil)
+- 🇵🇹 **Portuguese** (pt) - Português
+- 🇲🇽 **Spanish (Mexico)** (es-MX) - Español (México)
+- 🇨🇦 **French (Canada)** (fr-CA) - Français (Canada)
+- 🇦🇺 **English (Australia)** (en-AU) - English (Australia)
+- 🇬🇧 **English (UK)** (en-GB) - English (UK)
+
+Translations cover:
+
+- Card names and descriptions
+- Configuration form labels
+- Button labels (Add, Edit, Delete, Back)
+- Action names (Tap, Hold, Double Tap)
+- Section headers
+
+To add support for a new language or improve existing translations, please contribute via the [translations folder](.translations/).
 
 ## Room Card
 
@@ -49,21 +113,23 @@ Using `style: header` the card will render in a header style, showing the room n
 
 ![img_1.png](docs/img_1.png)
 
-
 ### Features
+
 - Displays room-specific data such as temperature, humidity, and device statuses.
 - Supports alarms, lights, doors, windows, and other entities.
 - Fully customizable layout and appearance.
 - Responsive design that adapts to different screen sizes.
 
 ### Configuration
+
 To use the Room Card, add it to your Lovelace dashboard. `type: custom:sc-area-card`
 
 #### Configuration Options
+
 | Option                        | Type           | Required | Description                                                           |
-|-------------------------------|----------------|----------|-----------------------------------------------------------------------|
+| ----------------------------- | -------------- | -------- | --------------------------------------------------------------------- |
 | `area`                        | `string`       | Yes      | The area or room to display information for.                          |
-| `style`                       | `string`       | No       | The style of the card (e.g., `header`, `full`).  (`full` by default)  |
+| `style`                       | `string`       | No       | The style of the card (e.g., `header`, `full`). (`full` by default)   |
 | `color`                       | `string`       | No       | The color of the card (e.g., `#f90`, `var(--green)`).                 |
 | `summary`                     | `array`        | No       | A list of entity groups to summarize (e.g., lights, doors, windows).  |
 | `summary[].name`              | `string`       | Yes      | The name of the entity group.                                         |
@@ -74,25 +140,26 @@ To use the Room Card, add it to your Lovelace dashboard. `type: custom:sc-area-c
 | `summary[].hold_action`       | `ActionConfig` | No       | Action to perform on hold in summary (e.g., show more details).       |
 | `summary[].double_tap_action` | `ActionConfig` | No       | Action to perform on double tap in summary(e.g., toggle a device).    |
 | `tap_action`                  | `ActionConfig` | No       | Action to perform on tap in card (e.g., navigate to another view).    |
-| `hold_action`                 | `ActionConfig` | No       | Action to perform on hold in card (e.g., show more details).                  |
-| `double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in card (e.g., toggle a device).              |
+| `hold_action`                 | `ActionConfig` | No       | Action to perform on hold in card (e.g., show more details).          |
+| `double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in card (e.g., toggle a device).      |
 
 The cards provides predefined entity groups for `lights`, `doors`, `windows`, and `alarms`.
 
 > NOTE: The summary actions related to entities like toogle will be applied to all entities defined for the summary.
 
 #### ActionConfig
-| Option                | Type       | Required | Description                                                          |
-|-----------------------|------------|----------|----------------------------------------------------------------------|
-| `action`              | `string`   | Yes      | The action to perform (e.g., `more-info`, `navigate`).               |
-| `navigation_path`     | `string`   | No       | The path to navigate to (if applicable).                             |
 
+| Option            | Type     | Required | Description                                            |
+| ----------------- | -------- | -------- | ------------------------------------------------------ |
+| `action`          | `string` | Yes      | The action to perform (e.g., `more-info`, `navigate`). |
+| `navigation_path` | `string` | No       | The path to navigate to (if applicable).               |
 
 > NOTE: Temperature and humidity sensors are automatically detected based on the area configuration in Home Assistant. Ensure that your sensors are correctly set up in the Home Assistant UI.
-> 
+>
 > ![Update Area](docs/updateArea.png)
 
 #### Example Configuration
+
 Below is an example configuration:
 
 ```yaml
@@ -123,19 +190,20 @@ presence:
 ```
 
 #### Example Use Cases
+
 1. **Living Room Monitoring**:
    Monitor the temperature, humidity, and status of lights, doors, and windows in the living room.
 2. **Bedroom Control**:
    Display the status of alarms, lights, and environmental sensors in the bedroom.
 
+## History Bars Card
 
-## History Bars Card 
-The History Bars Card is a custom Lovelace card for Home Assistant that displays historical data in a bar 
-chart format. It allows you to visualize the history of various entities over time and the instant value 
+The History Bars Card is a custom Lovelace card for Home Assistant that displays historical data in a bar
+chart format. It allows you to visualize the history of various entities over time and the instant value
 at the same time.
 
-
 ### Features
+
 - Displays historical data for multiple entities in a bar chart format.
 - Supports thresholds for visualizing data above or below a certain value.
 - Customizable colors and time ranges.
@@ -143,31 +211,32 @@ at the same time.
 
 ![History Bars Card](docs/history-bars-card.png)
 
-
 ### Configuration
+
 To use the History Bars Card, add it to your Lovelace dashboard. `type: custom:sc-bars-card`.
 
 #### Configuration Options
-| Option              | Type     | Required | Description                                                                     |
-|---------------------|----------|----------|---------------------------------------------------------------------------------|
-| `entities`          | `array`  | Yes      | A list of entity IDs to display in the chart.                                   |
-| `max`               | `number` | Yes      | The max value for all entities to allow to compare instant value.               |
-| `thresholds`        | `array`  | No       | A list of thresholds for coloring the bars based on values.                     |
-| `thresholds[].value` | `number` | Yes      | The threshold value.                                                            |
-| `thresholds[].color` | `string` | Yes      | The color to use for the threshold (e.g., `#f90`, `var(--red)`).                |
-| `entities[].entity` | `string` | Yes      | The entityID.                                                                   |
-| `entities[].name`   | `string` | No       | The name to display for the entity.                                             |
-| `entities[].icon`   | `string` | No       | The icon to display for the entity.                                             |
-| `entities[].color`  | `string` | No       | The color to use for the entity (e.g., `#f90`, `var(--red)`).                   |
-| `entities[].thresholds` | `array` | No       | A list of thresholds for coloring the entity bar (overwrites the common values. |
-| `entities[].thresholds[].value` | `number` | Yes      | The threshold value for the entity.                                             |
-| `entities[].thresholds[].color` | `string` | Yes      | The color to use for the entity threshold (e.g., `#f90`, `var(--red)`).         |
-| `entities[].tap_action`                  | `ActionConfig` | No       | Action to perform on tap in bar (e.g., navigate to another view).               |
-| `entities[].hold_action`                 | `ActionConfig` | No       | Action to perform on hold in bar (e.g., show more details).                     |
-| `entities[].double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in bar (e.g., toggle a device).                 |
 
+| Option                          | Type           | Required | Description                                                                     |
+| ------------------------------- | -------------- | -------- | ------------------------------------------------------------------------------- |
+| `entities`                      | `array`        | Yes      | A list of entity IDs to display in the chart.                                   |
+| `max`                           | `number`       | Yes      | The max value for all entities to allow to compare instant value.               |
+| `thresholds`                    | `array`        | No       | A list of thresholds for coloring the bars based on values.                     |
+| `thresholds[].value`            | `number`       | Yes      | The threshold value.                                                            |
+| `thresholds[].color`            | `string`       | Yes      | The color to use for the threshold (e.g., `#f90`, `var(--red)`).                |
+| `entities[].entity`             | `string`       | Yes      | The entityID.                                                                   |
+| `entities[].name`               | `string`       | No       | The name to display for the entity.                                             |
+| `entities[].icon`               | `string`       | No       | The icon to display for the entity.                                             |
+| `entities[].color`              | `string`       | No       | The color to use for the entity (e.g., `#f90`, `var(--red)`).                   |
+| `entities[].thresholds`         | `array`        | No       | A list of thresholds for coloring the entity bar (overwrites the common values. |
+| `entities[].thresholds[].value` | `number`       | Yes      | The threshold value for the entity.                                             |
+| `entities[].thresholds[].color` | `string`       | Yes      | The color to use for the entity threshold (e.g., `#f90`, `var(--red)`).         |
+| `entities[].tap_action`         | `ActionConfig` | No       | Action to perform on tap in bar (e.g., navigate to another view).               |
+| `entities[].hold_action`        | `ActionConfig` | No       | Action to perform on hold in bar (e.g., show more details).                     |
+| `entities[].double_tap_action`  | `ActionConfig` | No       | Action to perform on double tap in bar (e.g., toggle a device).                 |
 
 #### Example Configuration
+
 Below is an example configuration:
 
 ```yaml
@@ -194,18 +263,20 @@ entities:
     icon: mdi:desktop-classic
     color: var(--blue)
     thresholds:
-    - value: 101
-      color: var(--info-color)
-    - value: 201
-      color: var(--warning-color)
-    - value: 301
-      color: var(--error-color)
+      - value: 101
+        color: var(--info-color)
+      - value: 201
+        color: var(--warning-color)
+      - value: 301
+        color: var(--error-color)
 ```
 
 ## Troubleshooting
+
 - Ensure the card is installed correctly and added as a resource in your Lovelace configuration.
 - Check the browser console for errors if the card does not load.
 - Verify that the entity IDs in your configuration exist in your Home Assistant setup.
 
 ## Support
+
 For issues or feature requests, please visit the [GitHub repository](https://github.com/sergiocarracedo/sc-custom-cards) and open an issue.

@@ -75,12 +75,15 @@ export class ScBarsCard extends LitElement {
   }
 
   // card configuration
-  static getConfigElement() {
-    return document.createElement('sc-bars-card-editor')
+  static getStubConfig() {
+    return {
+      entities: [],
+      max: 100,
+    }
   }
 
-  static getStubConfig() {
-    return {}
+  static getConfigElement() {
+    return document.createElement('sc-bars-card-editor')
   }
 
   static styles = css`

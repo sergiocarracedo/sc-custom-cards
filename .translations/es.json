@@ -1,0 +1,59 @@
+{
+  "title": "Tarjetas Personalizadas SC",
+  "description": "Tarjetas personalizadas de Lovelace para Home Assistant",
+  "config": {
+    "area": "Área",
+    "style": "Estilo de Tarjeta",
+    "color": "Color Personalizado",
+    "presence": "Entidades de Presencia",
+    "alarm": "Entidades de Alarma",
+    "door": "Entidades de Puerta",
+    "light": "Entidades de Luz",
+    "entity_types": "Tipos de Entidades",
+    "summary_section": "Tipos de Resumen Personalizados",
+    "summary": "Resumen",
+    "entities": "Entidades",
+    "alarm_entities": "Entidades de Alarma",
+    "actions": "Acciones",
+    "card_actions": "Acciones de Tarjeta",
+    "tap_action": "Acción al Tocar",
+    "hold_action": "Acción al Mantener",
+    "double_tap_action": "Acción al Doble Tocar",
+    "title": "Título de Tarjeta",
+    "icon": "Icono",
+    "iconColor": "Color de Icono",
+    "buttonColor": "Color de Botón",
+    "action_config": "Configuración de Acción",
+    "max": "Valor Máximo",
+    "min": "Valor Mínimo",
+    "entity_thresholds": "Umbres de Entidad",
+    "global_thresholds_section": "Umbres Globales",
+    "value": "Valor de Umbral",
+    "name": "Nombre",
+    "full": "Completo",
+    "header": "Cabecera",
+    "hideName": "Ocultar Nombre",
+    "add_entity": "Añadir Entidad",
+    "add_threshold": "Añadir Umbral",
+    "add_summary": "Añadir Tipo de Resumen",
+    "edit_entity": "Editar Entidad",
+    "edit_threshold": "Editar Umbral",
+    "edit_summary": "Editar Tipo de Resumen",
+    "back": "Volver",
+    "thresholds": "Umbres"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Tarjeta de Área",
+      "description": "Muestra información del área con temperatura, humedad y resúmenes de estado de entidades"
+    },
+    "bars-card": {
+      "name": "Tarjeta de Barras de Historial",
+      "description": "Muestra valores de entidades como barras horizontales con umbres de colores"
+    },
+    "actions-card": {
+      "name": "Tarjeta de Acciones",
+      "description": "Muestra botones de acción personalizables con iconos y colores"
+    }
+  }
+}

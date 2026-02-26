@@ -236,14 +236,14 @@ export class ScAreaCard extends LitElement {
   }
 
   // card configuration
-  static getConfigElement() {
-    return document.createElement('sc-area-card-editor')
-  }
-
   static getStubConfig() {
     return {
-      area: 'area-card',
+      area: 'living_room',
     }
+  }
+
+  static getConfigElement() {
+    return document.createElement('sc-area-card-editor')
   }
 
   static styles = css`

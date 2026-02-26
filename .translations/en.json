@@ -1,4 +1,59 @@
 {
-  "title": "Room Card",
-  "description": "A custom Lovelace card to display room information."
+  "title": "SC Custom Cards",
+  "description": "Custom Lovelace cards for Home Assistant",
+  "config": {
+    "area": "Area",
+    "style": "Card Style",
+    "color": "Custom Color",
+    "presence": "Presence Entities",
+    "alarm": "Alarm Entities",
+    "door": "Door Entities",
+    "light": "Light Entities",
+    "entity_types": "Entity Types",
+    "summary_section": "Custom Summary Types",
+    "summary": "Summary",
+    "entities": "Entities",
+    "alarm_entities": "Alarm Entities",
+    "actions": "Actions",
+    "card_actions": "Card Actions",
+    "tap_action": "Tap Action",
+    "hold_action": "Hold Action",
+    "double_tap_action": "Double Tap Action",
+    "title": "Card Title",
+    "icon": "Icon",
+    "iconColor": "Icon Color",
+    "buttonColor": "Button Color",
+    "action_config": "Action Configuration",
+    "max": "Maximum Value",
+    "min": "Minimum Value",
+    "entity_thresholds": "Entity Thresholds",
+    "global_thresholds_section": "Global Thresholds",
+    "value": "Threshold Value",
+    "name": "Name",
+    "full": "Full",
+    "header": "Header",
+    "hideName": "Hide Name",
+    "add_entity": "Add Entity",
+    "add_threshold": "Add Threshold",
+    "add_summary": "Add Summary Type",
+    "edit_entity": "Edit Entity",
+    "edit_threshold": "Edit Threshold",
+    "edit_summary": "Edit Summary Type",
+    "back": "Back",
+    "thresholds": "Thresholds"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Area Card",
+      "description": "Displays area information with temperature, humidity, and entity status summaries"
+    },
+    "bars-card": {
+      "name": "History Bars Card",
+      "description": "Displays entity values as horizontal bars with color-coded thresholds"
+    },
+    "actions-card": {
+      "name": "Actions Card",
+      "description": "Displays customizable action buttons with icons and colors"
+    }
+  }
 }

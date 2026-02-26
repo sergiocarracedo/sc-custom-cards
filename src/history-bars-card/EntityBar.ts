@@ -178,15 +178,15 @@ export class EntityBar extends LitElement {
       .join(';')
 
     const lightText = contrast(this, instantColor, '#fff') > 2
-    const valueStyle = [
-      ...(instantColor !== neutralColor
+    const valueStyle = (
+      instantColor !== neutralColor
         ? [
             `background: ${getBaseColor(this, instantColor)}DD`,
             `color: ${lightText ? '#fff' : '#333'}`,
             `--value-text-shadow-color: ${lightText ? '#333' : 'transparent'}`,
           ]
-        : []),
-    ]
+        : []
+    )
       .filter(Boolean)
       .join(';')
 
@@ -213,8 +213,8 @@ export class EntityBar extends LitElement {
             </div>
 
             <div class="entity-bar__chart-titles">
-              <h3 class="entity-bar__name">${name}</h3>
-              <div class="entity-bar__value" style=${valueStyle}>
+              <h3 class="entity-bar__name">${this.config.hideName ? ' ' : name}</h3>
+              <div class="entity-bar__value" style=${valueStyle} title="${name || ''}">
                 ${isNaN(value) ? '-' : value.toFixed(2)}${units || ''}
               </div>
               <span class="entity-bar__instant" style=${instantLineStyle}></span>
