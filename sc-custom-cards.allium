@@ -1,0 +1,482 @@
+-- allium: 1
+-- sc-custom-cards.allium
+-- Home Assistant custom dashboard cards with visual configuration editors
+
+-- Scope: Area Card and History Bars Card configuration, rendering, and editing
+-- Includes: Card configuration schema, visual editors, rendering logic, localization
+-- Excludes:
+--   - Home Assistant core platform (external dependency)
+--   - LitElement web components framework (implementation detail)
+--   - Build tooling and deployment (infrastructure)
+
+-- ============================================================================
+-- Area Card Domain
+-- ============================================================================
+
+-- An Area Card displays summary information about a Home Assistant area,
+-- including temperature, humidity, and grouped entity status summaries.
+
+entity AreaCard {
+    area: Area
+    style: header | full = full
+    color: Color?
+    summaries: Set<EntitySummary>
+    tap_action: Action?
+    hold_action: Action?
+    double_tap_action: Action?
+
+    -- Derived: whether any alarm entity is active
+    has_active_alarm: summaries.flatMap(s => s.alarm_entities).any(e => e.state = on)
+}
+
+entity EntitySummary {
+    name: String
+    icon: Icon
+    entities: Set<EntityId>
+    alarm_entities: Set<EntityId>
+    tap_action: Action?
+    hold_action: Action?
+    double_tap_action: Action?
+
+    -- Constraints
+    invariant: entities.size > 0 or alarm_entities.size > 0
+}
+
+-- Area Card configuration migration from deprecated preset fields
+rule MigratePresetToSummary {
+    when: AreaCard.configured(
+        config: contains(presence | alarm | door | light)
+    )
+
+    let preset_definitions = {
+        presence: {name: "Presence", icon: "mdi:account-multiple"},
+        alarm: {name: "Alarms", icon: "mdi:alarm-bell", is_alarm: true},
+        door: {name: "Doors", icon: "mdi:door"},
+        light: {name: "Lights", icon: "mdi:lightbulb"}
+    }
+
+    ensures:
+        for preset_key in [presence, alarm, door, light]:
+            if config[preset_key] exists:
+                let def = preset_definitions[preset_key]
+                EntitySummary.created(
+                    name: def.name,
+                    icon: def.icon,
+                    entities: config[preset_key],
+                    alarm_entities: if def.is_alarm then config[preset_key] else []
+                )
+
+    ensures: config[presence, alarm, door, light] removed
+}
+
+-- ============================================================================
+-- History Bars Card Domain
+-- ============================================================================
+
+-- A History Bars Card displays entity values as horizontal bars with
+-- color-coded thresholds.
+
+entity BarsCard {
+    max: Number
+    entities: Set<EntityBar>
+    thresholds: Set<Threshold>
+    tap_action: Action?
+    hold_action: Action?
+    double_tap_action: Action?
+
+    -- Constraints
+    invariant: max > 0
+    invariant: entities.size > 0
+}
+
+entity EntityBar {
+    entity: EntityId
+    name: String?
+    icon: Icon?
+    color: Color?
+    min: Number?
+    max: Number?
+    hide_name: Boolean = false
+    thresholds: Set<Threshold>
+    tap_action: Action?
+    hold_action: Action?
+    double_tap_action: Action?
+
+    -- Derived: effective thresholds (entity-level overrides card-level)
+    effective_thresholds: if thresholds.size > 0 then thresholds else parent_card.thresholds
+
+    -- Derived: color based on thresholds
+    bar_color: 
+        if color then color
+        else effective_thresholds
+            .filter(t => entity.value >= t.value)
+            .max_by(t => t.value)
+            .color
+}
+
+entity Threshold {
+    value: Number
+    color: Color
+
+    invariant: value >= 0
+}
+
+-- ============================================================================
+-- Visual Editor Domain
+-- ============================================================================
+
+-- Visual editors allow users to configure cards through a UI instead of YAML.
+
+entity CardEditor {
+    card_config: AreaCard | BarsCard
+    editing_state: viewing | editing_summary(index: Integer) | editing_entity(index: Integer)
+    locale: Language
+}
+
+-- Area Card Editor: Adding a summary group
+rule AddSummary {
+    when: User.clicks(add_summary_button)
+    on: editor: CardEditor(card_config: AreaCard)
+
+    ensures: EntitySummary.created(
+        name: "New Summary",
+        icon: "mdi:help-circle",
+        entities: [],
+        alarm_entities: []
+    )
+    ensures: editor.card_config.summaries += created_summary
+}
+
+-- Area Card Editor: Quick-add preset summaries
+rule QuickAddPresetSummary {
+    when: User.clicks(quick_add_button(preset_type))
+    on: editor: CardEditor(card_config: AreaCard)
+    requires: preset_type in [presence, light, door, alarm]
+
+    let preset_definitions = {
+        presence: {name: "Presence", icon: "mdi:account-multiple"},
+        alarm: {name: "Alarms", icon: "mdi:alarm-bell", is_alarm: true},
+        door: {name: "Doors", icon: "mdi:door"},
+        light: {name: "Lights", icon: "mdi:lightbulb"}
+    }
+
+    let def = preset_definitions[preset_type]
+
+    ensures: EntitySummary.created(
+        name: def.name,
+        icon: def.icon,
+        entities: [],
+        alarm_entities: []
+    )
+    ensures: editor.card_config.summaries += created_summary
+}
+
+-- Area Card Editor: Delete summary with confirmation
+rule DeleteSummary {
+    when: User.confirms(delete_summary(summary))
+    on: editor: CardEditor(card_config: AreaCard)
+
+    ensures: editor.card_config.summaries -= summary
+}
+
+-- Area Card Editor: Reorder summaries via drag-and-drop
+rule ReorderSummaries {
+    when: User.drags(summary, from: old_index, to: new_index)
+    on: editor: CardEditor(card_config: AreaCard)
+
+    ensures: editor.card_config.summaries reordered(from: old_index, to: new_index)
+}
+
+-- Area Card Editor: Edit summary details
+rule EditSummary {
+    when: User.clicks(edit_summary_button(summary))
+    on: editor: CardEditor(card_config: AreaCard)
+
+    ensures: editor.editing_state = editing_summary(index: summary.index)
+}
+
+rule SaveSummaryEdits {
+    when: User.changes(summary_field, value)
+    on: editor: CardEditor(editing_state: editing_summary(index))
+
+    ensures: editor.card_config.summaries[index][summary_field] = value
+    ensures: CardConfigChanged.fired(config: editor.card_config)
+}
+
+rule NavigateBackFromSummary {
+    when: User.clicks(back_button)
+    on: editor: CardEditor(editing_state: editing_summary(_))
+
+    ensures: editor.editing_state = viewing
+}
+
+-- Bars Card Editor: Add entity via picker
+rule AddEntityToBar {
+    when: User.selects(entity_picker, entity_id)
+    on: editor: CardEditor(card_config: BarsCard)
+
+    ensures: EntityBar.created(
+        entity: entity_id,
+        name: "",
+        icon: "",
+        color: ""
+    )
+    ensures: editor.card_config.entities += created_entity_bar
+    ensures: entity_picker.value = cleared
+}
+
+-- Bars Card Editor: Delete entity bar
+rule DeleteEntityBar {
+    when: User.confirms(delete_entity(entity_bar))
+    on: editor: CardEditor(card_config: BarsCard)
+
+    ensures: editor.card_config.entities -= entity_bar
+}
+
+-- Bars Card Editor: Reorder entities via drag-and-drop
+rule ReorderEntities {
+    when: User.drags(entity_bar, from: old_index, to: new_index)
+    on: editor: CardEditor(card_config: BarsCard)
+
+    ensures: editor.card_config.entities reordered(from: old_index, to: new_index)
+}
+
+-- Bars Card Editor: Add threshold
+rule AddThreshold {
+    when: User.clicks(add_threshold_button)
+    on: editor: CardEditor(card_config: BarsCard)
+
+    ensures: Threshold.created(
+        value: 0,
+        color: "#ff0000"
+    )
+    ensures: editor.card_config.thresholds += created_threshold
+}
+
+-- Bars Card Editor: Delete threshold
+rule DeleteThreshold {
+    when: User.confirms(delete_threshold(threshold))
+    on: editor: CardEditor(card_config: BarsCard)
+
+    ensures: editor.card_config.thresholds -= threshold
+}
+
+-- Bars Card Editor: Reorder thresholds via drag-and-drop
+rule ReorderThresholds {
+    when: User.drags(threshold, from: old_index, to: new_index)
+    on: editor: CardEditor(card_config: BarsCard)
+
+    ensures: editor.card_config.thresholds reordered(from: old_index, to: new_index)
+}
+
+-- ============================================================================
+-- Localization Domain
+-- ============================================================================
+
+-- Multi-language support for editor labels and UI text.
+
+entity Localization {
+    supported_languages: Set<Language> = {en, es, gl, fr, de, ca, eu}
+    translations: Map<Language, Map<String, String>>
+}
+
+-- Label resolution with fallback chain
+rule ResolveLabel {
+    when: Editor.needs_label(key, user_language)
+
+    let translation =
+        translations[user_language][key]
+        or translations[en][key]  -- fallback to English
+        or key                    -- fallback to key itself
+
+    ensures: Label.resolved(text: translation)
+}
+
+-- Field labels use computeLabel callback pattern
+entity FieldLabel {
+    field_name: String
+    translation_key: String
+
+    -- Mapping from field names to translation keys
+    label_map: Map<String, String> = {
+        area: "config.area",
+        style: "config.style",
+        color: "config.color",
+        name: "config.name",
+        icon: "config.icon",
+        entities: "config.entities",
+        alarm_entities: "config.alarm_entities",
+        tap_action: "config.tap",
+        hold_action: "config.hold",
+        double_tap_action: "config.double_tap",
+        max: "config.max",
+        min: "config.min",
+        value: "config.value",
+        hideName: "config.hideName"
+    }
+}
+
+-- Helper text for specific fields
+rule ShowFieldHelper {
+    when: Editor.renders_field(field_name)
+    on: editor: CardEditor
+
+    let helper_text =
+        if field_name = "entities" then translations[editor.locale]["config.entities_helper"]
+        else if field_name = "alarm_entities" then translations[editor.locale]["config.alarm_entities_helper"]
+        else undefined
+
+    ensures: if helper_text then HelperText.displayed(text: helper_text)
+}
+
+-- ============================================================================
+-- Entity Filtering Domain
+-- ============================================================================
+
+-- Entity selectors filter by area when editing summaries.
+
+rule FilterEntitiesByArea {
+    when: Editor.renders_entity_selector(field)
+    on: editor: CardEditor(
+        card_config: AreaCard(area: selected_area),
+        editing_state: editing_summary(_)
+    )
+
+    ensures: EntitySelector.filtered(
+        area: selected_area,
+        field: field
+    )
+}
+
+-- ============================================================================
+-- Card Rendering Domain
+-- ============================================================================
+
+-- How cards display based on configuration and entity state.
+
+rule RenderAreaCard {
+    when: AreaCard.render(style)
+
+    ensures:
+        if style = full then FullCardView.displayed(
+            header: area.name,
+            temperature: area.temperature,
+            humidity: area.humidity,
+            summaries: for s in summaries render EntitySummaryView(s)
+        )
+        else if style = header then HeaderOnlyView.displayed(
+            header: area.name,
+            temperature: area.temperature,
+            humidity: area.humidity
+        )
+}
+
+rule RenderEntitySummary {
+    when: EntitySummary.render()
+    on: summary: EntitySummary
+
+    let active_count = summary.entities.filter(e => e.state = on).size
+    let total_count = summary.entities.size
+
+    ensures: EntitySummaryView.displayed(
+        name: summary.name,
+        icon: summary.icon,
+        count: "{active_count}/{total_count}",
+        alarm_active: summary.alarm_entities.any(e => e.state = on)
+    )
+}
+
+rule RenderBarsCard {
+    when: BarsCard.render()
+    on: card: BarsCard
+
+    ensures: BarsCardView.displayed(
+        bars: for entity_bar in card.entities render EntityBarView(entity_bar)
+    )
+}
+
+rule RenderEntityBar {
+    when: EntityBar.render()
+    on: bar: EntityBar
+
+    let value = bar.entity.value or 0
+    let max_value = bar.max or parent_card.max
+    let min_value = bar.min or 0
+    let percentage = ((value - min_value) / (max_value - min_value)) * 100
+
+    ensures: EntityBarView.displayed(
+        name: if not bar.hide_name then (bar.name or bar.entity.friendly_name),
+        icon: bar.icon or bar.entity.icon,
+        color: bar.bar_color,
+        width: percentage,
+        value: value
+    )
+}
+
+-- ============================================================================
+-- Action Handling Domain
+-- ============================================================================
+
+-- Cards and summaries can respond to user interactions.
+
+rule HandleTapAction {
+    when: User.taps(element)
+    on: element: AreaCard | EntitySummary | BarsCard | EntityBar
+    requires: element.tap_action exists
+
+    ensures: Action.executed(element.tap_action)
+}
+
+rule HandleHoldAction {
+    when: User.holds(element)
+    on: element: AreaCard | EntitySummary | BarsCard | EntityBar
+    requires: element.hold_action exists
+
+    ensures: Action.executed(element.hold_action)
+}
+
+rule HandleDoubleClick {
+    when: User.double_clicks(element)
+    on: element: AreaCard | EntitySummary | BarsCard | EntityBar
+    requires: element.double_tap_action exists
+
+    ensures: Action.executed(element.double_tap_action)
+}
+
+-- ============================================================================
+-- External Types
+-- ============================================================================
+
+-- Types provided by Home Assistant platform
+
+external entity Area {
+    area_id: String
+    name: String
+    temperature: Number?
+    humidity: Number?
+}
+
+external entity EntityId {
+    friendly_name: String
+    state: String
+    value: Number?
+    icon: Icon?
+}
+
+external type Icon = String  -- MDI icon name (e.g., "mdi:lightbulb")
+external type Color = String  -- CSS color (e.g., "#ff0000" or "red")
+external type Language = en | es | gl | fr | de | ca | eu
+external type Action  -- Home Assistant action configuration
+
+external event User.clicks(target)
+external event User.taps(target)
+external event User.holds(target)
+external event User.double_clicks(target)
+external event User.drags(item, from: Integer, to: Integer)
+external event User.confirms(operation)
+external event User.selects(picker, value)
+external event User.changes(field, value)
+
+external event CardConfigChanged.fired(config)
+external event HelperText.displayed(text: String)
+external event Label.resolved(text: String)
