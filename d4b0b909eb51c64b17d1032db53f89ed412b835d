@@ -1,0 +1,37 @@
+.translations/es.json
+  975e98f88c24c21d 43-54
+.translations/fr.json
+  975e98f88c24c21d 43-54
+.translations/de.json
+  975e98f88c24c21d 43-54
+.translations/en.json
+  975e98f88c24c21d 43-54
+src/area-card/AreaCardEditor.ts
+  975e98f88c24c21d 191,197,204,211,218,241,261,272-273,277-278,282-283,287-288,310
+.translations/gl.json
+  975e98f88c24c21d 43-54
+.translations/ca.json
+  975e98f88c24c21d 43-54
+.translations/eu.json
+  975e98f88c24c21d 43-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "d4b0b909eb51c64b17d1032db53f89ed412b835d",
+  "prompts": {
+    "975e98f88c24c21d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_366dc526fffeilnXY1Hvfgb04a",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 112,
+      "total_deletions": 20,
+      "accepted_lines": 100,
+      "overriden_lines": 0
+    }
+  }
+}
