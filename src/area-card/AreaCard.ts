@@ -61,49 +61,31 @@ export class ScAreaCard extends LitElement {
     return this._config?.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
   }
   get summaryTypes(): EntityTypeSummary[] {
-    // Predefined entity types
-    type EntityTypeSummaryRequiredAlarm = Omit<EntityTypeSummary, 'alarm_entities'> & {
-      alarm_entities: Exclude<EntityTypeSummary['alarm_entities'], undefined>
-    }
-    const predefinedSummaryTypes: EntityTypeSummaryRequiredAlarm[] = [
-      {
-        id: 'presence',
-        name: 'Presence',
-        icon: 'mdi:account-multiple',
-      },
-      {
-        id: 'alarm',
-        name: 'Alarms',
-        icon: 'mdi:alarm-bell',
-      },
-      {
-        id: 'door',
-        name: 'Doors',
-        icon: 'mdi:door',
-      },
-      {
-        id: 'window',
-        name: 'Windows',
-        icon: 'mdi:window-closed-variant',
-      },
-      {
-        id: 'light',
-        name: 'Lights',
-        icon: 'mdi:lightbulb',
-      },
-    ].map((type) => {
-      const entities = this.toArray(this._config?.[type.id])
-      return {
-        name: type.name,
-        icon: type.icon,
-        entities,
-        alarm_entities: type.id === 'alarm' ? this.toArray(entities) : [],
-      }
-    })
+    // Migrate deprecated preset fields to summaries
+    const migratedSummaries: EntityTypeSummary[] = []
 
-    const customSummaryTypes: EntityTypeSummaryRequiredAlarm[] = this.toArray(
-      this._config?.summary,
-    ).map((type) => {
+    const presetMap: Record<string, { name: string; icon: string; isAlarm?: boolean }> = {
+      presence: { name: 'Presence', icon: 'mdi:account-multiple' },
+      alarm: { name: 'Alarms', icon: 'mdi:alarm-bell', isAlarm: true },
+      door: { name: 'Doors', icon: 'mdi:door' },
+      light: { name: 'Lights', icon: 'mdi:lightbulb' },
+    }
+
+    for (const [presetKey, presetDef] of Object.entries(presetMap)) {
+      const entities = this.toArray(
+        this._config?.[presetKey as keyof ScAreaCardConfig] as string | string[] | undefined,
+      )
+      if (entities.length > 0) {
+        migratedSummaries.push({
+          name: presetDef.name,
+          icon: presetDef.icon,
+          entities,
+          alarm_entities: presetDef.isAlarm ? entities : [],
+        })
+      }
+    }
+
+    const customSummaries: EntityTypeSummary[] = this.toArray(this._config?.summary).map((type) => {
       return {
         name: type.name,
         icon: type.icon || 'mdi:help-circle',
@@ -115,8 +97,8 @@ export class ScAreaCard extends LitElement {
       }
     })
 
-    return [...predefinedSummaryTypes, ...customSummaryTypes].filter(
-      (type) => type.entities.length > 0 || type.alarm_entities.length > 0,
+    return [...migratedSummaries, ...customSummaries].filter(
+      (type) => type.entities.length > 0 || (type.alarm_entities && type.alarm_entities.length > 0),
     )
   }
 

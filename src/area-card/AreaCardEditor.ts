@@ -1,7 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
 import { type HomeAssistant, fireEvent } from 'custom-card-helpers'
-import type { ScAreaCardConfig, EntityTypeSummary } from './types'
+import { LitElement, css, html, nothing } from 'lit'
+import { customElement, property, state } from 'lit/decorators.js'
+import type { EntityTypeSummary, ScAreaCardConfig } from './types'
 
 // Material Design Icons paths
 const mdiPencil =
@@ -18,7 +18,49 @@ export class ScAreaCardEditor extends LitElement {
   @state() private _editingSummaryIndex: number | null = null
 
   public setConfig(config: ScAreaCardConfig): void {
-    this._config = config
+    // Migrate deprecated preset fields to summaries
+    const migratedConfig = this._migratePresetsToSummaries(config)
+    this._config = migratedConfig
+  }
+
+  private _migratePresetsToSummaries(config: ScAreaCardConfig): ScAreaCardConfig {
+    const summary = [...this._toArray(config.summary)]
+    let hasMigrations = false
+
+    const presetMap: Record<string, { name: string; icon: string; isAlarm?: boolean }> = {
+      presence: { name: 'Presence', icon: 'mdi:account-multiple' },
+      alarm: { name: 'Alarms', icon: 'mdi:alarm-bell', isAlarm: true },
+      door: { name: 'Doors', icon: 'mdi:door' },
+      light: { name: 'Lights', icon: 'mdi:lightbulb' },
+    }
+
+    for (const [presetKey, presetDef] of Object.entries(presetMap)) {
+      const entities = this._toArray(
+        config[presetKey as keyof ScAreaCardConfig] as string | string[] | undefined,
+      )
+      if (entities.length > 0) {
+        summary.push({
+          name: presetDef.name,
+          icon: presetDef.icon,
+          entities,
+          alarm_entities: presetDef.isAlarm ? entities : [],
+        })
+        hasMigrations = true
+      }
+    }
+
+    if (hasMigrations) {
+      // Return config without presets, with migrated summaries
+      const { presence, alarm, door, light, ...configWithoutPresets } = config
+      return { ...configWithoutPresets, summary }
+    }
+
+    return config
+  }
+
+  private _toArray<T>(value: T | T[] | undefined): T[] {
+    if (!value) return []
+    return Array.isArray(value) ? value : [value]
   }
 
   private get _summaryList(): EntityTypeSummary[] {
@@ -63,6 +105,29 @@ export class ScAreaCardEditor extends LitElement {
     fireEvent(this, 'config-changed', { config })
   }
 
+  private _quickAddSummary(type: 'presence' | 'light' | 'door' | 'alarm'): void {
+    const presetMap: Record<string, { name: string; icon: string; isAlarm?: boolean }> = {
+      presence: { name: 'Presence', icon: 'mdi:account-multiple' },
+      alarm: { name: 'Alarms', icon: 'mdi:alarm-bell', isAlarm: true },
+      door: { name: 'Doors', icon: 'mdi:door' },
+      light: { name: 'Lights', icon: 'mdi:lightbulb' },
+    }
+
+    const preset = presetMap[type]
+    const summary = [
+      ...this._summaryList,
+      {
+        name: preset.name,
+        icon: preset.icon,
+        entities: [],
+        alarm_entities: [],
+        isAlarm: preset.isAlarm,
+      },
+    ]
+    const config = { ...this._config, summary }
+    fireEvent(this, 'config-changed', { config })
+  }
+
   private _moveSummary(oldIndex: number, newIndex: number): void {
     const summary = [...this._summaryList]
     const [moved] = summary.splice(oldIndex, 1)
@@ -82,8 +147,6 @@ export class ScAreaCardEditor extends LitElement {
       }
       return this._renderSummaryEditor(summary)
     }
-
-    const currentArea = this._config?.area
 
     return html`
       <div class="editor">
@@ -113,36 +176,19 @@ export class ScAreaCardEditor extends LitElement {
                 { name: 'color', selector: { color_rgb: {} } },
               ],
             },
-            {
-              name: 'presence',
-              selector: {
-                entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
-              },
-            },
-            {
-              name: 'alarm',
-              selector: {
-                entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
-              },
-            },
-            {
-              name: 'door',
-              selector: {
-                entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
-              },
-            },
-            {
-              name: 'light',
-              selector: {
-                entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
-              },
-            },
           ]}
           @value-changed=${this._valueChanged}
         ></ha-form>
 
         <div class="section">
           <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.summary')}</h3>
+          <div class="quick-add">
+            <span>Quick Add:</span>
+            <ha-button @click=${() => this._quickAddSummary('presence')}>Presence</ha-button>
+            <ha-button @click=${() => this._quickAddSummary('light')}>Lights</ha-button>
+            <ha-button @click=${() => this._quickAddSummary('door')}>Doors</ha-button>
+            <ha-button @click=${() => this._quickAddSummary('alarm')}>Alarms</ha-button>
+          </div>
           <div class="items-list">
             ${this._summaryList.map((item, index) => {
               const entityCount = Array.isArray(item.entities)
@@ -176,7 +222,10 @@ export class ScAreaCardEditor extends LitElement {
               `
             })}
           </div>
-          <ha-button @click=${this._addSummary}>Add Summary Type</ha-button>
+          <ha-button size="small" appearance="filled" variant="brand" @click=${this._addSummary}>
+            <ha-svg-icon .path=${mdiPencil}></ha-svg-icon>
+            Add Summary Type
+          </ha-button>
         </div>
 
         <div class="section">
@@ -299,6 +348,17 @@ export class ScAreaCardEditor extends LitElement {
     .item-count {
       color: var(--secondary-text-color);
       font-size: 12px;
+    }
+    .quick-add {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .quick-add span {
+      color: var(--secondary-text-color);
+      font-size: 14px;
     }
     .icon-btn {
       background: none;
