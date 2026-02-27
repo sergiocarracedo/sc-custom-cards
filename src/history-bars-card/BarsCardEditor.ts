@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { type HomeAssistant, fireEvent } from 'custom-card-helpers'
 import type { ScBarsCardConfig, EntityBarConfig } from './types'
+import { localize } from '../localize/localize'
 
 // Material Design Icons paths
 const mdiPencil =
@@ -153,11 +154,17 @@ export class ScBarsCardEditor extends LitElement {
               selector: { number: { min: 0, step: 1 } },
             },
           ]}
+          .computeLabel=${(schema: any) => {
+            const labels = {
+              max: 'config.max',
+            }
+            return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+          }}
           @value-changed=${this._valueChanged}
         ></ha-form>
 
         <div class="section">
-          <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.entities')}</h3>
+          <h3>${localize(this.hass, 'config.entities')}</h3>
           <div class="items-list">
             ${this._config.entities?.map((entity, index) => {
               const stateObj = this.hass!.states[entity.entity]
@@ -189,12 +196,12 @@ export class ScBarsCardEditor extends LitElement {
           <ha-entity-picker
             .hass=${this.hass}
             @value-changed=${this._addEntity}
-            label="${this.hass!.localize('ui.panel.lovelace.editor.card.generic.entity')}: "
+            .label=${localize(this.hass, 'config.add_entity')}
           ></ha-entity-picker>
         </div>
 
         <div class="section">
-          <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.thresholds')}</h3>
+          <h3>${localize(this.hass, 'config.thresholds')}</h3>
           <div class="items-list">
             ${this._config.thresholds?.map(
               (threshold, index) => html`
@@ -207,7 +214,9 @@ export class ScBarsCardEditor extends LitElement {
                 >
                   <ha-svg-icon class="drag-handle" .path=${mdiDrag}></ha-svg-icon>
                   <div class="threshold-preview" style="background-color: ${threshold.color}"></div>
-                  <span class="item-name">Value: ${threshold.value}</span>
+                  <span class="item-name"
+                    >${localize(this.hass, 'config.threshold_value_label')} ${threshold.value}</span
+                  >
                   <ha-icon-button
                     .label=${this.hass!.localize('ui.common.edit')}
                     .path=${mdiPencil}
@@ -222,9 +231,12 @@ export class ScBarsCardEditor extends LitElement {
               `,
             )}
           </div>
-          <ha-button size="small" @click=${this._addThreshold} variant="brand" appearance="filled"
-            >${this.hass!.localize('ui.panel.lovelace.editor.card.generic.add')}</ha-button
-          >
+          <ha-button size="small" @click=${this._addThreshold} variant="brand" appearance="filled">
+            <ha-svg-icon
+              .path=${'M19,13H13V19H11V13H5V11H11V5H13V11H19V13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z'}
+            ></ha-svg-icon>
+            ${localize(this.hass, 'config.add_threshold')}
+          </ha-button>
         </div>
 
         <div class="section">
@@ -235,14 +247,31 @@ export class ScBarsCardEditor extends LitElement {
               {
                 type: 'expandable',
                 name: 'actions_section',
-                title: 'Actions',
+                title: localize(this.hass, 'config.actions'),
                 schema: [
-                  { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
-                  { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
-                  { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
+                  {
+                    name: 'tap_action',
+                    selector: { ui_action: {} },
+                  },
+                  {
+                    name: 'hold_action',
+                    selector: { ui_action: {} },
+                  },
+                  {
+                    name: 'double_tap_action',
+                    selector: { ui_action: {} },
+                  },
                 ],
               },
             ]}
+            .computeLabel=${(schema: any) => {
+              const labels = {
+                tap_action: 'config.tap',
+                hold_action: 'config.hold',
+                double_tap_action: 'config.double_tap',
+              }
+              return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+            }}
             @value-changed=${this._valueChanged}
           ></ha-form>
         </div>
@@ -264,14 +293,21 @@ export class ScBarsCardEditor extends LitElement {
           .hass=${this.hass}
           .data=${entity}
           .schema=${[
-            { name: 'entity', required: true, selector: { entity: {} } },
+            {
+              name: 'entity',
+              required: true,
+              selector: { entity: {} },
+            },
             {
               type: 'grid',
               name: '',
               flatten: true,
               schema: [
                 { name: 'name', selector: { text: {} } },
-                { name: 'hideName', selector: { boolean: {} } },
+                {
+                  name: 'hideName',
+                  selector: { boolean: {} },
+                },
               ],
             },
             { name: 'icon', selector: { icon: {} } },
@@ -281,21 +317,55 @@ export class ScBarsCardEditor extends LitElement {
               name: '',
               flatten: true,
               schema: [
-                { name: 'min', selector: { number: { step: 1 } } },
-                { name: 'max', selector: { number: { min: 0, step: 1 } } },
+                {
+                  name: 'min',
+                  selector: { number: { step: 1 } },
+                },
+                {
+                  name: 'max',
+                  selector: { number: { min: 0, step: 1 } },
+                },
               ],
             },
             {
               type: 'expandable',
               name: 'actions',
-              title: 'Actions',
+              title: localize(this.hass, 'config.actions'),
               schema: [
-                { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
-                { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
-                { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
+                {
+                  name: 'tap_action',
+                  selector: { ui_action: {} },
+                },
+                {
+                  name: 'hold_action',
+                  selector: { ui_action: {} },
+                },
+                {
+                  name: 'double_tap_action',
+                  selector: { ui_action: {} },
+                },
               ],
             },
           ]}
+          .computeLabel=${(schema: any) => {
+            const labels = {
+              entity: 'ui.panel.lovelace.editor.card.generic.entity',
+              name: 'config.name',
+              hideName: 'config.hideName',
+              icon: 'config.icon',
+              color: 'config.color',
+              min: 'config.min',
+              max: 'config.max',
+              tap_action: 'config.tap',
+              hold_action: 'config.hold',
+              double_tap_action: 'config.double_tap',
+            }
+            // Use hass.localize for standard HA labels, localize for custom ones
+            if (schema.name === 'entity') {
+              return this.hass!.localize(labels[schema.name])
+            }
+            return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+          }}
           @value-changed=${this._entityChanged}
         ></ha-form>
       </div>
@@ -319,6 +389,13 @@ export class ScBarsCardEditor extends LitElement {
             { name: 'value', required: true, selector: { number: { step: 0.1 } } },
             { name: 'color', required: true, selector: { text: {} } },
           ]}
+          .computeLabel=${(schema: any) => {
+            const labels = {
+              value: 'config.value',
+              color: 'config.color',
+            }
+            return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+          }}
           @value-changed=${this._thresholdChanged}
         ></ha-form>
       </div>

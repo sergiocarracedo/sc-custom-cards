@@ -1,6 +1,7 @@
 import { type HomeAssistant, fireEvent } from 'custom-card-helpers'
 import { LitElement, css, html, nothing } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
+import { localize } from '../localize/localize'
 import type { EntityTypeSummary, ScAreaCardConfig } from './types'
 
 // Material Design Icons paths
@@ -51,7 +52,13 @@ export class ScAreaCardEditor extends LitElement {
 
     if (hasMigrations) {
       // Return config without presets, with migrated summaries
-      const { presence, alarm, door, light, ...configWithoutPresets } = config
+      const {
+        presence: _presence,
+        alarm: _alarm,
+        door: _door,
+        light: _light,
+        ...configWithoutPresets
+      } = config
       return { ...configWithoutPresets, summary }
     }
 
@@ -159,7 +166,11 @@ export class ScAreaCardEditor extends LitElement {
           .hass=${this.hass}
           .data=${this._config}
           .schema=${[
-            { name: 'area', required: true, selector: { area: {} } },
+            {
+              name: 'area',
+              required: true,
+              selector: { area: {} },
+            },
             {
               type: 'grid',
               name: '',
@@ -178,51 +189,55 @@ export class ScAreaCardEditor extends LitElement {
                     },
                   },
                 },
-                { name: 'color', selector: { color_rgb: {} } },
+                {
+                  name: 'color',
+                  selector: { color_rgb: {} },
+                },
               ],
             },
           ]}
+          .computeLabel=${(schema: any) => {
+            const labels = {
+              area: 'config.area',
+              style: 'config.style',
+              color: 'config.color',
+            }
+            return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+          }}
           @value-changed=${this._valueChanged}
         ></ha-form>
 
         <div class="section">
           <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.summary')}</h3>
           <div class="quick-add">
-            <span
-              >${this.hass!.localize('component.sc-custom-cards.config.quick_add') ||
-              'Quick Add'}:</span
-            >
+            <span>${localize(this.hass, 'config.quick_add')}:</span>
             <ha-button
               size="small"
               variant="brand"
               appearance="filled"
               @click=${() => this._quickAddSummary('presence')}
-              >${this.hass!.localize('component.sc-custom-cards.config.presence') ||
-              'Presence'}</ha-button
+              >${localize(this.hass, 'config.presence')}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
               appearance="filled"
               @click=${() => this._quickAddSummary('light')}
-              >${this.hass!.localize('component.sc-custom-cards.config.lights') ||
-              'Lights'}</ha-button
+              >${localize(this.hass, 'config.lights')}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
               appearance="filled"
               @click=${() => this._quickAddSummary('door')}
-              >${this.hass!.localize('component.sc-custom-cards.config.doors') ||
-              'Doors'}</ha-button
+              >${localize(this.hass, 'config.doors')}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
               appearance="filled"
               @click=${() => this._quickAddSummary('alarm')}
-              >${this.hass!.localize('component.sc-custom-cards.config.alarms') ||
-              'Alarms'}</ha-button
+              >${localize(this.hass, 'config.alarms')}</ha-button
             >
           </div>
           <div class="items-list">
@@ -244,8 +259,7 @@ export class ScAreaCardEditor extends LitElement {
                   <ha-icon .icon=${item.icon || 'mdi:help-circle'}></ha-icon>
                   <span class="item-name">${item.name}</span>
                   <span class="item-count"
-                    >(${entityCount}
-                    ${this.hass!.localize('component.sc-custom-cards.config.entity_count')})</span
+                    >(${entityCount} ${localize(this.hass, 'config.entity_count')})</span
                   >
                   <ha-icon-button
                     .label=${this.hass!.localize('ui.common.edit')}
@@ -261,11 +275,11 @@ export class ScAreaCardEditor extends LitElement {
               `
             })}
           </div>
-          <ha-button size="small" @click=${this._addSummary} variant="brand" apperance="filled">
+          <ha-button size="small" @click=${this._addSummary} variant="brand" appearance="filled">
             <ha-svg-icon
               .path=${'M19,13H13V19H11V13H5V11H11V5H13V11H19V13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z'}
             ></ha-svg-icon>
-            ${this.hass!.localize('component.sc-custom-cards.config.entity_group')}
+            ${localize(this.hass, 'config.entity_group')}
           </ha-button>
         </div>
 
@@ -276,22 +290,21 @@ export class ScAreaCardEditor extends LitElement {
             .schema=${[
               {
                 type: 'expandable',
-                title: this.hass!.localize('component.sc-custom-cards.config.actions'),
-                flatten: true,
+                title: localize(this.hass, 'config.actions'),
                 schema: [
                   {
                     name: 'tap_action',
-                    label: this.hass!.localize('component.sc-custom-cards.config.tap'),
+                    label: localize(this.hass, 'config.tap'),
                     selector: { ui_action: {} },
                   },
                   {
                     name: 'hold_action',
-                    label: this.hass!.localize('component.sc-custom-cards.config.hold'),
+                    label: localize(this.hass, 'config.hold'),
                     selector: { ui_action: {} },
                   },
                   {
                     name: 'double_tap_action',
-                    label: this.hass!.localize('component.sc-custom-cards.config.double_tap'),
+                    label: localize(this.hass, 'config.double_tap'),
                     selector: { ui_action: {} },
                   },
                 ],
@@ -314,38 +327,81 @@ export class ScAreaCardEditor extends LitElement {
             .label=${this.hass!.localize('ui.common.back')}
             @click=${this._goBack}
           ></ha-icon-button-prev>
-          <span>${this.hass!.localize('component.sc-custom-cards.config.summary_type')}</span>
+          <span>${localize(this.hass, 'config.summary_type')}</span>
         </div>
         <ha-form
           .hass=${this.hass}
           .data=${summary}
           .schema=${[
-            { name: 'name', required: true, selector: { text: {} } },
-            { name: 'icon', selector: { icon: {} } },
+            {
+              type: 'grid',
+              name: '',
+              flatten: true,
+              schema: [
+                {
+                  name: 'name',
+                  required: true,
+                  selector: { text: {} },
+                },
+                { name: 'icon', selector: { icon: {} } },
+              ],
+            },
             {
               name: 'entities',
-              label: 'Entities',
               selector: {
-                entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
+                entity: {
+                  multiple: true,
+                  filter: { area: currentArea },
+                },
               },
             },
             {
               name: 'alarm_entities',
               selector: {
-                entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
+                entity: {
+                  multiple: true,
+                  filter: { area: currentArea },
+                },
               },
             },
             {
               type: 'expandable',
               name: 'actions',
-              title: 'Actions',
+              title: localize(this.hass, 'config.actions'),
               schema: [
-                { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
-                { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
-                { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
+                {
+                  name: 'tap_action',
+                  selector: { ui_action: {} },
+                },
+                {
+                  name: 'hold_action',
+                  selector: { ui_action: {} },
+                },
+                {
+                  name: 'double_tap_action',
+                  selector: { ui_action: {} },
+                },
               ],
             },
           ]}
+          .computeLabel=${(schema: any) => {
+            const labels = {
+              name: 'config.name',
+              icon: 'config.icon',
+              entities: 'config.entities',
+              alarm_entities: 'config.alarm_entities',
+              tap_action: 'config.tap',
+              hold_action: 'config.hold',
+              double_tap_action: 'config.double_tap',
+            }
+            return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+          }}
+          .computeHelper=${(schema: any) => {
+            if (schema.name === 'entities') return localize(this.hass, 'config.entities_helper')
+            if (schema.name === 'alarm_entities')
+              return localize(this.hass, 'config.alarm_entities_helper')
+            return undefined
+          }}
           @value-changed=${this._summaryChanged}
         ></ha-form>
       </div>
