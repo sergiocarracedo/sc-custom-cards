@@ -2,7 +2,6 @@ import './area-card/AreaCard'
 import './area-card/AreaCardEditor'
 import './history-bars-card'
 import './history-bars-card/BarsCardEditor'
-import './actions-card'
 
 import { DEFAULT_HA_COMPONENTS, loadHaComponents } from '@kipk/load-ha-components'
 
@@ -27,11 +26,4 @@ window.customCards.push({
   name: 'History bars card',
   description: 'Displays entity values as horizontal bars with color-coded thresholds',
   documentationURL: 'https://github.com/sergiocarracedo/sc-custom-cards#sc-bars-card',
-})
-
-window.customCards.push({
-  type: 'sc-actions-card',
-  name: 'Actions card',
-  description: 'Displays customizable action buttons with icons and colors',
-  documentationURL: 'https://github.com/sergiocarracedo/sc-custom-cards#sc-actions-card',
 })
