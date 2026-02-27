@@ -184,10 +184,16 @@ export class ScAreaCardEditor extends LitElement {
           <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.summary')}</h3>
           <div class="quick-add">
             <span>Quick Add:</span>
-            <ha-button @click=${() => this._quickAddSummary('presence')}>Presence</ha-button>
-            <ha-button @click=${() => this._quickAddSummary('light')}>Lights</ha-button>
-            <ha-button @click=${() => this._quickAddSummary('door')}>Doors</ha-button>
-            <ha-button @click=${() => this._quickAddSummary('alarm')}>Alarms</ha-button>
+            <ha-button size="small" @click=${() => this._quickAddSummary('presence')}
+              >Presence</ha-button
+            >
+            <ha-button size="small" @click=${() => this._quickAddSummary('light')}
+              >Lights</ha-button
+            >
+            <ha-button size="small" @click=${() => this._quickAddSummary('door')}>Doors</ha-button>
+            <ha-button size="small" @click=${() => this._quickAddSummary('alarm')}
+              >Alarms</ha-button
+            >
           </div>
           <div class="items-list">
             ${this._summaryList.map((item, index) => {
@@ -222,21 +228,29 @@ export class ScAreaCardEditor extends LitElement {
               `
             })}
           </div>
-          <ha-button size="small" appearance="filled" variant="brand" @click=${this._addSummary}>
-            <ha-svg-icon .path=${mdiPencil}></ha-svg-icon>
-            Add Summary Type
+          <ha-button size="small" @click=${this._addSummary}>
+            <ha-svg-icon
+              .path=${'M19,13H13V19H11V13H5V11H11V5H13V11H19V13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z'}
+            ></ha-svg-icon>
+            Add entity group
           </ha-button>
         </div>
 
         <div class="section">
-          <h3>${this.hass!.localize('ui.panel.lovelace.editor.action-editor.actions')}</h3>
           <ha-form
             .hass=${this.hass}
             .data=${this._config}
             .schema=${[
-              { name: 'tap_action', selector: { ui_action: {} } },
-              { name: 'hold_action', selector: { ui_action: {} } },
-              { name: 'double_tap_action', selector: { ui_action: {} } },
+              {
+                type: 'expandable',
+                name: 'actions_section',
+                title: 'Actions',
+                schema: [
+                  { name: 'tap_action', selector: { ui_action: {} } },
+                  { name: 'hold_action', selector: { ui_action: {} } },
+                  { name: 'double_tap_action', selector: { ui_action: {} } },
+                ],
+              },
             ]}
             @value-changed=${this._valueChanged}
           ></ha-form>
