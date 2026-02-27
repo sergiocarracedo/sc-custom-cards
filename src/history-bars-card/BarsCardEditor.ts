@@ -222,7 +222,7 @@ export class ScBarsCardEditor extends LitElement {
               `,
             )}
           </div>
-          <ha-button @click=${this._addThreshold}
+          <ha-button size="small" @click=${this._addThreshold} variant="brand" appearance="filled"
             >${this.hass!.localize('ui.panel.lovelace.editor.card.generic.add')}</ha-button
           >
         </div>

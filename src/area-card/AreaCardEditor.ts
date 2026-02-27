@@ -188,34 +188,41 @@ export class ScAreaCardEditor extends LitElement {
         <div class="section">
           <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.summary')}</h3>
           <div class="quick-add">
-            <span>${this.hass!.localize('component.sc-custom-cards.config.quick_add')}:</span>
+            <span
+              >${this.hass!.localize('component.sc-custom-cards.config.quick_add') ||
+              'Quick Add'}:</span
+            >
             <ha-button
               size="small"
               variant="brand"
-              apperance="filled"
+              appearance="filled"
               @click=${() => this._quickAddSummary('presence')}
-              >${this.hass!.localize('component.sc-custom-cards.config.presence')}</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.presence') ||
+              'Presence'}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
-              apperance="filled"
+              appearance="filled"
               @click=${() => this._quickAddSummary('light')}
-              >${this.hass!.localize('component.sc-custom-cards.config.lights')}</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.lights') ||
+              'Lights'}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
-              apperance="filled"
+              appearance="filled"
               @click=${() => this._quickAddSummary('door')}
-              >${this.hass!.localize('component.sc-custom-cards.config.doors')}</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.doors') ||
+              'Doors'}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
-              apperance="filled"
+              appearance="filled"
               @click=${() => this._quickAddSummary('alarm')}
-              >${this.hass!.localize('component.sc-custom-cards.config.alarms')}</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.alarms') ||
+              'Alarms'}</ha-button
             >
           </div>
           <div class="items-list">
