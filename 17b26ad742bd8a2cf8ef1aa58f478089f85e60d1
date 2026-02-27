@@ -1,0 +1,41 @@
+src/__tests__/setup.ts
+  975e98f88c24c21d 105-111
+vitest.config.ts
+  975e98f88c24c21d 1-43
+TESTING.md
+  975e98f88c24c21d 1-171
+src/__tests__/area-card/AreaCard.test.ts
+  975e98f88c24c21d 2,17-19
+src/__tests__/history-bars-card/BarsCardEditor.test.ts
+  975e98f88c24c21d 1-367
+src/__tests__/mockData.ts
+  975e98f88c24c21d 1-248
+src/__tests__/area-card/AreaCardEditor.test.ts
+  975e98f88c24c21d 1-418
+package.json
+  975e98f88c24c21d 14-17
+src/__tests__/README.md
+  975e98f88c24c21d 1-221
+sc-custom-cards.allium
+  975e98f88c24c21d 1-482
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.6",
+  "base_commit_sha": "17b26ad742bd8a2cf8ef1aa58f478089f85e60d1",
+  "prompts": {
+    "975e98f88c24c21d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_366dc526fffeilnXY1Hvfgb04a",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 1968,
+      "total_deletions": 6,
+      "accepted_lines": 1965,
+      "overriden_lines": 0
+    }
+  }
+}
