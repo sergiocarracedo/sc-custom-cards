@@ -1,0 +1,25 @@
+src/history-bars-card/BarsCardEditor.ts
+  975e98f88c24c21d 226-233,283-285
+src/area-card/AreaCardEditor.ts
+  975e98f88c24c21d 249-251,297-299
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "b974edb2b364f8d010585c08196812b2482235d6",
+  "prompts": {
+    "975e98f88c24c21d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_366dc526fffeilnXY1Hvfgb04a",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 19,
+      "total_deletions": 13,
+      "accepted_lines": 17,
+      "overriden_lines": 0
+    }
+  }
+}
