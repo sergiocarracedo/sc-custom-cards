@@ -40,7 +40,18 @@
     "edit_threshold": "Schwelle bearbeiten",
     "edit_summary": "Zusammenfassungstyp bearbeiten",
     "back": "Zurück",
-    "thresholds": "Schwellen"
+    "thresholds": "Schwellen",
+    "quick_add": "Schnell hinzufügen",
+    "entity_group": "Entitätsgruppe hinzufügen",
+    "entity_count": "Entitäten",
+    "presence": "Präsenz",
+    "lights": "Lichter",
+    "doors": "Türen",
+    "alarms": "Alarme",
+    "summary_type": "Zusammenfassungstyp",
+    "tap": "Tippen",
+    "hold": "Halten",
+    "double_tap": "Doppeltippen"
   },
   "cards": {
     "area-card": {

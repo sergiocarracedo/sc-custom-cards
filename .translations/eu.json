@@ -40,7 +40,18 @@
     "edit_threshold": "Atalasea Editatu",
     "edit_summary": "Laburpen Mota Editatu",
     "back": "Itzuli",
-    "thresholds": "Atalaseak"
+    "thresholds": "Atalaseak",
+    "quick_add": "Gehitu Azkar",
+    "entity_group": "Gehitu entitate taldea",
+    "entity_count": "entitate",
+    "presence": "Presentzia",
+    "lights": "Argiak",
+    "doors": "Ateak",
+    "alarms": "Alarmak",
+    "summary_type": "Laburpen Mota",
+    "tap": "Ukitu",
+    "hold": "Mantendu",
+    "double_tap": "Ukitu Bikoitza"
   },
   "cards": {
     "area-card": {

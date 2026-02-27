@@ -188,34 +188,34 @@ export class ScAreaCardEditor extends LitElement {
         <div class="section">
           <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.summary')}</h3>
           <div class="quick-add">
-            <span>Quick Add:</span>
+            <span>${this.hass!.localize('component.sc-custom-cards.config.quick_add')}:</span>
             <ha-button
               size="small"
               variant="brand"
               apperance="filled"
               @click=${() => this._quickAddSummary('presence')}
-              >Presence</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.presence')}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
               apperance="filled"
               @click=${() => this._quickAddSummary('light')}
-              >Lights</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.lights')}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
               apperance="filled"
               @click=${() => this._quickAddSummary('door')}
-              >Doors</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.doors')}</ha-button
             >
             <ha-button
               size="small"
               variant="brand"
               apperance="filled"
               @click=${() => this._quickAddSummary('alarm')}
-              >Alarms</ha-button
+              >${this.hass!.localize('component.sc-custom-cards.config.alarms')}</ha-button
             >
           </div>
           <div class="items-list">
@@ -236,7 +236,10 @@ export class ScAreaCardEditor extends LitElement {
                   <ha-svg-icon class="drag-handle" .path=${mdiDrag}></ha-svg-icon>
                   <ha-icon .icon=${item.icon || 'mdi:help-circle'}></ha-icon>
                   <span class="item-name">${item.name}</span>
-                  <span class="item-count">(${entityCount} entities)</span>
+                  <span class="item-count"
+                    >(${entityCount}
+                    ${this.hass!.localize('component.sc-custom-cards.config.entity_count')})</span
+                  >
                   <ha-icon-button
                     .label=${this.hass!.localize('ui.common.edit')}
                     .path=${mdiPencil}
@@ -255,7 +258,7 @@ export class ScAreaCardEditor extends LitElement {
             <ha-svg-icon
               .path=${'M19,13H13V19H11V13H5V11H11V5H13V11H19V13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z'}
             ></ha-svg-icon>
-            Add entity group
+            ${this.hass!.localize('component.sc-custom-cards.config.entity_group')}
           </ha-button>
         </div>
 
@@ -266,12 +269,24 @@ export class ScAreaCardEditor extends LitElement {
             .schema=${[
               {
                 type: 'expandable',
-                name: 'actions_section',
-                title: 'Actions',
+                title: this.hass!.localize('component.sc-custom-cards.config.actions'),
+                flatten: true,
                 schema: [
-                  { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
-                  { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
-                  { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
+                  {
+                    name: 'tap_action',
+                    label: this.hass!.localize('component.sc-custom-cards.config.tap'),
+                    selector: { ui_action: {} },
+                  },
+                  {
+                    name: 'hold_action',
+                    label: this.hass!.localize('component.sc-custom-cards.config.hold'),
+                    selector: { ui_action: {} },
+                  },
+                  {
+                    name: 'double_tap_action',
+                    label: this.hass!.localize('component.sc-custom-cards.config.double_tap'),
+                    selector: { ui_action: {} },
+                  },
                 ],
               },
             ]}
@@ -292,7 +307,7 @@ export class ScAreaCardEditor extends LitElement {
             .label=${this.hass!.localize('ui.common.back')}
             @click=${this._goBack}
           ></ha-icon-button-prev>
-          <span>Summary Type</span>
+          <span>${this.hass!.localize('component.sc-custom-cards.config.summary_type')}</span>
         </div>
         <ha-form
           .hass=${this.hass}

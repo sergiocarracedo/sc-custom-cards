@@ -40,7 +40,18 @@
     "edit_threshold": "Editar Umbral",
     "edit_summary": "Editar Tipo de Resumen",
     "back": "Volver",
-    "thresholds": "Umbres"
+    "thresholds": "Umbres",
+    "quick_add": "Añadir Rápido",
+    "entity_group": "Añadir grupo de entidades",
+    "entity_count": "entidades",
+    "presence": "Presencia",
+    "lights": "Luces",
+    "doors": "Puertas",
+    "alarms": "Alarmas",
+    "summary_type": "Tipo de Resumen",
+    "tap": "Toque",
+    "hold": "Mantener",
+    "double_tap": "Doble Toque"
   },
   "cards": {
     "area-card": {

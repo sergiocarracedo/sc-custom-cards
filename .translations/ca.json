@@ -40,7 +40,18 @@
     "edit_threshold": "Editar Llindar",
     "edit_summary": "Editar Tipus de Resum",
     "back": "Tornar",
-    "thresholds": "Llindars"
+    "thresholds": "Llindars",
+    "quick_add": "Afegir Ràpid",
+    "entity_group": "Afegir grup d'entitats",
+    "entity_count": "entitats",
+    "presence": "Presència",
+    "lights": "Llums",
+    "doors": "Portes",
+    "alarms": "Alarmes",
+    "summary_type": "Tipus de Resum",
+    "tap": "Tocar",
+    "hold": "Mantenir",
+    "double_tap": "Doble Tocar"
   },
   "cards": {
     "area-card": {

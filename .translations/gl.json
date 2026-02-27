@@ -40,7 +40,18 @@
     "edit_threshold": "Editar Limiar",
     "edit_summary": "Editar Tipo de Resumo",
     "back": "Volver",
-    "thresholds": "Limiares"
+    "thresholds": "Limiares",
+    "quick_add": "Engadir Rápido",
+    "entity_group": "Engadir grupo de entidades",
+    "entity_count": "entidades",
+    "presence": "Presenza",
+    "lights": "Luces",
+    "doors": "Portas",
+    "alarms": "Alarmas",
+    "summary_type": "Tipo de Resumo",
+    "tap": "Toque",
+    "hold": "Manter",
+    "double_tap": "Dobre Toque"
   },
   "cards": {
     "area-card": {

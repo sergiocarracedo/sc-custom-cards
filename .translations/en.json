@@ -40,7 +40,18 @@
     "edit_threshold": "Edit Threshold",
     "edit_summary": "Edit Summary Type",
     "back": "Back",
-    "thresholds": "Thresholds"
+    "thresholds": "Thresholds",
+    "quick_add": "Quick Add",
+    "entity_group": "Add entity group",
+    "entity_count": "entities",
+    "presence": "Presence",
+    "lights": "Lights",
+    "doors": "Doors",
+    "alarms": "Alarms",
+    "summary_type": "Summary Type",
+    "tap": "Tap",
+    "hold": "Hold",
+    "double_tap": "Double Tap"
   },
   "cards": {
     "area-card": {
