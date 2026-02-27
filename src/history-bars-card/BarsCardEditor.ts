@@ -58,18 +58,28 @@ export class ScBarsCardEditor extends LitElement {
     fireEvent(this, 'config-changed', { config })
   }
 
-  private _deleteEntity(index: number): void {
-    const entities = [...(this._config?.entities || [])]
-    entities.splice(index, 1)
-    const config = { ...this._config, entities }
-    fireEvent(this, 'config-changed', { config })
+  private async _deleteEntity(index: number): Promise<void> {
+    const entity = this._config?.entities?.[index]
+    const name = entity?.name || entity?.entity || 'this entity'
+
+    if (confirm(`Are you sure you want to delete "${name}"?`)) {
+      const entities = [...(this._config?.entities || [])]
+      entities.splice(index, 1)
+      const config = { ...this._config, entities }
+      fireEvent(this, 'config-changed', { config })
+    }
   }
 
-  private _deleteThreshold(index: number): void {
-    const thresholds = [...(this._config?.thresholds || [])]
-    thresholds.splice(index, 1)
-    const config = { ...this._config, thresholds }
-    fireEvent(this, 'config-changed', { config })
+  private async _deleteThreshold(index: number): Promise<void> {
+    const threshold = this._config?.thresholds?.[index]
+    const value = threshold?.value ?? 'this threshold'
+
+    if (confirm(`Are you sure you want to delete threshold "${value}"?`)) {
+      const thresholds = [...(this._config?.thresholds || [])]
+      thresholds.splice(index, 1)
+      const config = { ...this._config, thresholds }
+      fireEvent(this, 'config-changed', { config })
+    }
   }
 
   private _addEntity(ev: CustomEvent): void {

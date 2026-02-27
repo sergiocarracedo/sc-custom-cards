@@ -89,11 +89,16 @@ export class ScAreaCardEditor extends LitElement {
     fireEvent(this, 'config-changed', { config })
   }
 
-  private _deleteSummary(index: number): void {
-    const summary = [...this._summaryList]
-    summary.splice(index, 1)
-    const config = { ...this._config, summary }
-    fireEvent(this, 'config-changed', { config })
+  private async _deleteSummary(index: number): Promise<void> {
+    const summary = this._summaryList[index]
+    const name = summary?.name || 'this group'
+
+    if (confirm(`Are you sure you want to delete "${name}"?`)) {
+      const newSummaries = [...this._summaryList]
+      newSummaries.splice(index, 1)
+      const config = { ...this._config, summary: newSummaries }
+      fireEvent(this, 'config-changed', { config })
+    }
   }
 
   private _addSummary(): void {
@@ -184,14 +189,32 @@ export class ScAreaCardEditor extends LitElement {
           <h3>${this.hass!.localize('ui.panel.lovelace.editor.card.generic.summary')}</h3>
           <div class="quick-add">
             <span>Quick Add:</span>
-            <ha-button size="small" @click=${() => this._quickAddSummary('presence')}
+            <ha-button
+              size="small"
+              variant="brand"
+              apperance="filled"
+              @click=${() => this._quickAddSummary('presence')}
               >Presence</ha-button
             >
-            <ha-button size="small" @click=${() => this._quickAddSummary('light')}
+            <ha-button
+              size="small"
+              variant="brand"
+              apperance="filled"
+              @click=${() => this._quickAddSummary('light')}
               >Lights</ha-button
             >
-            <ha-button size="small" @click=${() => this._quickAddSummary('door')}>Doors</ha-button>
-            <ha-button size="small" @click=${() => this._quickAddSummary('alarm')}
+            <ha-button
+              size="small"
+              variant="brand"
+              apperance="filled"
+              @click=${() => this._quickAddSummary('door')}
+              >Doors</ha-button
+            >
+            <ha-button
+              size="small"
+              variant="brand"
+              apperance="filled"
+              @click=${() => this._quickAddSummary('alarm')}
               >Alarms</ha-button
             >
           </div>
@@ -228,7 +251,7 @@ export class ScAreaCardEditor extends LitElement {
               `
             })}
           </div>
-          <ha-button size="small" @click=${this._addSummary}>
+          <ha-button size="small" @click=${this._addSummary} variant="brand" apperance="filled">
             <ha-svg-icon
               .path=${'M19,13H13V19H11V13H5V11H11V5H13V11H19V13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z'}
             ></ha-svg-icon>
@@ -279,6 +302,7 @@ export class ScAreaCardEditor extends LitElement {
             { name: 'icon', selector: { icon: {} } },
             {
               name: 'entities',
+              label: 'Entities',
               selector: {
                 entity: { multiple: true, filter: currentArea ? { area: currentArea } : undefined },
               },
