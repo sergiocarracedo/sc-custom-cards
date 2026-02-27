@@ -218,14 +218,20 @@ export class ScBarsCardEditor extends LitElement {
         </div>
 
         <div class="section">
-          <h3>${this.hass!.localize('ui.panel.lovelace.editor.action-editor.actions')}</h3>
           <ha-form
             .hass=${this.hass}
             .data=${this._config}
             .schema=${[
-              { name: 'tap_action', selector: { ui_action: {} } },
-              { name: 'hold_action', selector: { ui_action: {} } },
-              { name: 'double_tap_action', selector: { ui_action: {} } },
+              {
+                type: 'expandable',
+                name: 'actions_section',
+                title: 'Actions',
+                schema: [
+                  { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
+                  { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
+                  { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
+                ],
+              },
             ]}
             @value-changed=${this._valueChanged}
           ></ha-form>
@@ -274,9 +280,9 @@ export class ScBarsCardEditor extends LitElement {
               name: 'actions',
               title: 'Actions',
               schema: [
-                { name: 'tap_action', selector: { ui_action: {} } },
-                { name: 'hold_action', selector: { ui_action: {} } },
-                { name: 'double_tap_action', selector: { ui_action: {} } },
+                { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
+                { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
+                { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
               ],
             },
           ]}

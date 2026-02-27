@@ -246,9 +246,9 @@ export class ScAreaCardEditor extends LitElement {
                 name: 'actions_section',
                 title: 'Actions',
                 schema: [
-                  { name: 'tap_action', selector: { ui_action: {} } },
-                  { name: 'hold_action', selector: { ui_action: {} } },
-                  { name: 'double_tap_action', selector: { ui_action: {} } },
+                  { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
+                  { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
+                  { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
                 ],
               },
             ]}
@@ -294,9 +294,9 @@ export class ScAreaCardEditor extends LitElement {
               name: 'actions',
               title: 'Actions',
               schema: [
-                { name: 'tap_action', selector: { ui_action: {} } },
-                { name: 'hold_action', selector: { ui_action: {} } },
-                { name: 'double_tap_action', selector: { ui_action: {} } },
+                { name: 'tap_action', label: 'Tap', selector: { ui_action: {} } },
+                { name: 'hold_action', label: 'Hold', selector: { ui_action: {} } },
+                { name: 'double_tap_action', label: 'Double Tap', selector: { ui_action: {} } },
               ],
             },
           ]}
