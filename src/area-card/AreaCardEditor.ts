@@ -176,9 +176,7 @@ export class ScAreaCardEditor extends LitElement {
               `
             })}
           </div>
-          <ha-button @click=${this._addSummary}>
-            ${this.hass!.localize('ui.panel.lovelace.editor.card.generic.add')}
-          </ha-button>
+          <ha-button @click=${this._addSummary}>Add Summary Type</ha-button>
         </div>
 
         <div class="section">
