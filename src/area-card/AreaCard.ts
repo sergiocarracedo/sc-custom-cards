@@ -30,6 +30,8 @@ const VARIANT_SIZES = {
     iconLeft: -10,
     iconBottom: -10,
     chartHeight: 100,
+    borderRadius: 12,
+    padding: '12px 16px',
   },
   compact: {
     titleFontSize: 16,
@@ -43,12 +45,14 @@ const VARIANT_SIZES = {
     iconLeft: 0,
     iconBottom: -5,
     chartHeight: 60,
+    borderRadius: 10,
+    padding: '10px 12px',
   },
   mini: {
     titleFontSize: 14,
     titleFontSizeHeader: 22,
     tempFontSize: 18,
-    humFontSize: 11,
+    humFontSize: 12,
     areaIconSize: 45,
     areaIconIconSize: 20,
     summaryIconSize: 26,
@@ -56,6 +60,8 @@ const VARIANT_SIZES = {
     iconLeft: 5,
     iconBottom: -5,
     chartHeight: 40,
+    borderRadius: 8,
+    padding: '8px 10px',
   },
 }
 
@@ -225,6 +231,7 @@ export class ScAreaCard extends LitElement {
           hasDoubleClick: hasAction(this._config.double_tap_action),
         })}
         class="${classMap(classes)}"
+        style="--border-radius: ${sizes.borderRadius}px; --padding: ${sizes.padding};"
       >
         <div
           class="area-card__content"
@@ -303,8 +310,8 @@ export class ScAreaCard extends LitElement {
     .area-card {
       position: relative;
       overflow: hidden;
-      border-radius: var(--ha-card-border-radius, 12px);
-      padding: 12px 16px;
+      border-radius: var(--border-radius, var(--ha-card-border-radius, 12px));
+      padding: var(--padding, 12px 16px);
     }
 
     .area-card--alarm {
@@ -362,11 +369,11 @@ export class ScAreaCard extends LitElement {
       justify-content: center;
     }
 
-    .area-card--variant-compact .area-card__content {
-      min-height: 90px;
+    .area-card--variant-compact {
+      height: 90px;
     }
-    .area-card--variant-mini .area-card__content {
-      min-height: 55px;
+    .area-card--variant-mini {
+      height: 70px;
     }
     .area-card--variant-compact.area-card--style-header .area-card__content,
     .area-card--variant-mini.area-card--style-header .area-card__content {
@@ -452,6 +459,26 @@ export class ScAreaCard extends LitElement {
       100% {
         background-color: var(--ha-card-background, white);
       }
+    }
+
+    /* Card editor preview adjustments */
+    hui-card-edit-mode .area-card {
+      min-height: var(--min-height, 120px);
+    }
+    hui-card-edit-mode .area-card--style-header {
+      min-height: var(--min-height-header, 50px);
+    }
+    hui-card-edit-mode .area-card--variant-compact {
+      min-height: 90px;
+    }
+    hui-card-edit-mode .area-card--variant-compact.area-card--style-header {
+      min-height: 70px;
+    }
+    hui-card-edit-mode .area-card--variant-mini {
+      min-height: 55px;
+    }
+    hui-card-edit-mode .area-card--variant-mini.area-card--style-header {
+      min-height: 45px;
     }
   `
 }
