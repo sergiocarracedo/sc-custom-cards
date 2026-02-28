@@ -1,0 +1,23 @@
+src/area-card/TempHumChart.ts
+  a9870787917f247a 110-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.6",
+  "base_commit_sha": "213817ae7a38980fbac6e0af5343225306ae86fe",
+  "prompts": {
+    "a9870787917f247a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_359b8b61bffefgo0qjWmSrtw4J",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 1,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
