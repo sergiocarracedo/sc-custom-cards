@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import '../../history-bars-card/BarsCard'
 import { ScBarsCard } from '../../history-bars-card/BarsCard'
 import { createMockHass, createMockBarsCardConfig, createMockEntityBar } from '../mockData'

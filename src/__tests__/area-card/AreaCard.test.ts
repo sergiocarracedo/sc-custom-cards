@@ -5,7 +5,6 @@ import {
   createMockHassWithAreas,
   createMockAreaCardConfig,
   createMockEntitySummary,
-  createMockArea,
 } from '../mockData'
 import { handleAction } from 'custom-card-helpers'
 

@@ -294,22 +294,27 @@ export class ScAreaCardEditor extends LitElement {
                 schema: [
                   {
                     name: 'tap_action',
-                    label: localize(this.hass, 'config.tap'),
                     selector: { ui_action: {} },
                   },
                   {
                     name: 'hold_action',
-                    label: localize(this.hass, 'config.hold'),
                     selector: { ui_action: {} },
                   },
                   {
                     name: 'double_tap_action',
-                    label: localize(this.hass, 'config.double_tap'),
                     selector: { ui_action: {} },
                   },
                 ],
               },
             ]}
+            .computeLabel=${(schema: any) => {
+              const labels = {
+                tap_action: 'config.tap',
+                hold_action: 'config.hold',
+                double_tap_action: 'config.double_tap',
+              }
+              return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''
+            }}
             @value-changed=${this._valueChanged}
           ></ha-form>
         </div>
@@ -318,8 +323,6 @@ export class ScAreaCardEditor extends LitElement {
   }
 
   private _renderSummaryEditor(summary: EntityTypeSummary) {
-    const currentArea = this._config?.area
-
     return html`
       <div class="sub-editor">
         <div class="header">
@@ -351,7 +354,6 @@ export class ScAreaCardEditor extends LitElement {
               selector: {
                 entity: {
                   multiple: true,
-                  filter: { area: currentArea },
                 },
               },
             },
@@ -360,7 +362,6 @@ export class ScAreaCardEditor extends LitElement {
               selector: {
                 entity: {
                   multiple: true,
-                  filter: { area: currentArea },
                 },
               },
             },
