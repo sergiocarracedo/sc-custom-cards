@@ -332,11 +332,17 @@ export class ScAreaCard extends LitElement {
     .area-card--style-header .area-card__chart {
       opacity: 0.7;
     }
+    .area-card--variant-compact .area-card__chart {
+      top: 20px;
+    }
     .area-card--variant-compact .area-card__chart temp-hum-chart {
-      max-height: 70px;
+      max-height: 60px;
+    }
+    .area-card--variant-mini .area-card__chart {
+      top: 15px;
     }
     .area-card--variant-mini .area-card__chart temp-hum-chart {
-      max-height: 50px;
+      max-height: 40px;
     }
 
     .area-card__content {
