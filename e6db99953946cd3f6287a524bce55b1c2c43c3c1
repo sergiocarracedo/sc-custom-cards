@@ -1,0 +1,25 @@
+package.json
+  975e98f88c24c21d 3
+CHANGELOG.md
+  975e98f88c24c21d 1-21,26,32,38,44-46,50-51,57-58,62,68-69,73,79-80,84,90,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.6",
+  "base_commit_sha": "e6db99953946cd3f6287a524bce55b1c2c43c3c1",
+  "prompts": {
+    "975e98f88c24c21d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_366dc526fffeilnXY1Hvfgb04a",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 41,
+      "total_deletions": 20,
+      "accepted_lines": 41,
+      "overriden_lines": 0
+    }
+  }
+}
