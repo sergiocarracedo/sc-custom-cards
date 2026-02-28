@@ -28,6 +28,7 @@ const VARIANT_SIZES = {
     summaryIconSize: 36,
     statusGap: 10,
     iconLeft: -10,
+    iconBottom: -10,
   },
   compact: {
     titleFontSize: 16,
@@ -38,7 +39,8 @@ const VARIANT_SIZES = {
     areaIconIconSize: 32,
     summaryIconSize: 30,
     statusGap: 7,
-    iconLeft: -5,
+    iconLeft: -7,
+    iconBottom: -7,
   },
   mini: {
     titleFontSize: 14,
@@ -49,7 +51,8 @@ const VARIANT_SIZES = {
     areaIconIconSize: 26,
     summaryIconSize: 26,
     statusGap: 5,
-    iconLeft: 0,
+    iconLeft: -5,
+    iconBottom: -5,
   },
 }
 
@@ -233,6 +236,7 @@ export class ScAreaCard extends LitElement {
             --summary-icon-size: ${sizes.summaryIconSize}px;
             --status-gap: ${sizes.statusGap}px;
             --icon-left: ${sizes.iconLeft}px;
+            --icon-bottom: ${sizes.iconBottom}px;
           "
         >
           ${header}
@@ -403,7 +407,7 @@ export class ScAreaCard extends LitElement {
     .area-card__icon {
       position: absolute;
       left: var(--icon-left, -10px);
-      bottom: -10px;
+      bottom: var(--icon-bottom, -10px);
       z-index: 2;
       pointer-events: none;
       display: flex;

@@ -107,7 +107,8 @@ export class TempHumChart extends LitElement {
           axisTick: { show: false },
           axisLabel: { show: false },
           splitLine: { show: false },
-          max: 200,
+          min: 0,
+          max: 100,
         },
       ],
       series: [
