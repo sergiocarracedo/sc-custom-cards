@@ -134,6 +134,14 @@ export class EntitiesTypeStatus extends LitElement {
       margin: 0 0 10px 0;
       padding: 0 16px;
     }
+    ha-tooltip {
+      max-height: 150px;
+      overflow-y: auto;
+    }
+    ha-list {
+      max-height: 100px;
+      overflow-y: auto;
+    }
     .entities-type-status__icon {
       border-radius: 9999px;
       background-color: var(--bg-color);

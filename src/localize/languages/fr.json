@@ -2,6 +2,7 @@
   "config": {
     "area": "Zone",
     "style": "Style de Carte",
+    "variant": "Variante de Taille",
     "color": "Couleur Personnalisée",
     "summary": "Résumé",
     "entities": "Entités",
