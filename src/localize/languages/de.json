@@ -2,6 +2,7 @@
   "config": {
     "area": "Bereich",
     "style": "Kartenstil",
+    "variant": "Größenvariante",
     "color": "Benutzerdefinierte Farbe",
     "summary": "Zusammenfassung",
     "entities": "Entitäten",

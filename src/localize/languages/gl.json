@@ -2,6 +2,7 @@
   "config": {
     "area": "Área",
     "style": "Estilo de Tarxeta",
+    "variant": "Variante de Tamaño",
     "color": "Cor Personalizado",
     "summary": "Resumo",
     "entities": "Entidades",

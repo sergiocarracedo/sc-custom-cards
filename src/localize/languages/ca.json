@@ -2,6 +2,7 @@
   "config": {
     "area": "Àrea",
     "style": "Estil de Targeta",
+    "variant": "Variant de Mida",
     "color": "Color Personalitzat",
     "summary": "Resum",
     "entities": "Entitats",

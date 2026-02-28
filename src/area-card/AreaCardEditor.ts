@@ -164,12 +164,23 @@ export class ScAreaCardEditor extends LitElement {
       <div class="editor">
         <ha-form
           .hass=${this.hass}
-          .data=${this._config}
+          .data=${{ style: 'full', variant: 'default', ...this._config }}
           .schema=${[
             {
-              name: 'area',
-              required: true,
-              selector: { area: {} },
+              type: 'grid',
+              name: '',
+              flatten: true,
+              schema: [
+                {
+                  name: 'area',
+                  required: true,
+                  selector: { area: {} },
+                },
+                {
+                  name: 'color',
+                  selector: { color_rgb: {} },
+                },
+              ],
             },
             {
               type: 'grid',
@@ -190,8 +201,18 @@ export class ScAreaCardEditor extends LitElement {
                   },
                 },
                 {
-                  name: 'color',
-                  selector: { color_rgb: {} },
+                  name: 'variant',
+                  default: 'default',
+                  selector: {
+                    select: {
+                      mode: 'dropdown',
+                      options: [
+                        { label: 'Default', value: 'default' },
+                        { label: 'Compact', value: 'compact' },
+                        { label: 'Mini', value: 'mini' },
+                      ],
+                    },
+                  },
                 },
               ],
             },
@@ -200,6 +221,7 @@ export class ScAreaCardEditor extends LitElement {
             const labels = {
               area: 'config.area',
               style: 'config.style',
+              variant: 'config.variant',
               color: 'config.color',
             }
             return labels[schema.name] ? localize(this.hass, labels[schema.name]) : ''

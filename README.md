@@ -113,6 +113,14 @@ Using `style: header` the card will render in a header style, showing the room n
 
 ![img_1.png](docs/img_1.png)
 
+**Compact variant** (smaller sizes, ideal for dashboards with many cards):
+
+![Area Card Compact](docs/area-card-compact.png)
+
+**Mini variant** (even smaller, perfect for compact layouts):
+
+![Area Card Mini](docs/area-card-mini.png)
+
 ### Features
 
 - Displays room-specific data such as temperature, humidity, and device statuses.
@@ -126,22 +134,23 @@ To use the Room Card, add it to your Lovelace dashboard. `type: custom:sc-area-c
 
 #### Configuration Options
 
-| Option                        | Type           | Required | Description                                                           |
-| ----------------------------- | -------------- | -------- | --------------------------------------------------------------------- |
-| `area`                        | `string`       | Yes      | The area or room to display information for.                          |
-| `style`                       | `string`       | No       | The style of the card (e.g., `header`, `full`). (`full` by default)   |
-| `color`                       | `string`       | No       | The color of the card (e.g., `#f90`, `var(--green)`).                 |
-| `summary`                     | `array`        | No       | A list of entity groups to summarize (e.g., lights, doors, windows).  |
-| `summary[].name`              | `string`       | Yes      | The name of the entity group.                                         |
-| `summary[].icon`              | `string`       | Yes      | The icon to represent the entity group.                               |
-| `summary[].entities`          | `array`        | Yes      | A list of entity IDs for the group.                                   |
-| `summary[].alarm_entities`    | `array`        | No       | A list of of entities to show as alarms.                              |
-| `summary[].tap_action`        | `ActionConfig` | No       | Action to perform on tap in summary (e.g., navigate to another view). |
-| `summary[].hold_action`       | `ActionConfig` | No       | Action to perform on hold in summary (e.g., show more details).       |
-| `summary[].double_tap_action` | `ActionConfig` | No       | Action to perform on double tap in summary(e.g., toggle a device).    |
-| `tap_action`                  | `ActionConfig` | No       | Action to perform on tap in card (e.g., navigate to another view).    |
-| `hold_action`                 | `ActionConfig` | No       | Action to perform on hold in card (e.g., show more details).          |
-| `double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in card (e.g., toggle a device).      |
+| Option                        | Type           | Required | Description                                                                         |
+| ----------------------------- | -------------- | -------- | ----------------------------------------------------------------------------------- |
+| `area`                        | `string`       | Yes      | The area or room to display information for.                                        |
+| `style`                       | `string`       | No       | The style of the card (e.g., `header`, `full`). (`full` by default)                 |
+| `variant`                     | `string`       | No       | The size variant of the card (`default`, `compact`, `mini`). (`default` by default) |
+| `color`                       | `string`       | No       | The color of the card (e.g., `#f90`, `var(--green)`).                               |
+| `summary`                     | `array`        | No       | A list of entity groups to summarize (e.g., lights, doors, windows).                |
+| `summary[].name`              | `string`       | Yes      | The name of the entity group.                                                       |
+| `summary[].icon`              | `string`       | Yes      | The icon to represent the entity group.                                             |
+| `summary[].entities`          | `array`        | Yes      | A list of entity IDs for the group.                                                 |
+| `summary[].alarm_entities`    | `array`        | No       | A list of of entities to show as alarms.                                            |
+| `summary[].tap_action`        | `ActionConfig` | No       | Action to perform on tap in summary (e.g., navigate to another view).               |
+| `summary[].hold_action`       | `ActionConfig` | No       | Action to perform on hold in summary (e.g., show more details).                     |
+| `summary[].double_tap_action` | `ActionConfig` | No       | Action to perform on double tap in summary(e.g., toggle a device).                  |
+| `tap_action`                  | `ActionConfig` | No       | Action to perform on tap in card (e.g., navigate to another view).                  |
+| `hold_action`                 | `ActionConfig` | No       | Action to perform on hold in card (e.g., show more details).                        |
+| `double_tap_action`           | `ActionConfig` | No       | Action to perform on double tap in card (e.g., toggle a device).                    |
 
 The cards provides predefined entity groups for `lights`, `doors`, `windows`, and `alarms`.
 
@@ -195,6 +204,21 @@ presence:
    Monitor the temperature, humidity, and status of lights, doors, and windows in the living room.
 2. **Bedroom Control**:
    Display the status of alarms, lights, and environmental sensors in the bedroom.
+
+**Using variants for compact layouts:**
+
+```yaml
+type: custom:sc-area-card
+area: kitchen
+variant: compact # or 'mini' for even smaller
+style: header
+summary:
+  - name: Appliances
+    icon: mdi:fridge
+    entities:
+      - switch.kitchen_fridge
+      - switch.kitchen_microwave
+```
 
 ## History Bars Card
 

@@ -8,6 +8,7 @@ export class TempHum extends LitElement {
   @property({ type: String }) public temperatureEntityId: string | undefined | null
   @property({ type: String }) public humidityEntityId: string | undefined | null
   @property({ type: Object }) public hass!: HomeAssistant
+  @property({ type: Number }) public fontSize: number = 28
 
   get tempState(): HomeAssistant['states'][0] | undefined {
     return (this.temperatureEntityId && this.hass.states[this.temperatureEntityId]) || undefined
@@ -37,7 +38,7 @@ export class TempHum extends LitElement {
   }
 
   protected render(): TemplateResult {
-    return html`<div class="temp-hum">
+    return html`<div class="temp-hum" style="--font-size: ${this.fontSize}px;">
       ${this.temperature !== undefined
         ? html`<div class="temp-hum__temperature">${this.temperature}${this.temperatureUnits}</div>`
         : nothing}
@@ -51,7 +52,7 @@ export class TempHum extends LitElement {
     .temp-hum {
       display: flex;
       gap: 10px;
-      font-size: 28px;
+      font-size: var(--font-size, 28px);
       font-weight: 300;
       line-height: 1em;
       align-items: baseline;

@@ -13,6 +13,7 @@ export type EntityTypeSummary = {
 export interface ScAreaCardConfig extends LovelaceCardConfig {
   area: string
   style?: 'header' | 'full'
+  variant?: 'default' | 'compact' | 'mini'
   color?: string
   summary?: EntityTypeSummary | EntityTypeSummary[]
   tap_action?: ActionConfig

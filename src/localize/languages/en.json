@@ -2,6 +2,7 @@
   "config": {
     "area": "Area",
     "style": "Card Style",
+    "variant": "Size Variant",
     "color": "Custom Color",
     "summary": "Summary",
     "entities": "Entities",

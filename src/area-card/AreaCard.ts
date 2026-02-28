@@ -1,21 +1,57 @@
-import { css, html, LitElement, nothing, type TemplateResult } from 'lit'
-import { classMap } from 'lit/directives/class-map.js'
-import { customElement, state } from 'lit/decorators.js'
+import { actionHandler } from '@/action-handler-directive'
+import { areaColors } from '@/area-colors'
+import type { Area } from '@/types.ts'
+import { toArray } from '@/utils'
 import {
   type ActionHandlerEvent,
   handleAction,
   hasAction,
   type HomeAssistant,
 } from 'custom-card-helpers'
-import type { Area } from '@/types.ts'
-import { areaColors } from '@/area-colors'
-import type { EntityTypeSummary, ScAreaCardConfig } from './types.ts'
-import { actionHandler } from '@/action-handler-directive'
-import './TempHum.ts'
+import { css, html, LitElement, nothing, type TemplateResult } from 'lit'
+import { customElement, state } from 'lit/decorators.js'
+import { classMap } from 'lit/directives/class-map.js'
 import '../components/Icon.ts'
-import './TempHumChart.ts'
 import './EntityTypeStatus.ts'
-import { toArray } from '@/utils'
+import './TempHum.ts'
+import './TempHumChart.ts'
+import type { EntityTypeSummary, ScAreaCardConfig } from './types.ts'
+
+const VARIANT_SIZES = {
+  default: {
+    titleFontSize: 20,
+    titleFontSizeHeader: 30,
+    tempFontSize: 28,
+    humFontSize: 15,
+    areaIconSize: 100,
+    areaIconIconSize: 40,
+    summaryIconSize: 36,
+    statusGap: 10,
+    iconLeft: -10,
+  },
+  compact: {
+    titleFontSize: 16,
+    titleFontSizeHeader: 24,
+    tempFontSize: 22,
+    humFontSize: 12,
+    areaIconSize: 75,
+    areaIconIconSize: 32,
+    summaryIconSize: 30,
+    statusGap: 7,
+    iconLeft: -5,
+  },
+  mini: {
+    titleFontSize: 14,
+    titleFontSizeHeader: 22,
+    tempFontSize: 18,
+    humFontSize: 11,
+    areaIconSize: 60,
+    areaIconIconSize: 26,
+    summaryIconSize: 26,
+    statusGap: 5,
+    iconLeft: 0,
+  },
+}
 
 @customElement('sc-area-card')
 export class ScAreaCard extends LitElement {
@@ -113,6 +149,14 @@ export class ScAreaCard extends LitElement {
     })
   }
 
+  get variant() {
+    return this._config?.variant || 'default'
+  }
+
+  get variantSizes() {
+    return VARIANT_SIZES[this.variant]
+  }
+
   private handleAction(ev: ActionHandlerEvent) {
     if (!this._config || !this._hass) return
     handleAction(
@@ -145,12 +189,15 @@ export class ScAreaCard extends LitElement {
       return html`<p class="error">${this._config.area} is unavailable.</p>`
     }
 
+    const sizes = this.variantSizes
+
     const header: TemplateResult = html`<header class="area-card__header">
       <h1 class="area-card__name">${area.name}</h1>
       <temp-hum
         .temperatureEntityId=${area.temperature_entity_id}
         .humidityEntityId=${area.humidity_entity_id}
         .hass=${this._hass}
+        .fontSize=${sizes.tempFontSize}
       ></temp-hum>
     </header>`
 
@@ -159,6 +206,7 @@ export class ScAreaCard extends LitElement {
       'area-card--alarm': this.alarmActive,
       'area-card--with-action': this.hasAction,
       [`area-card--style-${this._config.style || 'full'}`]: true,
+      [`area-card--variant-${this.variant}`]: true,
     }
     const summaries = this.summaryTypes.filter((type) => type.entities.length)
 
@@ -172,7 +220,21 @@ export class ScAreaCard extends LitElement {
         })}
         class="${classMap(classes)}"
       >
-        <div class="area-card__content" style="--area-color: ${this.areaColor};">
+        <div
+          class="area-card__content"
+          style="
+            --area-color: ${this.areaColor};
+            --title-font-size: ${sizes.titleFontSize}px;
+            --title-font-size-header: ${sizes.titleFontSizeHeader}px;
+            --temp-font-size: ${sizes.tempFontSize}px;
+            --hum-font-size: ${sizes.humFontSize}px;
+            --area-icon-size: ${sizes.areaIconSize}px;
+            --area-icon-icon-size: ${sizes.areaIconIconSize}px;
+            --summary-icon-size: ${sizes.summaryIconSize}px;
+            --status-gap: ${sizes.statusGap}px;
+            --icon-left: ${sizes.iconLeft}px;
+          "
+        >
           ${header}
           ${summaries.length
             ? html`<aside class="area-card__status">
@@ -185,6 +247,7 @@ export class ScAreaCard extends LitElement {
                       .name=${type.name}
                       .bgColor=${this.areaColor}
                       .color=${'var(--black2)'}
+                      .size=${sizes.summaryIconSize}
                       .actions=${{
                         tap_action: type.tap_action,
                         hold_action: type.hold_action,
@@ -200,8 +263,8 @@ export class ScAreaCard extends LitElement {
             class="area-card__icon"
             .icon=${area.icon}
             .color=${this.areaColor}
-            size="100"
-            iconSize="40"
+            .size=${sizes.areaIconSize}
+            .iconSize=${sizes.areaIconIconSize}
           ></sc-icon>
           ${(area.temperature_entity_id || area.humidity_entity_id) &&
           html`<div class="area-card__chart">
@@ -265,6 +328,12 @@ export class ScAreaCard extends LitElement {
     .area-card--style-header .area-card__chart {
       opacity: 0.7;
     }
+    .area-card--variant-compact .area-card__chart temp-hum-chart {
+      max-height: 70px;
+    }
+    .area-card--variant-mini .area-card__chart temp-hum-chart {
+      max-height: 50px;
+    }
 
     .area-card__content {
       min-height: 120px;
@@ -276,6 +345,17 @@ export class ScAreaCard extends LitElement {
       min-height: 50px;
       padding-left: 90px;
       justify-content: center;
+    }
+
+    .area-card--variant-compact .area-card__content {
+      min-height: 90px;
+    }
+    .area-card--variant-mini .area-card__content {
+      min-height: 70px;
+    }
+    .area-card--variant-compact.area-card--style-header .area-card__content,
+    .area-card--variant-mini.area-card--style-header .area-card__content {
+      padding-left: 70px;
     }
 
     .area-card__header {
@@ -290,13 +370,13 @@ export class ScAreaCard extends LitElement {
     }
 
     .area-card__name {
-      font-size: 20px;
+      font-size: var(--title-font-size, 20px);
       margin: 0;
       font-weight: 300;
     }
 
     .area-card--style-header .area-card__name {
-      font-size: 30px;
+      font-size: var(--title-font-size-header, 30px);
       font-weight: 200;
     }
 
@@ -306,7 +386,7 @@ export class ScAreaCard extends LitElement {
       justify-content: flex-end;
       align-items: flex-end;
       padding-top: 40px;
-      gap: 10px;
+      gap: var(--status-gap, 10px);
       z-index: 2;
       flex: 1;
       margin-left: 80px;
@@ -315,9 +395,14 @@ export class ScAreaCard extends LitElement {
       padding-top: 10px;
     }
 
+    .area-card--variant-compact .area-card__status,
+    .area-card--variant-mini .area-card__status {
+      margin-left: 0;
+    }
+
     .area-card__icon {
       position: absolute;
-      left: -10px;
+      left: var(--icon-left, -10px);
       bottom: -10px;
       z-index: 2;
       pointer-events: none;
