@@ -1,0 +1,23 @@
+src/area-card/AreaCard.ts
+  a9870787917f247a 33-34,48-49,63-64,234,313-314,463-482
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.6",
+  "base_commit_sha": "ef6cd09d8ebe9c192c33e48d40e225db36ce1ac3",
+  "prompts": {
+    "a9870787917f247a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_359b8b61bffefgo0qjWmSrtw4J",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 29,
+      "total_deletions": 2,
+      "accepted_lines": 29,
+      "overriden_lines": 0
+    }
+  }
+}
