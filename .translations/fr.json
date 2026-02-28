@@ -1,0 +1,70 @@
+{
+  "title": "Cartes Personnalisées SC",
+  "description": "Cartes personnalisées Lovelace pour Home Assistant",
+  "config": {
+    "area": "Zone",
+    "style": "Style de Carte",
+    "color": "Couleur Personnalisée",
+    "presence": "Entités de Présence",
+    "alarm": "Entités d'Alarme",
+    "door": "Entités de Porte",
+    "light": "Entités de Lumière",
+    "entity_types": "Types d'Entités",
+    "summary_section": "Types de Résumé Personnalisés",
+    "summary": "Résumé",
+    "entities": "Entités",
+    "alarm_entities": "Entités d'Alarme",
+    "actions": "Actions",
+    "card_actions": "Actions de Carte",
+    "tap_action": "Action au Toucher",
+    "hold_action": "Action au Maintenir",
+    "double_tap_action": "Action au Double Toucher",
+    "title": "Titre de Carte",
+    "icon": "Icône",
+    "iconColor": "Couleur d'Icône",
+    "buttonColor": "Couleur de Bouton",
+    "action_config": "Configuration d'Action",
+    "max": "Valeur Maximale",
+    "min": "Valeur Minimale",
+    "entity_thresholds": "Seuils d'Entité",
+    "global_thresholds_section": "Seuils Globaux",
+    "value": "Valeur de Seuil",
+    "name": "Nom",
+    "full": "Complet",
+    "header": "En-tête",
+    "hideName": "Masquer le Nom",
+    "add_entity": "Ajouter Entité",
+    "add_threshold": "Ajouter Seuil",
+    "add_summary": "Ajouter Type de Résumé",
+    "edit_entity": "Modifier Entité",
+    "edit_threshold": "Modifier Seuil",
+    "edit_summary": "Modifier Type de Résumé",
+    "back": "Retour",
+    "thresholds": "Seuils",
+    "quick_add": "Ajout Rapide",
+    "entity_group": "Ajouter un groupe d'entités",
+    "entity_count": "entités",
+    "presence": "Présence",
+    "lights": "Lumières",
+    "doors": "Portes",
+    "alarms": "Alarmes",
+    "summary_type": "Type de Résumé",
+    "tap": "Toucher",
+    "hold": "Maintenir",
+    "double_tap": "Double Toucher"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Carte de Zone",
+      "description": "Affiche les informations de zone avec température, humidité et résumés d'état d'entités"
+    },
+    "bars-card": {
+      "name": "Carte de Barres Historiques",
+      "description": "Affiche les valeurs d'entités sous forme de barres horizontales avec seuils de couleurs"
+    },
+    "actions-card": {
+      "name": "Carte d'Actions",
+      "description": "Affiche des boutons d'action personnalisables avec icônes et couleurs"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "title": "SC Txartela Pertsonalizatuak",
+  "description": "Lovelace txartela pertsonalizatuak Home Assistanterako",
+  "config": {
+    "area": "Eremua",
+    "style": "Txartelaren Estiloa",
+    "color": "Kolore Pertsonalizatua",
+    "presence": "Presentzia Entitateak",
+    "alarm": "Alarma Entitateak",
+    "door": "Atea Entitateak",
+    "light": "Argia Entitateak",
+    "entity_types": "Entitate Motak",
+    "summary_section": "Laburpen Motu Pertsonalizatuak",
+    "summary": "Laburpena",
+    "entities": "Entitateak",
+    "alarm_entities": "Alarma Entitateak",
+    "actions": "Ekintzak",
+    "card_actions": "Txartelaren Ekintzak",
+    "tap_action": "Ukitze Ekintza",
+    "hold_action": "Mantentze Ekintza",
+    "double_tap_action": "Ukitze Bikoitzeko Ekintza",
+    "title": "Txartelaren Izenburua",
+    "icon": "Ikonoa",
+    "iconColor": "Ikonoaren Kolorea",
+    "buttonColor": "Botoiaren Kolorea",
+    "action_config": "Ekintzaren Konfigurazioa",
+    "max": "Balio Maximoa",
+    "min": "Balio Minimoa",
+    "entity_thresholds": "Entitatearen Atalaseak",
+    "global_thresholds_section": "Atalase Globalak",
+    "value": "Atalasearen Balioa",
+    "name": "Izena",
+    "full": "Osorik",
+    "header": "Goiburua",
+    "hideName": "Izena Ezkutatu",
+    "add_entity": "Entitatea Gehitu",
+    "add_threshold": "Atalasea Gehitu",
+    "add_summary": "Laburpen Mota Gehitu",
+    "edit_entity": "Entitatea Editatu",
+    "edit_threshold": "Atalasea Editatu",
+    "edit_summary": "Laburpen Mota Editatu",
+    "back": "Itzuli",
+    "thresholds": "Atalaseak",
+    "quick_add": "Gehitu Azkar",
+    "entity_group": "Gehitu entitate taldea",
+    "entity_count": "entitate",
+    "presence": "Presentzia",
+    "lights": "Argiak",
+    "doors": "Ateak",
+    "alarms": "Alarmak",
+    "summary_type": "Laburpen Mota",
+    "tap": "Ukitu",
+    "hold": "Mantendu",
+    "double_tap": "Ukitu Bikoitza"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Eremu Txartela",
+      "description": "Eremuaren informazioa erakusten du tenperatura, hezetasuna eta entitateen egoera laburpenekin"
+    },
+    "bars-card": {
+      "name": "Historia Barra Txartela",
+      "description": "Entitateen balioak erakusten ditu barra horizontaletan kolore atalaseekin"
+    },
+    "actions-card": {
+      "name": "Ekintza Txartela",
+      "description": "Ikono eta kolore pertsonalizatuekin ekintza botoiak erakusten ditu"
+    }
+  }
+}

@@ -1,6 +1,6 @@
-import pluginVitest from "@vitest/eslint-plugin";
-import oxlint from "eslint-plugin-oxlint";
-import love from "eslint-config-love";
+import pluginVitest from '@vitest/eslint-plugin'
+import oxlint from 'eslint-plugin-oxlint'
+import love from 'eslint-config-love'
 
 export default [
   {

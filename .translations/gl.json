@@ -1,0 +1,70 @@
+{
+  "title": "Tarxetas Personalizadas SC",
+  "description": "Tarxetas personalizadas de Lovelace para Home Assistant",
+  "config": {
+    "area": "Área",
+    "style": "Estilo de Tarxeta",
+    "color": "Cor Personalizado",
+    "presence": "Entidades de Presenza",
+    "alarm": "Entidades de Alarma",
+    "door": "Entidades de Porta",
+    "light": "Entidades de Luz",
+    "entity_types": "Tipos de Entidades",
+    "summary_section": "Tipos de Resumo Personalizados",
+    "summary": "Resumo",
+    "entities": "Entidades",
+    "alarm_entities": "Entidades de Alarma",
+    "actions": "Accións",
+    "card_actions": "Accións de Tarxeta",
+    "tap_action": "Acción ao Tocar",
+    "hold_action": "Acción ao Manter",
+    "double_tap_action": "Acción ao Dobre Tocar",
+    "title": "Título de Tarxeta",
+    "icon": "Icona",
+    "iconColor": "Cor de Icona",
+    "buttonColor": "Cor de Botón",
+    "action_config": "Configuración de Acción",
+    "max": "Valor Máximo",
+    "min": "Valor Mínimo",
+    "entity_thresholds": "Limiares de Entidade",
+    "global_thresholds_section": "Limiares Globais",
+    "value": "Valor de Limiar",
+    "name": "Nome",
+    "full": "Completo",
+    "header": "Cabecera",
+    "hideName": "Ocultar Nome",
+    "add_entity": "Engadir Entidade",
+    "add_threshold": "Engadir Limiar",
+    "add_summary": "Engadir Tipo de Resumo",
+    "edit_entity": "Editar Entidade",
+    "edit_threshold": "Editar Limiar",
+    "edit_summary": "Editar Tipo de Resumo",
+    "back": "Volver",
+    "thresholds": "Limiares",
+    "quick_add": "Engadir Rápido",
+    "entity_group": "Engadir grupo de entidades",
+    "entity_count": "entidades",
+    "presence": "Presenza",
+    "lights": "Luces",
+    "doors": "Portas",
+    "alarms": "Alarmas",
+    "summary_type": "Tipo de Resumo",
+    "tap": "Toque",
+    "hold": "Manter",
+    "double_tap": "Dobre Toque"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Tarxeta de Área",
+      "description": "Mostra información da área con temperatura, humidade e resumos de estado de entidades"
+    },
+    "bars-card": {
+      "name": "Tarxeta de Barras de Historial",
+      "description": "Mostra valores de entidades como barras horizontais con limiares de cores"
+    },
+    "actions-card": {
+      "name": "Tarxeta de Accións",
+      "description": "Mostra botóns de acción personalizables con iconas e cores"
+    }
+  }
+}

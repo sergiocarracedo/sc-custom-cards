@@ -1,0 +1,70 @@
+{
+  "title": "Targetes Personalitzades SC",
+  "description": "Targetes personalitzades de Lovelace per a Home Assistant",
+  "config": {
+    "area": "Àrea",
+    "style": "Estil de Targeta",
+    "color": "Color Personalitzat",
+    "presence": "Entitats de Presència",
+    "alarm": "Entitats d'Alarma",
+    "door": "Entitats de Porta",
+    "light": "Entitats de Llum",
+    "entity_types": "Tipus d'Entitats",
+    "summary_section": "Tipus de Resum Personalitzats",
+    "summary": "Resum",
+    "entities": "Entitats",
+    "alarm_entities": "Entitats d'Alarma",
+    "actions": "Accions",
+    "card_actions": "Accions de Targeta",
+    "tap_action": "Acció en Tocar",
+    "hold_action": "Acció en Mantenir",
+    "double_tap_action": "Acció en Doble Tocar",
+    "title": "Títol de Targeta",
+    "icon": "Icona",
+    "iconColor": "Color d'Icona",
+    "buttonColor": "Color de Botó",
+    "action_config": "Configuració d'Acció",
+    "max": "Valor Màxim",
+    "min": "Valor Mínim",
+    "entity_thresholds": "Llindars d'Entitat",
+    "global_thresholds_section": "Llindars Globals",
+    "value": "Valor de Llindar",
+    "name": "Nom",
+    "full": "Complet",
+    "header": "Capçalera",
+    "hideName": "Amagar Nom",
+    "add_entity": "Afegir Entitat",
+    "add_threshold": "Afegir Llindar",
+    "add_summary": "Afegir Tipus de Resum",
+    "edit_entity": "Editar Entitat",
+    "edit_threshold": "Editar Llindar",
+    "edit_summary": "Editar Tipus de Resum",
+    "back": "Tornar",
+    "thresholds": "Llindars",
+    "quick_add": "Afegir Ràpid",
+    "entity_group": "Afegir grup d'entitats",
+    "entity_count": "entitats",
+    "presence": "Presència",
+    "lights": "Llums",
+    "doors": "Portes",
+    "alarms": "Alarmes",
+    "summary_type": "Tipus de Resum",
+    "tap": "Tocar",
+    "hold": "Mantenir",
+    "double_tap": "Doble Tocar"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Targeta d'Àrea",
+      "description": "Mostra informació de l'àrea amb temperatura, humitat i resums d'estat d'entitats"
+    },
+    "bars-card": {
+      "name": "Targeta de Barres d'Històric",
+      "description": "Mostra valors d'entitats com a barres horitzontals amb llindars de colors"
+    },
+    "actions-card": {
+      "name": "Targeta d'Accions",
+      "description": "Mostra botons d'acció personalitzables amb icones i colors"
+    }
+  }
+}

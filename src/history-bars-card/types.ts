@@ -16,6 +16,7 @@ export interface EntityBarConfig {
   hold_action?: ActionConfig
   double_tap_action?: ActionConfig
   thresholds?: Threshold[]
+  hideName?: boolean
 }
 
 export interface ScBarsCardConfig extends LovelaceCardConfig {

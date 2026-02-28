@@ -1,0 +1,70 @@
+{
+  "title": "SC Benutzerdefinierte Karten",
+  "description": "Benutzerdefinierte Lovelace-Karten für Home Assistant",
+  "config": {
+    "area": "Bereich",
+    "style": "Kartenstil",
+    "color": "Benutzerdefinierte Farbe",
+    "presence": "Anwesenheits-Entitäten",
+    "alarm": "Alarm-Entitäten",
+    "door": "Tür-Entitäten",
+    "light": "Licht-Entitäten",
+    "entity_types": "Entitätstypen",
+    "summary_section": "Benutzerdefinierte Zusammenfassungstypen",
+    "summary": "Zusammenfassung",
+    "entities": "Entitäten",
+    "alarm_entities": "Alarm-Entitäten",
+    "actions": "Aktionen",
+    "card_actions": "Kartenaktionen",
+    "tap_action": "Antipp-Aktion",
+    "hold_action": "Halte-Aktion",
+    "double_tap_action": "Doppeltes Antippen-Aktion",
+    "title": "Kartentitel",
+    "icon": "Symbol",
+    "iconColor": "Symbolfarbe",
+    "buttonColor": "Knopffarbe",
+    "action_config": "Aktionskonfiguration",
+    "max": "Maximalwert",
+    "min": "Minimalwert",
+    "entity_thresholds": "Entitätsschwellen",
+    "global_thresholds_section": "Globale Schwellen",
+    "value": "Schwellenwert",
+    "name": "Name",
+    "full": "Vollständig",
+    "header": "Kopfzeile",
+    "hideName": "Namen ausblenden",
+    "add_entity": "Entität hinzufügen",
+    "add_threshold": "Schwelle hinzufügen",
+    "add_summary": "Zusammenfassungstyp hinzufügen",
+    "edit_entity": "Entität bearbeiten",
+    "edit_threshold": "Schwelle bearbeiten",
+    "edit_summary": "Zusammenfassungstyp bearbeiten",
+    "back": "Zurück",
+    "thresholds": "Schwellen",
+    "quick_add": "Schnell hinzufügen",
+    "entity_group": "Entitätsgruppe hinzufügen",
+    "entity_count": "Entitäten",
+    "presence": "Präsenz",
+    "lights": "Lichter",
+    "doors": "Türen",
+    "alarms": "Alarme",
+    "summary_type": "Zusammenfassungstyp",
+    "tap": "Tippen",
+    "hold": "Halten",
+    "double_tap": "Doppeltippen"
+  },
+  "cards": {
+    "area-card": {
+      "name": "Bereichskarte",
+      "description": "Zeigt Bereichsinformationen mit Temperatur, Luftfeuchtigkeit und Zusammenfassungen von Entitätsstatus"
+    },
+    "bars-card": {
+      "name": "Verlaufsbalken-Karte",
+      "description": "Zeigt Entitätswerte als horizontale Balken mit Farbschwellen"
+    },
+    "actions-card": {
+      "name": "Aktionskarte",
+      "description": "Zeigt anpassbare Aktionsknöpfe mit Symbolen und Farben"
+    }
+  }
+}
