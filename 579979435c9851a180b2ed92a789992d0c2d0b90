@@ -1,0 +1,47 @@
+docs/area-card-variants.md
+  a9870787917f247a 1-7
+README.md
+  a9870787917f247a 116-123,138,140-141,208-222
+src/area-card/types.ts
+  a9870787917f247a 16
+src/area-card/AreaCardEditor.ts
+  a9870787917f247a 167,170-174,177-183,204-214,224
+src/localize/languages/fr.json
+  a9870787917f247a 5
+src/localize/languages/de.json
+  a9870787917f247a 5
+src/localize/languages/es.json
+  a9870787917f247a 5
+src/area-card/AreaCard.ts
+  a9870787917f247a 20-40,42-51,53-54,152-159,192-193,200,209,225-236,250,266-267,331-336,350-360,373,379,389,398-400,405
+src/area-card/TempHum.ts
+  a9870787917f247a 11,41,55
+src/localize/languages/eu.json
+  a9870787917f247a 5
+src/localize/languages/ca.json
+  a9870787917f247a 5
+src/localize/languages/gl.json
+  a9870787917f247a 5
+src/localize/languages/en.json
+  a9870787917f247a 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.6",
+  "base_commit_sha": "579979435c9851a180b2ed92a789992d0c2d0b90",
+  "prompts": {
+    "a9870787917f247a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_359b8b61bffefgo0qjWmSrtw4J",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 180,
+      "total_deletions": 33,
+      "accepted_lines": 156,
+      "overriden_lines": 2
+    }
+  }
+}
