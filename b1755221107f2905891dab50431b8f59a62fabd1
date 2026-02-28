@@ -1,0 +1,27 @@
+src/__tests__/history-bars-card/BarsCard.test.ts
+  975e98f88c24c21d 1
+eslint.config.ts
+  975e98f88c24c21d 1-3
+src/area-card/AreaCardEditor.ts
+  975e98f88c24c21d 310-317
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.6",
+  "base_commit_sha": "b1755221107f2905891dab50431b8f59a62fabd1",
+  "prompts": {
+    "975e98f88c24c21d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_366dc526fffeilnXY1Hvfgb04a",
+        "model": "opencode-go/kimi-k2.5"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>",
+      "messages": [],
+      "total_additions": 28,
+      "total_deletions": 21,
+      "accepted_lines": 20,
+      "overriden_lines": 0
+    }
+  }
+}
