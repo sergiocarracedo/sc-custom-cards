@@ -29,6 +29,7 @@ const VARIANT_SIZES = {
     statusGap: 10,
     iconLeft: -10,
     iconBottom: -10,
+    chartHeight: 100,
   },
   compact: {
     titleFontSize: 16,
@@ -39,20 +40,22 @@ const VARIANT_SIZES = {
     areaIconIconSize: 32,
     summaryIconSize: 30,
     statusGap: 7,
-    iconLeft: -7,
-    iconBottom: -7,
+    iconLeft: 0,
+    iconBottom: -5,
+    chartHeight: 60,
   },
   mini: {
     titleFontSize: 14,
     titleFontSizeHeader: 22,
     tempFontSize: 18,
     humFontSize: 11,
-    areaIconSize: 60,
-    areaIconIconSize: 26,
+    areaIconSize: 45,
+    areaIconIconSize: 20,
     summaryIconSize: 26,
     statusGap: 5,
-    iconLeft: -5,
+    iconLeft: 5,
     iconBottom: -5,
+    chartHeight: 40,
   },
 }
 
@@ -277,6 +280,7 @@ export class ScAreaCard extends LitElement {
               .temperatureEntityId=${area.temperature_entity_id}
               .humidityEntityId=${area.humidity_entity_id}
               .color="${this.areaColor}"
+              .height=${sizes.chartHeight}
             ></temp-hum-chart>
           </div>`}
         </div>
@@ -325,6 +329,7 @@ export class ScAreaCard extends LitElement {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      overflow: hidden;
       temp-hum-chart {
         max-height: 100px;
       }
@@ -361,7 +366,7 @@ export class ScAreaCard extends LitElement {
       min-height: 90px;
     }
     .area-card--variant-mini .area-card__content {
-      min-height: 70px;
+      min-height: 55px;
     }
     .area-card--variant-compact.area-card--style-header .area-card__content,
     .area-card--variant-mini.area-card--style-header .area-card__content {
