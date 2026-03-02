@@ -1,0 +1,26 @@
+name: Auto-merge Release PRs
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge-release-pr:
+    runs-on: ubuntu-latest
+    # Only run on release-please PRs
+    if: |
+      github.event.pull_request.user.login == 'github-actions[bot]' &&
+      startsWith(github.event.pull_request.head.ref, 'release-please--')
+    steps:
+      - name: Enable auto-merge for release PR
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

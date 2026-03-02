@@ -1,0 +1,13 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "sc-custom-cards",
+      "changelog-path": "CHANGELOG.md",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": false,
+      "include-v-in-tag": true,
+      "extra-files": []
+    }
+  }
+}

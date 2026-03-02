@@ -18,7 +18,8 @@
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path .gitignore",
     "lint:eslint": "eslint . --fix",
     "lint": "run-s lint:*",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "@kipk/load-ha-components": "^1.0.3",
@@ -29,18 +30,14 @@
     "lit": "^2.8.0"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/exec": "^7.1.0",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^12.0.1",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
     "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.9",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/eslint-plugin": "^1.1.36",
     "canvas": "^3.2.1",
-    "conventional-changelog-conventionalcommits": "^8.0.0",
     "dotenv": "^16.5.0",
     "eslint": "^9.21.0",
     "eslint-config-love": "^119.0.0",
@@ -48,11 +45,11 @@
     "globals": "^16.0.0",
     "jiti": "^2.4.2",
     "jsdom": "^26.0.0",
+    "lefthook": "^2.1.2",
     "npm-run-all2": "^7.0.2",
     "oxlint": "^0.15.13",
     "prettier": "3.5.3",
     "sass-embedded": "^1.85.1",
-    "semantic-release": "^24.2.3",
     "ts-lit-plugin": "^2.0.2",
     "typescript": "~5.8.0",
     "vite": "^6.2.1",
