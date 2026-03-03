@@ -16,7 +16,7 @@ export class TempHum extends LitElement {
 
   get temperature(): number | undefined {
     return this.tempState?.state !== undefined
-      ? Math.round(parseFloat(this.tempState.state))
+      ?this.tempState.state
       : undefined
   }
   get temperatureUnits(): string | undefined {
@@ -29,7 +29,7 @@ export class TempHum extends LitElement {
 
   get humidity(): number | undefined {
     return this.humState?.state !== undefined
-      ? Math.round(parseFloat(this.humState.state))
+      ? this.humState.state
       : undefined
   }
 
