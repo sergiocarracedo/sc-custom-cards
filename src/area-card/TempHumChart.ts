@@ -27,7 +27,7 @@ export class TempHumChart extends LitElement {
 
   private getTempHumStats() {
     // Check if we have already retrieved the statistics
-    const cachedStats = cache.get(this.cacheKey)
+    const cachedStats = cache.get<typeof this.tempHumStats>(this.cacheKey)
     if (cachedStats) {
       this.tempHumStats = cachedStats
       return

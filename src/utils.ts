@@ -1,4 +1,4 @@
-export const getBaseColor = (el: Element, color: string): string => {
+export const getBaseColor = (el: Element, color: string | number[]): string => {
   const normalizeHexColor = (hex: string): string => {
     // Check if it's a 3-digit hex color
     if (/^#([0-9a-f]{3})$/i.test(hex)) {
@@ -7,13 +7,24 @@ export const getBaseColor = (el: Element, color: string): string => {
     return hex
   }
 
+  if (Array.isArray(color)) {
+    const hexColor = color
+      .slice(0, 3)
+      .map((c) => {
+        const hex = Number(c).toString(16)
+        return hex.length === 1 ? '0' + hex : hex
+      })
+      .join('')
+    return normalizeHexColor('#' + hexColor)
+  }
+
   let value = color
 
-  if (color.startsWith('var(')) {
+  if (typeof color === 'string' && color.startsWith('var(')) {
     value = getComputedStyle(el).getPropertyValue(color.replace('var(', '').replace(')', '')).trim()
   }
 
-  return normalizeHexColor(value)
+  return normalizeHexColor(value as string)
 }
 
 export function toArray<T>(value: T | T[] | undefined): T[] {
@@ -29,7 +40,7 @@ const BLUE = 0.0722
 
 const GAMMA = 2.4
 
-export function colorToDec(el: Element, color: string): [number, number, number] {
+export function colorToDec(el: Element, color: string | number[]): [number, number, number] {
   const baseColor = getBaseColor(el, color)
 
   // Extract the r, g, b components from the #rrggbb string
@@ -40,7 +51,7 @@ export function colorToDec(el: Element, color: string): [number, number, number]
   return [r, g, b]
 }
 
-export function luminance(el: Element, color: string) {
+export function luminance(el: Element, color: string | number[]) {
   const [r, g, b] = colorToDec(el, color)
   const a = [r, g, b].map((v) => {
     v /= 255
@@ -49,7 +60,7 @@ export function luminance(el: Element, color: string) {
   return a[0] * RED + a[1] * GREEN + a[2] * BLUE
 }
 
-export function contrast(el, color1: string, color2: string): number {
+export function contrast(el: Element, color1: string | number[], color2: string | number[]): number {
   const lum1 = luminance(el, color1)
   const lum2 = luminance(el, color2)
   const brightest = Math.max(lum1, lum2)

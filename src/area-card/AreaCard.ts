@@ -1,7 +1,7 @@
 import { actionHandler } from '@/action-handler-directive'
 import { areaColors } from '@/area-colors'
 import type { Area } from '@/types.ts'
-import { toArray } from '@/utils'
+import { toArray, getBaseColor } from '@/utils'
 import {
   type ActionHandlerEvent,
   handleAction,
@@ -106,7 +106,8 @@ export class ScAreaCard extends LitElement {
   }
 
   get areaColor() {
-    return this._config?.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
+    const color = this._config?.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
+    return getBaseColor(this, color as string | number[])
   }
   get summaryTypes(): EntityTypeSummary[] {
     // Migrate deprecated preset fields to summaries
