@@ -1,0 +1,25 @@
+src/__tests__/area-card/AreaCard.test.ts
+  9a330cf1a53f9f11 92-99,102,104-117
+src/__tests__/utils.test.ts
+  9a330cf1a53f9f11 1-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "0e39f623a5e98ab24eee673385938f8c04876178",
+  "prompts": {
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 63,
+      "total_deletions": 5,
+      "accepted_lines": 61,
+      "overriden_lines": 0
+    }
+  }
+}
