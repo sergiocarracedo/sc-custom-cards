@@ -89,12 +89,32 @@ describe('ScAreaCard', () => {
       expect(element['areaColor']).toBe('#ff0000')
     })
 
-    it('should use default color if no custom color', () => {
-      const config = createMockAreaCardConfig({ color: undefined })
+    it('should handle color array properly', () => {
+      const config = createMockAreaCardConfig({ color: [142, 26, 26] as unknown as string })
       element.setConfig(config)
       element.hass = mockHass
-      const color = element['areaColor']
-      expect(color).toBeDefined()
+      expect(element['areaColor']).toBe('#8e1a1a')
+    })
+
+    it('should use area preset color if no custom color is provided', () => {
+      const config = createMockAreaCardConfig({ color: undefined })
+      element.setConfig(config)
+      element.style.setProperty('--blue', '#0000ff')
+      element.hass = mockHass
+      expect(element['areaColor']).toBe('#0000ff')
+    })
+
+    it('should use #999 when neither custom nor area preset color exists', () => {
+      const customHass = createMockHassWithAreas({
+        office: {
+          ...mockHass.areas.office,
+          area_id: 'unknown-area',
+        },
+      })
+      const config = createMockAreaCardConfig({ color: undefined })
+      element.setConfig(config)
+      element.hass = customHass
+      expect(element['areaColor']).toBe('#999999')
     })
   })
 
