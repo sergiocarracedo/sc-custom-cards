@@ -1,0 +1,29 @@
+src/area-card/AreaCard.ts
+  9a330cf1a53f9f11 4,109-110
+src/area-card/TempHumChart.ts
+  9a330cf1a53f9f11 30
+src/area-card/types.ts
+  9a330cf1a53f9f11 17
+src/utils.ts
+  9a330cf1a53f9f11 1,10-20,23,27,43,54,63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "efba5417ed6190d2843246d96e1dbfea15256f86",
+  "prompts": {
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 54,
+      "total_deletions": 42,
+      "accepted_lines": 22,
+      "overriden_lines": 0
+    }
+  }
+}
