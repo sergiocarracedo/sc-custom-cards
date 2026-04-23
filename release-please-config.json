@@ -8,6 +8,7 @@
       "bump-patch-for-minor-pre-major": false,
       "prerelease": true,
       "prerelease-type": "beta",
+      "versioning-strategy": "prerelease",
       "include-component-in-tag": false,
       "include-v-in-tag": true,
       "extra-files": []
