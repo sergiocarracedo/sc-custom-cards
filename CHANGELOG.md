@@ -19,6 +19,13 @@
 - Add TESTING.md with test suite documentation
 - Add Allium specification for complete domain modeling
 
+## [1.8.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.7.0...v1.8.0) (2026-04-23)
+
+
+### Features
+
+* **release:** support beta prereleases ([#17](https://github.com/sergiocarracedo/sc-custom-cards/issues/17)) ([4382fe0](https://github.com/sergiocarracedo/sc-custom-cards/commit/4382fe033ddbd892715e23f02ed7d1c9ef7f70cd))
+
 ## [1.7.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.6.1...v1.7.0) (2026-04-23)
 
 
