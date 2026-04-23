@@ -3,9 +3,38 @@ import './area-card/AreaCardEditor'
 import './history-bars-card'
 import './history-bars-card/BarsCardEditor'
 
-import { DEFAULT_HA_COMPONENTS, loadHaComponents } from '@kipk/load-ha-components'
+import { loadHaComponents } from '@kipk/load-ha-components'
 
-await loadHaComponents([...DEFAULT_HA_COMPONENTS, 'hui-sensor-card'])
+declare const __SC_CUSTOM_CARDS_VERSION__: string
+declare const __SC_CUSTOM_CARDS_BUILD_DATE__: string
+
+const REQUIRED_HA_COMPONENTS = [
+  'ha-alert',
+  'ha-button',
+  'ha-dialog',
+  'ha-entity-picker',
+  'ha-form',
+  'ha-icon',
+  'ha-icon-button',
+  'ha-icon-button-prev',
+  'ha-icon-picker',
+  'ha-select',
+  'ha-selector',
+  'ha-sortable',
+  'ha-svg-icon',
+  'ha-textfield',
+  'hui-sensor-card',
+]
+
+try {
+  await loadHaComponents(REQUIRED_HA_COMPONENTS)
+} catch (error) {
+  console.warn('[SC Custom Cards] Error loading Home Assistant form components:', error)
+}
+
+console.info(
+  `[SC Custom Cards] v${__SC_CUSTOM_CARDS_VERSION__} Build: ${__SC_CUSTOM_CARDS_BUILD_DATE__}`,
+)
 
 declare global {
   interface Window {

@@ -30,6 +30,28 @@ Version behavior:
 
 To test beta versions in HACS, enable beta versions for the repository in HACS before checking for updates.
 
+## Local Development
+
+For local development, the Vite build can copy `dist/sc-custom-cards.js` directly into your Home Assistant HACS install after each build or watch rebuild.
+
+Create a local `.env.local` file in the repository root. It is ignored by git and loaded automatically when Vite runs. You can also keep using `.env` if you already have one, but `.env.local` is the preferred file for personal machine settings.
+
+Example:
+
+```bash
+HA_SYNC_TARGET=root@homeassistant.local:/config/www/community/sc-custom-cards/sc-custom-cards.js
+```
+
+Notes:
+- `HA_SYNC_TARGET` is the preferred variable name
+- `HA_SCP_TARGET` is still accepted as a fallback for older local setups
+- the recommended target is the HACS-installed file path, so local builds update the same file Home Assistant loads from `/hacsfiles/sc-custom-cards/sc-custom-cards.js`
+- if the copy fails, the build now fails loudly instead of silently continuing
+
+Typical workflow:
+- run `pnpm build` for a one-off build and sync
+- run `pnpm dev` to watch, rebuild, and sync automatically after changes
+
 ## Table of Contents
 
 - [Installation](#installation)
