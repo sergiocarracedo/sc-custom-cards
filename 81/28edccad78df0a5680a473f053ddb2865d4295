@@ -1,0 +1,23 @@
+vite.config.ts
+  9a330cf1a53f9f11 42,61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "8128edccad78df0a5680a473f053ddb2865d4295",
+  "prompts": {
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 1,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
