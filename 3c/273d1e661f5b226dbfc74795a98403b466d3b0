@@ -1,0 +1,31 @@
+vite.config.ts
+  9a330cf1a53f9f11 2-3,8-21,25-38,41,47,54-56,60,63-67,69-72,81-82
+README.md
+  9a330cf1a53f9f11 33-54
+.env.local.example
+  9a330cf1a53f9f11 1
+.gitignore
+  9a330cf1a53f9f11 5
+src/index.ts
+  9a330cf1a53f9f11 6,8-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "3c273d1e661f5b226dbfc74795a98403b466d3b0",
+  "prompts": {
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 119,
+      "total_deletions": 25,
+      "accepted_lines": 102,
+      "overriden_lines": 0
+    }
+  }
+}
