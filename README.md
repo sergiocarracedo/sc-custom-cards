@@ -1,6 +1,6 @@
 # SC Custom Cards
 
-Provides multiple custom cards for Home Assistant, including a room card and a bars card.
+Provides multiple custom cards for Home Assistant, including an area card and a history bars card.
 
 ## Automated Releases
 
