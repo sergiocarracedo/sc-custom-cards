@@ -19,6 +19,13 @@
 - Add TESTING.md with test suite documentation
 - Add Allium specification for complete domain modeling
 
+## [1.9.0-beta.1](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.9.0-beta...v1.9.0-beta.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* **release:** upload assets with gh cli ([187f6c9](https://github.com/sergiocarracedo/sc-custom-cards/commit/187f6c914f46c98a40e035675238ac2907188459))
+
 ## [1.9.0-beta](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.8.0...v1.9.0-beta) (2026-04-23)
 
 
