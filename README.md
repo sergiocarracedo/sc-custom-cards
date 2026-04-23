@@ -2,6 +2,14 @@
 
 Provides multiple custom cards for Home Assistant, including a room card and a bars card.
 
+## Automated Releases
+
+This repository uses `release-please` to open a release PR after changes land on `main`.
+When that PR passes `CI`, GitHub Actions merges it automatically, creates the GitHub release, builds the bundle, and uploads `dist/sc-custom-cards.js` as a release asset.
+
+To keep the process fully automatic, add a repository secret named `RELEASE_PLEASE_TOKEN` with permissions to create and merge pull requests, push to `main`, create releases, and trigger follow-up workflows.
+Without that secret, GitHub falls back to `GITHUB_TOKEN`, which usually cannot trigger the PR and push workflows required to finish the full release flow.
+
 ## Table of Contents
 
 - [Installation](#installation)
