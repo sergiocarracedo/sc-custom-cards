@@ -39,6 +39,7 @@ function copyFileToHA(localPath: string, remotePath: string) {
 function copyToHA() {
   let enabled = true
   const syncTarget = getHASyncTarget()
+  const isCI = process.env.CI === 'true'
 
   return {
     name: 'copy-to-ha',
@@ -57,7 +58,7 @@ function copyToHA() {
       }
     },
     closeBundle: async () => {
-      if (!enabled || !syncTarget) {
+      if (!enabled || !syncTarget || isCI) {
         return
       }
 
