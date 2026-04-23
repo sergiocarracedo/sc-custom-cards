@@ -1,0 +1,23 @@
+README.md
+  9a330cf1a53f9f11 10-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "6c903f83d3cb4f17a223fd8cea9473930dd48958",
+  "prompts": {
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 1,
+      "accepted_lines": 6,
+      "overriden_lines": 0
+    }
+  }
+}
