@@ -19,6 +19,20 @@
 - Add TESTING.md with test suite documentation
 - Add Allium specification for complete domain modeling
 
+## [1.8.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.7.0...v1.8.0) (2026-04-23)
+
+
+### Features
+
+* **release:** support beta prereleases ([51d81db](https://github.com/sergiocarracedo/sc-custom-cards/commit/51d81db8cfa10d8b023162da10ff3f4ffd5e29c4))
+
+
+### Bug Fixes
+
+* **beta:** use prerelease versioning ([acdb3c9](https://github.com/sergiocarracedo/sc-custom-cards/commit/acdb3c9b330e5287646722d65c730a3a0a1cfa70))
+* **dev:** disable HA sync in CI ([8128edc](https://github.com/sergiocarracedo/sc-custom-cards/commit/8128edccad78df0a5680a473f053ddb2865d4295))
+* **dev:** sync HACS bundle for local testing ([14e56f9](https://github.com/sergiocarracedo/sc-custom-cards/commit/14e56f90d80709eecf08d2413ebd530e6cd1ebeb))
+
 ## [1.7.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.6.1...v1.7.0) (2026-04-23)
 
 
