@@ -19,6 +19,51 @@
 - Add TESTING.md with test suite documentation
 - Add Allium specification for complete domain modeling
 
+## [1.9.0-beta](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.8.0...v1.9.0-beta) (2026-04-23)
+
+
+### Features
+
+* add compact and mini variants for area card ([c84f9dd](https://github.com/sergiocarracedo/sc-custom-cards/commit/c84f9ddfc9eca4b08b150d95a30e48aba8cf2a65))
+* add compact and mini variants for area card ([5799794](https://github.com/sergiocarracedo/sc-custom-cards/commit/579979435c9851a180b2ed92a789992d0c2d0b90))
+* add confirmation dialogs before deleting items ([823cdc8](https://github.com/sergiocarracedo/sc-custom-cards/commit/823cdc8ea04f31e24256ec2140fd15129b1660ab))
+* add translatable strings for all form labels ([d4b0b90](https://github.com/sergiocarracedo/sc-custom-cards/commit/d4b0b909eb51c64b17d1032db53f89ed412b835d))
+* add visual editor configuration forms for all cards ([00bb124](https://github.com/sergiocarracedo/sc-custom-cards/commit/00bb124f552da14e5e51a9f052b44a50aef9e2f0))
+* Add visual editor configuration forms for all cards ([697a126](https://github.com/sergiocarracedo/sc-custom-cards/commit/697a1269da39fc31c6d3b1b29ae61e1bac89e637))
+* history-bars-card ([d471387](https://github.com/sergiocarracedo/sc-custom-cards/commit/d4713876c2e163f745b101e83141b74c6ba53e7e))
+* icon and bars actions ([786bb51](https://github.com/sergiocarracedo/sc-custom-cards/commit/786bb515599d5cd52f1f7dd403b9e77a44e16c06))
+* icon and bars actions ([83f59dc](https://github.com/sergiocarracedo/sc-custom-cards/commit/83f59dc71c328f73bc14408842723f59c3f6dc78))
+* implement custom localization system for card editors ([c34b865](https://github.com/sergiocarracedo/sc-custom-cards/commit/c34b86597e9a2e9effbcd3a4181613ad2053a8f1))
+* proportional border radius, padding, and card editor preview heights ([ef6cd09](https://github.com/sergiocarracedo/sc-custom-cards/commit/ef6cd09d8ebe9c192c33e48d40e225db36ce1ac3))
+* **release:** support beta prereleases ([51d81db](https://github.com/sergiocarracedo/sc-custom-cards/commit/51d81db8cfa10d8b023162da10ff3f4ffd5e29c4))
+* room-card ([7d80013](https://github.com/sergiocarracedo/sc-custom-cards/commit/7d8001308eaf5207e4bc6e2c959d3a1b7ad2d7f8))
+* sc-bars-card ([65c4de8](https://github.com/sergiocarracedo/sc-custom-cards/commit/65c4de87839a3fdc61d804547cb9f314b2a8e0bb))
+* sc-bars-card ([2cfccaa](https://github.com/sergiocarracedo/sc-custom-cards/commit/2cfccaa4a632ff71827a55001547c9e3a4fc4b21))
+* sc-bars-card beta ([2e8e0d9](https://github.com/sergiocarracedo/sc-custom-cards/commit/2e8e0d9f05e1ee2cd9636b8bb02bb66bf346e858))
+
+
+### Bug Fixes
+
+* add human-readable labels to action fields and wrap in expandable ([b974edb](https://github.com/sergiocarracedo/sc-custom-cards/commit/b974edb2b364f8d010585c08196812b2482235d6))
+* add missing label to Add Summary Type button ([4213aa7](https://github.com/sergiocarracedo/sc-custom-cards/commit/4213aa7b447610f62826b3219976ab3f62225b7c))
+* adjust chart position and height to prevent overflow in compact/mini modes ([842b82c](https://github.com/sergiocarracedo/sc-custom-cards/commit/842b82c3bdeffa009957c618bc1a37fae49107bf))
+* **area-card:** handle array value for color property ([efba541](https://github.com/sergiocarracedo/sc-custom-cards/commit/efba5417ed6190d2843246d96e1dbfea15256f86))
+* **area-card:** support YAML array colors in graph rendering ([fe45a93](https://github.com/sergiocarracedo/sc-custom-cards/commit/fe45a93b3337b308f1b8286ab0ad9f2fdec0af8f))
+* **beta:** use prerelease versioning ([acdb3c9](https://github.com/sergiocarracedo/sc-custom-cards/commit/acdb3c9b330e5287646722d65c730a3a0a1cfa70))
+* **beta:** use prerelease versioning config ([690e51a](https://github.com/sergiocarracedo/sc-custom-cards/commit/690e51ac1e73f392849a4a6e577763432a2e3944))
+* correct button appearance attribute typo and add styling to all buttons ([c830e1d](https://github.com/sergiocarracedo/sc-custom-cards/commit/c830e1d3f54279caf2599f239886e1a39f510d8e))
+* **dev:** disable HA sync in CI ([8128edc](https://github.com/sergiocarracedo/sc-custom-cards/commit/8128edccad78df0a5680a473f053ddb2865d4295))
+* **dev:** sync HACS bundle for local testing ([14e56f9](https://github.com/sergiocarracedo/sc-custom-cards/commit/14e56f90d80709eecf08d2413ebd530e6cd1ebeb))
+* fix release ([a90717c](https://github.com/sergiocarracedo/sc-custom-cards/commit/a90717c2658a89199dc5585c74441ee5113ad964))
+* ha-toolbar in HA 2025.10.0 that know uses Webawesome ([9759c6d](https://github.com/sergiocarracedo/sc-custom-cards/commit/9759c6d5b36a197a3183d617fc46cc6b7627467d))
+* **readme:** correct card names in intro ([f3aa28f](https://github.com/sergiocarracedo/sc-custom-cards/commit/f3aa28fb3b0495eb8dedd32c0cf5a0a2d517f33c))
+* **readme:** correct card names in intro ([c9e0dda](https://github.com/sergiocarracedo/sc-custom-cards/commit/c9e0ddaeb394ae3c3a9e7cd9365cb7a6335ccaba))
+* reduce mini variant card height and icon size ([4d3963e](https://github.com/sergiocarracedo/sc-custom-cards/commit/4d3963ee8e3c841b96a6381fb70255cc2f02aa2e))
+* **release:** use plain tags for HACS ([#14](https://github.com/sergiocarracedo/sc-custom-cards/issues/14)) ([6dd2430](https://github.com/sergiocarracedo/sc-custom-cards/commit/6dd243042d7f7c595b2c8f01673725cf8963605e))
+* remove invalid entity selector area filter and clean up linter issues ([b175522](https://github.com/sergiocarracedo/sc-custom-cards/commit/b1755221107f2905891dab50431b8f59a62fabd1))
+* set humidity chart y-axis to 0-100 scale ([213817a](https://github.com/sergiocarracedo/sc-custom-cards/commit/213817ae7a38980fbac6e0af5343225306ae86fe))
+* update AreaCard with latest adjustments ([3be06c1](https://github.com/sergiocarracedo/sc-custom-cards/commit/3be06c185db8b28d13fb91ecf4229552fc23c79f))
+
 ## [1.8.0](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.7.0...v1.8.0) (2026-04-23)
 
 
