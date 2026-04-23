@@ -1,0 +1,27 @@
+README.md
+  9a330cf1a53f9f11 5-12
+.github/workflows/release-please.yml
+  9a330cf1a53f9f11 23-24
+.github/workflows/auto-merge-release.yml
+  9a330cf1a53f9f11 4-6,8,18-19,21,23-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "f97b21dd6087a48f0488613f0b5df1e5d1b41427",
+  "prompts": {
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 56,
+      "total_deletions": 15,
+      "accepted_lines": 54,
+      "overriden_lines": 0
+    }
+  }
+}
