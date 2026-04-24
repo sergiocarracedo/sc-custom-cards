@@ -1,0 +1,83 @@
+src/__tests__/history-bars-card/BarsCard.test.ts
+  9a330cf1a53f9f11 302-303
+src/__tests__/area-card/TempHumChart.test.ts
+  9a330cf1a53f9f11 2-12,17-18,20-30,35-36,38-45,50-51,53-58
+  3ccc52be4266301a 1,13-16,19,31-34,37,46-49,52
+src/__tests__/mockData.ts
+  9a330cf1a53f9f11 103-106
+src/area-card/AreaCardEditor.ts
+  9a330cf1a53f9f11 22,24,26-36,91,107,118,128,151,159
+src/area-card/TempHum.ts
+  h_a4417d1a5d273e 7-14,17-18,21-22,25-26,29-30,33-34,39-42,44-45
+src/area-card/types.ts
+  h_a4417d1a5d273e 13-15,19-20,32-63
+  9a330cf1a53f9f11 18
+src/area-card/getTempHumStats.ts
+  h_a4417d1a5d273e 1-61,65-70
+src/cache.ts
+  h_a4417d1a5d273e 5-10,13
+src/__tests__/setup.ts
+  9a330cf1a53f9f11 106-110
+src/history-bars-card/EntityBar.ts
+  9a330cf1a53f9f11 4,78
+src/area-card/TempHumChart.ts
+  9a330cf1a53f9f11 4,17,132-135,137-165
+  h_a4417d1a5d273e 1-2,7,11-12,19-21,97-102,105-130,136
+src/history-bars-card/types.ts
+  9a330cf1a53f9f11 23
+src/logger.ts
+  9a330cf1a53f9f11 1-24
+src/history-bars-card/BarsCard.ts
+  9a330cf1a53f9f11 35-66,86-89,116-130,140-186
+src/area-card/AreaCard.ts
+  h_a4417d1a5d273e 4,16,19,244-276,278-286,290,292-295,302-304,314-315,362,367,370,529,534,543,571
+  9a330cf1a53f9f11 175-206,233-237,383,385-386,451-456,526-528,530-533,535-542,544-570,572-585
+src/index.ts
+  9a330cf1a53f9f11 7,33,36,48,56
+src/history-bars-card/BarsCardEditor.ts
+  9a330cf1a53f9f11 23-35,39,62,70,81,93,105,112,120,128
+src/__tests__/index.test.ts
+  9a330cf1a53f9f11 1-31
+src/__tests__/area-card/AreaCard.test.ts
+  9a330cf1a53f9f11 231-253,332
+src/utils.ts
+  h_a4417d1a5d273e 66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "77075b80f963e569c3620ce88898fdac9cc1fcc1",
+  "prompts": {
+    "3ccc52be4266301a": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "e1c1bdc5-4b45-4e7b-9c01-177965409e40",
+        "model": "copilot/auto"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 55,
+      "accepted_lines": 16,
+      "overriden_lines": 0
+    },
+    "9a330cf1a53f9f11": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_249310c88ffe11AOrjULCxS05E",
+        "model": "github-copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 602,
+      "total_deletions": 177,
+      "accepted_lines": 428,
+      "overriden_lines": 3
+    }
+  },
+  "humans": {
+    "h_a4417d1a5d273e": {
+      "author": "Sergio Carracedo"
+    }
+  }
+}
