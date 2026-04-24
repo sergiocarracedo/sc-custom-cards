@@ -1,0 +1,31 @@
+src/index.ts
+  h_a4417d1a5d273e 47,55
+src/area-card/AreaCard.ts
+  h_a4417d1a5d273e 215-240
+  3ccc52be4266301a 110-113,115,328,351,368,376
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "6ea11a47350a0df065607b5cc8de975d43fcfdfd",
+  "prompts": {
+    "3ccc52be4266301a": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "e1c1bdc5-4b45-4e7b-9c01-177965409e40",
+        "model": "copilot/auto"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 7,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_a4417d1a5d273e": {
+      "author": "Sergio Carracedo"
+    }
+  }
+}
