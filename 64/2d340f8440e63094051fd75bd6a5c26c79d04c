@@ -1,0 +1,75 @@
+src/__tests__/setup.ts
+  9aa9f10d6e9dccf4 106-110
+src/area-card/AreaCardEditor.ts
+  9aa9f10d6e9dccf4 22,24,26-36,91,107,118,128,151,159
+.github/workflows/upload-release-assets.yml
+  9aa9f10d6e9dccf4 12,36
+README.md
+  9aa9f10d6e9dccf4 10,21-23,26-28,32-52
+src/__tests__/area-card/TempHumChart.test.ts
+  9aa9f10d6e9dccf4 1-58
+vite.config.ts
+  9aa9f10d6e9dccf4 2-3,8-22,26-39,42-43,49,56-58,62,65-69,71-74,83-84
+src/index.ts
+  9aa9f10d6e9dccf4 6-7,9-36,47-48,55-56
+src/area-card/types.ts
+  9aa9f10d6e9dccf4 13-15,18-20,32-63
+src/history-bars-card/types.ts
+  9aa9f10d6e9dccf4 23
+src/cache.ts
+  9aa9f10d6e9dccf4 5-10,13
+.github/workflows/beta-release.yml
+  9aa9f10d6e9dccf4 1-181
+src/__tests__/history-bars-card/BarsCard.test.ts
+  9aa9f10d6e9dccf4 302-303
+src/area-card/getTempHumStats.ts
+  9aa9f10d6e9dccf4 1-70
+src/utils.ts
+  9aa9f10d6e9dccf4 63-67
+.github/workflows/auto-merge-release.yml
+  9aa9f10d6e9dccf4 44
+src/__tests__/area-card/AreaCard.test.ts
+  9aa9f10d6e9dccf4 231-253,332
+src/history-bars-card/BarsCardEditor.ts
+  9aa9f10d6e9dccf4 23-35,39,62,70,81,93,105,112,120,128
+src/logger.ts
+  9aa9f10d6e9dccf4 1-24
+src/area-card/TempHum.ts
+  9aa9f10d6e9dccf4 7-14,17-18,21-22,25-26,29-30,33-34,39-42,44-45
+src/area-card/TempHumChart.ts
+  9aa9f10d6e9dccf4 1-2,4,7,11-12,17,19-21,97-102,105-130,132-165
+src/history-bars-card/EntityBar.ts
+  9aa9f10d6e9dccf4 4,78
+.env.local.example
+  9aa9f10d6e9dccf4 1
+src/__tests__/mockData.ts
+  9aa9f10d6e9dccf4 103-106
+src/history-bars-card/BarsCard.ts
+  9aa9f10d6e9dccf4 35-66,86-89,116-130,140-186
+.gitignore
+  9aa9f10d6e9dccf4 5
+src/area-card/AreaCard.ts
+  9aa9f10d6e9dccf4 4,16,19,110-115,179-186,213-242,249-291,295,297-300,307-309,319-320,328,351,367-368,372,375-376,388,390-391,456-461,531-589
+src/__tests__/index.test.ts
+  9aa9f10d6e9dccf4 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "642d340f8440e63094051fd75bd6a5c26c79d04c",
+  "prompts": {
+    "9aa9f10d6e9dccf4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_240f170cfffeDq3YyIij5ZKi2p",
+        "model": "github-copilot/gpt-5.4"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 1065,
+      "total_deletions": 167,
+      "accepted_lines": 989,
+      "overriden_lines": 0
+    }
+  }
+}
