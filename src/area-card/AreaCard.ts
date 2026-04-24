@@ -107,8 +107,12 @@ export class ScAreaCard extends LitElement {
   }
 
   get areaColor() {
+    if (!this._config) {
+      return '#999'
+    }
+
     const color =
-      this._config?.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
+      this._config.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
     return getBaseColor(this, color as string | number[])
   }
   get summaryTypes(): EntityTypeSummary[] {
@@ -180,30 +184,6 @@ export class ScAreaCard extends LitElement {
     return this._config?._stubPreview === true
   }
 
-  private renderStubPreview(): TemplateResult {
-    return html`
-      <ha-card class="area-card area-card--preview area-card--variant-default">
-        <div class="area-card__content area-card__content--preview">
-          <header class="area-card__header">
-            <h1 class="area-card__name">Living Room</h1>
-            <div class="temp-hum" style="--font-size: 28px;">
-              <div class="temp-hum__temperature">22°C</div>
-              <div class="temp-hum__humidity">45%</div>
-            </div>
-          </header>
-
-          <aside class="area-card__status area-card__status--preview">
-            <div class="preview-chip">Presence</div>
-            <div class="preview-chip">Lights</div>
-          </aside>
-
-          <div class="area-card__preview-chart"></div>
-          <div class="area-card__preview-icon"></div>
-        </div>
-      </ha-card>
-    `
-  }
-
   private handleAction(ev: ActionHandlerEvent) {
     if (!this._config || !this._hass) return
     handleAction(
@@ -232,7 +212,32 @@ export class ScAreaCard extends LitElement {
     }
 
     if (this.isStubPreview) {
-      return this.renderStubPreview()
+      return this.renderCard({
+        areaName: 'Living Room',
+        temperature: 22,
+        temperatureUnits: '°C',
+        humidity: 45,
+        humidityUnits: '%',
+        areaIcon: 'mdi:sofa',
+        areaColor: '#03a9f4',
+        summaryTypes: [
+          {
+            name: 'Presence',
+            icon: 'mdi:account-multiple',
+            entities: ['binary_sensor.living_room_presence'],
+          },
+        ],
+        style: 'full',
+        variant: 'default',
+        stats: Promise.resolve({
+          tempHumStats: Array.from({ length: 24 }, (_, i) => ({
+            time: new Date(Date.now() - (23 - i) * 60 * 60 * 1000), // hourly data for the past 24 hours
+            temp: 22.5 + Math.sin((i / 24) * 2 * Math.PI) * 2, // some variation in temperature
+            humidity: 45 + Math.cos((i / 24) * 2 * Math.PI) * 5, // some variation in humidity
+          })),
+          chartMessage: null,
+        }),
+      })
     }
 
     const { area } = this
@@ -320,7 +325,7 @@ export class ScAreaCard extends LitElement {
         <div
           class="area-card__content"
           style="
-            --area-color: ${this.areaColor};
+            --area-color: ${props.areaColor};
             --title-font-size: ${sizes.titleFontSize}px;
             --title-font-size-header: ${sizes.titleFontSizeHeader}px;
             --temp-font-size: ${sizes.tempFontSize}px;
@@ -343,7 +348,7 @@ export class ScAreaCard extends LitElement {
                       .hass=${this.hass}
                       .icon=${type.icon}
                       .name=${type.name}
-                      .bgColor=${this.areaColor}
+                      .bgColor=${props.areaColor}
                       .color=${'var(--black2)'}
                       .size=${sizes.summaryIconSize}
                       .actions=${{
@@ -360,7 +365,7 @@ export class ScAreaCard extends LitElement {
           <sc-icon
             class="area-card__icon"
             .icon=${props.areaIcon}
-            .color=${this.areaColor}
+            .color=${props.areaColor}
             .size=${sizes.areaIconSize}
             .iconSize=${sizes.areaIconIconSize}
           ></sc-icon>
@@ -368,7 +373,7 @@ export class ScAreaCard extends LitElement {
           html`<div class="area-card__chart">
             <temp-hum-chart
               .stats=${props.stats}
-              .color="${this.areaColor}"
+              .color="${props.areaColor}"
               .height=${sizes.chartHeight}
             ></temp-hum-chart>
           </div>`}

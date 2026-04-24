@@ -44,7 +44,7 @@ declare global {
 window.customCards = window.customCards || []
 window.customCards.push({
   type: 'sc-area-card',
-  name: 'Area card',
+  name: 'SC Custom Cards: Area card',
   preview: true,
   description: 'Displays area information with temperature, humidity, and entity status summaries',
   documentationURL: 'https://github.com/sergiocarracedo/sc-custom-cards#sc-area-card',
@@ -52,7 +52,7 @@ window.customCards.push({
 
 window.customCards.push({
   type: 'sc-bars-card',
-  name: 'History bars card',
+  name: 'SC History bars card',
   preview: true,
   description: 'Displays entity values as horizontal bars with color-coded thresholds',
   documentationURL: 'https://github.com/sergiocarracedo/sc-custom-cards#sc-bars-card',
