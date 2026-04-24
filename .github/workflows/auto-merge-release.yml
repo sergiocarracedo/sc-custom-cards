@@ -41,7 +41,7 @@ jobs:
             exit 0
           fi
 
-          if [[ "$BASE_REF" != "main" && "$BASE_REF" != "beta" ]]; then
+          if [[ "$BASE_REF" != "main" ]]; then
             echo "PR #$PR_NUMBER does not target a release branch."
             exit 0
           fi

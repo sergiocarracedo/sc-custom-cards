@@ -103,11 +103,11 @@ if (!customElements.get('ha-entity-picker')) {
 }
 
 // Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}))
+global.ResizeObserver = class ResizeObserver {
+  observe = vi.fn()
+  unobserve = vi.fn()
+  disconnect = vi.fn()
+}
 
 // Global test utilities
 global.flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0))

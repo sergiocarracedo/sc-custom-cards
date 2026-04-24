@@ -1,7 +1,7 @@
 import { actionHandler } from '@/action-handler-directive'
 import { areaColors } from '@/area-colors'
 import type { Area } from '@/types.ts'
-import { toArray, getBaseColor } from '@/utils'
+import { getBaseColor, toArray } from '@/utils'
 import {
   type ActionHandlerEvent,
   handleAction,
@@ -13,9 +13,10 @@ import { customElement, state } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js'
 import '../components/Icon.ts'
 import './EntityTypeStatus.ts'
+import { getTempHumStats } from './getTempHumStats.js'
 import './TempHum.ts'
 import './TempHumChart.ts'
-import type { EntityTypeSummary, ScAreaCardConfig } from './types.ts'
+import type { EntityTypeSummary, RenderProps, ScAreaCardConfig } from './types.ts'
 
 const VARIANT_SIZES = {
   default: {
@@ -106,7 +107,12 @@ export class ScAreaCard extends LitElement {
   }
 
   get areaColor() {
-    const color = this._config?.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
+    if (!this._config) {
+      return '#999'
+    }
+
+    const color =
+      this._config.color || (this.area?.area_id && areaColors[this.area.area_id]) || '#999'
     return getBaseColor(this, color as string | number[])
   }
   get summaryTypes(): EntityTypeSummary[] {
@@ -170,6 +176,14 @@ export class ScAreaCard extends LitElement {
     return VARIANT_SIZES[this.variant]
   }
 
+  private get isPreview(): boolean {
+    return this.isStubPreview || this.closest('hui-card-edit-mode') !== null
+  }
+
+  private get isStubPreview(): boolean {
+    return this._config?._stubPreview === true
+  }
+
   private handleAction(ev: ActionHandlerEvent) {
     if (!this._config || !this._hass) return
     handleAction(
@@ -196,29 +210,103 @@ export class ScAreaCard extends LitElement {
     if (!this._config) {
       return nothing
     }
+
+    if (this.isStubPreview) {
+      return this.renderCard({
+        areaName: 'Living Room',
+        temperature: 22,
+        temperatureUnits: '°C',
+        humidity: 45,
+        humidityUnits: '%',
+        areaIcon: 'mdi:sofa',
+        areaColor: '#03a9f4',
+        summaryTypes: [
+          {
+            name: 'Presence',
+            icon: 'mdi:account-multiple',
+            entities: ['binary_sensor.living_room_presence'],
+          },
+        ],
+        style: 'full',
+        variant: 'default',
+        stats: Promise.resolve({
+          tempHumStats: Array.from({ length: 24 }, (_, i) => ({
+            time: new Date(Date.now() - (23 - i) * 60 * 60 * 1000), // hourly data for the past 24 hours
+            temp: 22.5 + Math.sin((i / 24) * 2 * Math.PI) * 2, // some variation in temperature
+            humidity: 45 + Math.cos((i / 24) * 2 * Math.PI) * 5, // some variation in humidity
+          })),
+          chartMessage: null,
+        }),
+      })
+    }
+
     const { area } = this
 
     if (!area) {
       return html`<p class="error">${this._config.area} is unavailable.</p>`
     }
 
+    return this.renderCard({
+      areaName: area.name,
+      temperature: area.temperature_entity_id
+        ? parseFloat(this.hass.states[area.temperature_entity_id].state)
+        : null,
+      humidity: area.humidity_entity_id
+        ? parseFloat(this.hass.states[area.humidity_entity_id].state)
+        : null,
+      temperatureUnits: area.temperature_entity_id
+        ? this.hass.states[area.temperature_entity_id].attributes.unit_of_measurement
+        : undefined,
+      humidityUnits: area.humidity_entity_id
+        ? this.hass.states[area.humidity_entity_id].attributes.unit_of_measurement
+        : undefined,
+      areaIcon: area.icon,
+      areaColor: this.areaColor,
+      summaryTypes: this.summaryTypes,
+      style: this._config.style || 'full',
+      variant: this.variant,
+      alarmActive: this.alarmActive,
+      hasAction: this.hasAction,
+      actions: {
+        tap_action: this._config.tap_action,
+        hold_action: this._config.hold_action,
+        double_tap_action: this._config.double_tap_action,
+      },
+      stats: getTempHumStats(
+        this.getStatsCacheKey(area.temperature_entity_id, area.humidity_entity_id),
+        this._hass,
+        area.temperature_entity_id,
+        area.humidity_entity_id,
+      ),
+    })
+  }
+
+  private getStatsCacheKey(
+    temperatureEntityId: string | null | undefined,
+    humidityEntityId: string | null | undefined,
+  ): string {
+    return `temp-hum-chart-${this._config?.area ?? 'unknown'}-${temperatureEntityId ?? 'none'}-${humidityEntityId ?? 'none'}`
+  }
+
+  private renderCard(props: RenderProps) {
     const sizes = this.variantSizes
 
     const header: TemplateResult = html`<header class="area-card__header">
-      <h1 class="area-card__name">${area.name}</h1>
+      <h1 class="area-card__name">${props.areaName}</h1>
       <temp-hum
-        .temperatureEntityId=${area.temperature_entity_id}
-        .humidityEntityId=${area.humidity_entity_id}
-        .hass=${this._hass}
+        .temperature=${props.temperature}
+        .temperatureUnits=${props.temperatureUnits}
+        .humidity=${props.humidity}
+        .humidityUnits=${props.humidityUnits}
         .fontSize=${sizes.tempFontSize}
       ></temp-hum>
     </header>`
 
     const classes = {
       'area-card': true,
-      'area-card--alarm': this.alarmActive,
-      'area-card--with-action': this.hasAction,
-      [`area-card--style-${this._config.style || 'full'}`]: true,
+      'area-card--alarm': !!props.alarmActive,
+      'area-card--with-action': !!props.hasAction,
+      [`area-card--style-${props.style || 'full'}`]: true,
       [`area-card--variant-${this.variant}`]: true,
     }
     const summaries = this.summaryTypes.filter((type) => type.entities.length)
@@ -228,8 +316,8 @@ export class ScAreaCard extends LitElement {
         @action=${this.handleAction}
         tabindex="0"
         .actionHandler=${actionHandler({
-          hasHold: hasAction(this._config.hold_action),
-          hasDoubleClick: hasAction(this._config.double_tap_action),
+          hasHold: hasAction(props.actions?.hold_action),
+          hasDoubleClick: hasAction(props.actions?.double_tap_action),
         })}
         class="${classMap(classes)}"
         style="--border-radius: ${sizes.borderRadius}px; --padding: ${sizes.padding};"
@@ -237,7 +325,7 @@ export class ScAreaCard extends LitElement {
         <div
           class="area-card__content"
           style="
-            --area-color: ${this.areaColor};
+            --area-color: ${props.areaColor};
             --title-font-size: ${sizes.titleFontSize}px;
             --title-font-size-header: ${sizes.titleFontSizeHeader}px;
             --temp-font-size: ${sizes.tempFontSize}px;
@@ -260,7 +348,7 @@ export class ScAreaCard extends LitElement {
                       .hass=${this.hass}
                       .icon=${type.icon}
                       .name=${type.name}
-                      .bgColor=${this.areaColor}
+                      .bgColor=${props.areaColor}
                       .color=${'var(--black2)'}
                       .size=${sizes.summaryIconSize}
                       .actions=${{
@@ -276,18 +364,16 @@ export class ScAreaCard extends LitElement {
 
           <sc-icon
             class="area-card__icon"
-            .icon=${area.icon}
-            .color=${this.areaColor}
+            .icon=${props.areaIcon}
+            .color=${props.areaColor}
             .size=${sizes.areaIconSize}
             .iconSize=${sizes.areaIconIconSize}
           ></sc-icon>
-          ${(area.temperature_entity_id || area.humidity_entity_id) &&
+          ${(props.temperature !== undefined || props.humidity !== undefined) &&
           html`<div class="area-card__chart">
             <temp-hum-chart
-              .hass=${this.hass}
-              .temperatureEntityId=${area.temperature_entity_id}
-              .humidityEntityId=${area.humidity_entity_id}
-              .color="${this.areaColor}"
+              .stats=${props.stats}
+              .color="${props.areaColor}"
               .height=${sizes.chartHeight}
             ></temp-hum-chart>
           </div>`}
@@ -299,7 +385,10 @@ export class ScAreaCard extends LitElement {
   // card configuration
   static getStubConfig() {
     return {
+      _stubPreview: true,
       area: 'living_room',
+      style: 'full',
+      variant: 'default',
     }
   }
 
@@ -362,6 +451,12 @@ export class ScAreaCard extends LitElement {
       min-height: 120px;
       display: flex;
       flex-direction: column;
+    }
+
+    .area-card__content--preview {
+      position: relative;
+      min-height: 120px;
+      overflow: hidden;
     }
 
     .area-card--style-header .area-card__content {
@@ -431,6 +526,67 @@ export class ScAreaCard extends LitElement {
       pointer-events: none;
       display: flex;
       align-items: center;
+    }
+
+    .area-card--preview {
+      padding: 12px 16px;
+    }
+
+    .area-card__status--preview {
+      padding-top: 18px;
+      margin-left: 80px;
+    }
+
+    .preview-chip {
+      background: color-mix(in srgb, var(--primary-color, #03a9f4) 22%, transparent);
+      border: 1px solid color-mix(in srgb, var(--primary-color, #03a9f4) 45%, transparent);
+      border-radius: 999px;
+      color: var(--primary-text-color);
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+
+    .area-card__preview-chart {
+      background:
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--primary-color, #03a9f4) 28%, transparent),
+          transparent
+        ),
+        linear-gradient(
+          135deg,
+          transparent 15%,
+          color-mix(in srgb, var(--primary-color, #03a9f4) 60%, transparent) 40%,
+          transparent 70%
+        ),
+        linear-gradient(
+          160deg,
+          transparent 5%,
+          color-mix(in srgb, var(--accent-color, #4caf50) 35%, transparent) 45%,
+          transparent 85%
+        );
+      border-radius: 18px 0 0 0;
+      bottom: -20px;
+      left: 72px;
+      opacity: 0.7;
+      position: absolute;
+      right: -18px;
+      top: 42px;
+    }
+
+    .area-card__preview-icon {
+      background: radial-gradient(
+        circle at 30% 30%,
+        color-mix(in srgb, var(--primary-color, #03a9f4) 28%, white),
+        color-mix(in srgb, var(--primary-color, #03a9f4) 72%, transparent)
+      );
+      border-radius: 20px;
+      bottom: -10px;
+      height: 92px;
+      left: -12px;
+      opacity: 0.9;
+      position: absolute;
+      width: 92px;
     }
 
     .area-card--style-header .area-card__icon {

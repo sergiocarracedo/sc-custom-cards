@@ -1,49 +1,48 @@
 import type { TemplateResult } from 'lit'
 import { css, html, LitElement, nothing } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import type { HomeAssistant } from 'custom-card-helpers'
 
 @customElement('temp-hum')
 export class TempHum extends LitElement {
-  @property({ type: String }) public temperatureEntityId: string | undefined | null
-  @property({ type: String }) public humidityEntityId: string | undefined | null
-  @property({ type: Object }) public hass!: HomeAssistant
+  @property({ type: String }) public temperature: string | undefined | null
+  @property({ type: String }) public temperatureUnits: string | undefined | null
+  @property({ type: String }) public humidity: string | undefined | null
+  @property({ type: String }) public humidityUnits: string | undefined | null
+
+  // @property({ type: String }) public temperatureEntityId: string | undefined | null
+  // @property({ type: String }) public humidityEntityId: string | undefined | null
+  // @property({ type: Object }) public hass!: HomeAssistant
   @property({ type: Number }) public fontSize: number = 28
 
-  get tempState(): HomeAssistant['states'][0] | undefined {
-    return (this.temperatureEntityId && this.hass.states[this.temperatureEntityId]) || undefined
+  private isEmpty(value: string | undefined | null): boolean {
+    return value === undefined || value === null || value === ''
   }
 
-  get temperature(): number | undefined {
-    return this.tempState?.state !== undefined
-      ? Math.round(parseFloat(this.tempState.state))
-      : undefined
-  }
-  get temperatureUnits(): string | undefined {
-    return this.tempState?.attributes.unit_of_measurement
+  get _temperature(): number | undefined {
+    return !this.isEmpty(this.temperature) ? Math.round(parseFloat(this.temperature!)) : undefined
   }
 
-  get humState(): HomeAssistant['states'][0] | undefined {
-    return (this.humidityEntityId && this.hass.states[this.humidityEntityId]) || undefined
+  get _temperatureUnits(): string {
+    return this.temperatureUnits || '°'
   }
 
-  get humidity(): number | undefined {
-    return this.humState?.state !== undefined
-      ? Math.round(parseFloat(this.humState.state))
-      : undefined
+  get _humidity(): number | undefined {
+    return !this.isEmpty(this.humidity) ? Math.round(parseFloat(this.humidity!)) : undefined
   }
 
-  get humidityUnits(): string | undefined {
-    return this.humState?.attributes.unit_of_measurement
+  get _humidityUnits(): string {
+    return this.humidityUnits || '%'
   }
 
   protected render(): TemplateResult {
     return html`<div class="temp-hum" style="--font-size: ${this.fontSize}px;">
-      ${this.temperature !== undefined
-        ? html`<div class="temp-hum__temperature">${this.temperature}${this.temperatureUnits}</div>`
+      ${this._temperature !== undefined
+        ? html`<div class="temp-hum__temperature">
+            ${this._temperature}${this._temperatureUnits}
+          </div>`
         : nothing}
-      ${this.humidity !== undefined
-        ? html`<div class="temp-hum__humidity">${this.humidity}${this.humidityUnits}</div>`
+      ${this._humidity !== undefined
+        ? html`<div class="temp-hum__humidity">${this._humidity}${this._humidityUnits}</div>`
         : nothing}
     </div>`
   }

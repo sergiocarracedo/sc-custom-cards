@@ -299,6 +299,8 @@ describe('ScBarsCard', () => {
       expect(stubConfig.type).toBe('custom:sc-bars-card')
       expect(stubConfig.max).toBeDefined()
       expect(stubConfig.entities).toBeDefined()
+      expect(stubConfig.entities.length).toBeGreaterThan(0)
+      expect(stubConfig._stubPreview).toBe(true)
     })
 
     it('should provide config element', () => {

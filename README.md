@@ -7,7 +7,7 @@ Provides multiple custom cards for Home Assistant, including an area card and a 
 This repository uses `release-please` to open a release PR after changes land on `main`.
 When that PR passes `CI`, GitHub Actions merges it automatically, creates the GitHub release, builds the bundle, and uploads `dist/sc-custom-cards.js` as a release asset.
 
-The repository also supports a fully automatic `beta` release channel. Merges to `beta` follow the same flow, but publish prereleases such as `v1.7.1-beta.1` that can be used for testing before promoting changes to `main`.
+The repository also supports a fully automatic `beta` release channel. Every push to `beta` publishes a prerelease such as `v1.9.0-beta.2` that can be used for testing before promoting changes to `main`.
 
 To keep the process fully automatic, add a repository secret named `RELEASE_PLEASE_TOKEN` with permissions to create and merge pull requests, push to `main`, create releases, and trigger follow-up workflows.
 Without that secret, GitHub falls back to `GITHUB_TOKEN`, which usually cannot trigger the PR and push workflows required to finish the full release flow.
@@ -18,18 +18,38 @@ Use the long-lived `beta` branch as the prerelease lane.
 
 How it works:
 - open normal feature and fix PRs against `beta` when you want to test changes before shipping them to `main`
-- when a PR is merged into `beta`, `release-please` opens or updates a beta release PR
-- after `CI` succeeds, GitHub Actions merges that release PR automatically
-- the merge publishes a GitHub prerelease and uploads `dist/sc-custom-cards.js`
+- every push to `beta` builds the bundle and publishes a GitHub prerelease directly
+- the beta workflow computes the next `-beta.N` tag without looking at commit type
+- the prerelease uploads `dist/sc-custom-cards.js` as part of the same workflow
 
 Version behavior:
-- each merge into `beta` can produce a new prerelease version when there are releasable commits
-- `fix:` commits produce patch prereleases such as `v1.7.1-beta.1`, then `v1.7.1-beta.2`
-- `feat:` commits produce minor prereleases such as `v1.8.0-beta.1`
-- breaking changes produce the next major prerelease version
+- each push to `beta` produces a new prerelease version
+- if `beta` is already ahead of the latest stable tag, the workflow increments the existing `-beta.N` series
+- if `main` catches up to the beta base version, the next beta starts from the next patch version
 
 To test beta versions in HACS, enable beta versions for the repository in HACS before checking for updates.
 
+## Local Development
+
+For local development, the Vite build can copy `dist/sc-custom-cards.js` directly into your Home Assistant HACS install after each build or watch rebuild.
+
+Create a local `.env.local` file in the repository root. It is ignored by git and loaded automatically when Vite runs. You can also keep using `.env` if you already have one, but `.env.local` is the preferred file for personal machine settings.
+
+Example:
+
+```bash
+HA_SYNC_TARGET=root@homeassistant.local:/config/www/community/sc-custom-cards/sc-custom-cards.js
+```
+
+Notes:
+- `HA_SYNC_TARGET` is the preferred variable name
+- `HA_SCP_TARGET` is still accepted as a fallback for older local setups
+- the recommended target is the HACS-installed file path, so local builds update the same file Home Assistant loads from `/hacsfiles/sc-custom-cards/sc-custom-cards.js`
+- if the copy fails, the build now fails loudly instead of silently continuing
+
+Typical workflow:
+- run `pnpm build` for a one-off build and sync
+- run `pnpm dev` to watch, rebuild, and sync automatically after changes
 ## Table of Contents
 
 - [Installation](#installation)

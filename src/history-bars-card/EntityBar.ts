@@ -1,6 +1,7 @@
 import { css, html, LitElement, nothing, TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { EntityBarConfig, Threshold } from '@/history-bars-card/types'
+import { logger } from '@/logger'
 import { contrast, getBaseColor } from '@/utils'
 import '../echarts-wrapper'
 import { EChartsOption, graphic } from 'echarts'
@@ -74,7 +75,7 @@ export class EntityBar extends LitElement {
         this.entityStats = cache.set(this.cacheKey, stats)
       },
       (error) => {
-        console.error(error)
+        logger.error(error)
       },
     )
   }

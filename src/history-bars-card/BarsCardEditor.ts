@@ -20,11 +20,23 @@ export class ScBarsCardEditor extends LitElement {
   @state() private _editingThresholdIndex: number | null = null
 
   public setConfig(config: ScBarsCardConfig): void {
-    this._config = config
+    const sanitizedConfig = this._sanitizeConfig(config)
+    this._config = sanitizedConfig
+
+    if (config._stubPreview) {
+      queueMicrotask(() => {
+        fireEvent(this, 'config-changed', { config: sanitizedConfig })
+      })
+    }
+  }
+
+  private _sanitizeConfig(config: ScBarsCardConfig): ScBarsCardConfig {
+    const { _stubPreview, ...sanitizedConfig } = config
+    return sanitizedConfig
   }
 
   private _valueChanged(ev: CustomEvent): void {
-    const config = { ...this._config, ...ev.detail.value }
+    const config = this._sanitizeConfig({ ...this._config, ...ev.detail.value } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -47,7 +59,7 @@ export class ScBarsCardEditor extends LitElement {
     if (this._editingEntityIndex === null) return
     const entities = [...(this._config?.entities || [])]
     entities[this._editingEntityIndex] = ev.detail.value
-    const config = { ...this._config, entities }
+    const config = this._sanitizeConfig({ ...this._config, entities } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -55,7 +67,7 @@ export class ScBarsCardEditor extends LitElement {
     if (this._editingThresholdIndex === null) return
     const thresholds = [...(this._config?.thresholds || [])]
     thresholds[this._editingThresholdIndex] = ev.detail.value
-    const config = { ...this._config, thresholds }
+    const config = this._sanitizeConfig({ ...this._config, thresholds } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -66,7 +78,7 @@ export class ScBarsCardEditor extends LitElement {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
       const entities = [...(this._config?.entities || [])]
       entities.splice(index, 1)
-      const config = { ...this._config, entities }
+      const config = this._sanitizeConfig({ ...this._config, entities } as ScBarsCardConfig)
       fireEvent(this, 'config-changed', { config })
     }
   }
@@ -78,7 +90,7 @@ export class ScBarsCardEditor extends LitElement {
     if (confirm(`Are you sure you want to delete threshold "${value}"?`)) {
       const thresholds = [...(this._config?.thresholds || [])]
       thresholds.splice(index, 1)
-      const config = { ...this._config, thresholds }
+      const config = this._sanitizeConfig({ ...this._config, thresholds } as ScBarsCardConfig)
       fireEvent(this, 'config-changed', { config })
     }
   }
@@ -90,14 +102,14 @@ export class ScBarsCardEditor extends LitElement {
       ...(this._config?.entities || []),
       { entity: entityId, name: '', icon: '', color: '' },
     ]
-    const config = { ...this._config, entities }
+    const config = this._sanitizeConfig({ ...this._config, entities } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
     ;(ev.target as any).value = ''
   }
 
   private _addThreshold(): void {
     const thresholds = [...(this._config?.thresholds || []), { value: 0, color: '#ff0000' }]
-    const config = { ...this._config, thresholds }
+    const config = this._sanitizeConfig({ ...this._config, thresholds } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -105,7 +117,7 @@ export class ScBarsCardEditor extends LitElement {
     const entities = [...(this._config?.entities || [])]
     const [moved] = entities.splice(oldIndex, 1)
     entities.splice(newIndex, 0, moved)
-    const config = { ...this._config, entities }
+    const config = this._sanitizeConfig({ ...this._config, entities } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -113,7 +125,7 @@ export class ScBarsCardEditor extends LitElement {
     const thresholds = [...(this._config?.thresholds || [])]
     const [moved] = thresholds.splice(oldIndex, 1)
     thresholds.splice(newIndex, 0, moved)
-    const config = { ...this._config, thresholds }
+    const config = this._sanitizeConfig({ ...this._config, thresholds } as ScBarsCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 

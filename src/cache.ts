@@ -2,9 +2,15 @@ type CacheEntry = {
   value: unknown
   expires: number
 }
+
+export type Cache = {
+  set<T>(key: string, value: T, ttl?: number): T
+  get<T>(key: string): T | undefined
+}
+
 const cacheMap = new Map<string, CacheEntry>()
 
-export const cache = {
+export const cache: Cache = {
   set<T>(key: string, value: T, ttl = 60): T {
     cacheMap.set(key, {
       value,

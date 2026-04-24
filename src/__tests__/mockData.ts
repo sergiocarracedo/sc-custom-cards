@@ -100,7 +100,10 @@ export const createMockHass = (overrides?: Partial<HomeAssistant>): HomeAssistan
       },
     },
     callService: vi.fn(),
-    callWS: vi.fn(),
+    callWS: vi.fn().mockResolvedValue({
+      'sensor.office_temperature': [{ start: '2024-01-01T00:00:00.000Z', mean: 22.5 }],
+      'sensor.office_humidity': [{ start: '2024-01-01T00:00:00.000Z', mean: 45 }],
+    }),
     fetchWithAuth: vi.fn(),
     sendWS: vi.fn(),
     callApi: vi.fn(),
