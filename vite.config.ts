@@ -18,6 +18,7 @@ if (existsSync('.env.local')) {
 const packageJson = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf8')) as {
   version: string
 }
+const packageVersion = process.env.SC_CUSTOM_CARDS_VERSION ?? packageJson.version
 const buildTimestamp = new Date().toISOString()
 
 const allExternal = [...builtinModules, ...builtinModules.map((m) => `node:${m}`)]
@@ -79,7 +80,7 @@ function copyToHA() {
 export default defineConfig({
   define: {
     'process.env': {},
-    __SC_CUSTOM_CARDS_VERSION__: JSON.stringify(packageJson.version),
+    __SC_CUSTOM_CARDS_VERSION__: JSON.stringify(packageVersion),
     __SC_CUSTOM_CARDS_BUILD_DATE__: JSON.stringify(buildTimestamp),
   },
   resolve: {

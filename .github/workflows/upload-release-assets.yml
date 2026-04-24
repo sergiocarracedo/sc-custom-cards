@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   build-and-upload:
+    if: github.event.release.prerelease == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
