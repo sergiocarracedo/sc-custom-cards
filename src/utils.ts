@@ -60,7 +60,11 @@ export function luminance(el: Element, color: string | number[]) {
   return a[0] * RED + a[1] * GREEN + a[2] * BLUE
 }
 
-export function contrast(el: Element, color1: string | number[], color2: string | number[]): number {
+export function contrast(
+  el: Element,
+  color1: string | number[],
+  color2: string | number[],
+): number {
   const lum1 = luminance(el, color1)
   const lum2 = luminance(el, color2)
   const brightest = Math.max(lum1, lum2)

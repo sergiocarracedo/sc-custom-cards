@@ -32,6 +32,38 @@ export class ScBarsCard extends LitElement {
     return this._hass
   }
 
+  private get isStubPreview(): boolean {
+    return this.config?._stubPreview === true
+  }
+
+  private renderStubPreview() {
+    return html`
+      <ha-card class="bars-card bars-card--preview">
+        <div class="bars-card__content">
+          ${[
+            { name: 'Temperature', value: '22.5°C', width: '42%', color: '#ff7043' },
+            { name: 'Humidity', value: '45%', width: '58%', color: '#42a5f5' },
+          ].map(
+            (item) => html`
+              <div class="preview-bar">
+                <div class="preview-bar__row">
+                  <span class="preview-bar__name">${item.name}</span>
+                  <span class="preview-bar__value">${item.value}</span>
+                </div>
+                <div class="preview-bar__track">
+                  <span
+                    class="preview-bar__fill"
+                    style="width: ${item.width}; --preview-color: ${item.color};"
+                  ></span>
+                </div>
+              </div>
+            `,
+          )}
+        </div>
+      </ha-card>
+    `
+  }
+
   private handleAction(ev: ActionHandlerEvent) {
     if (!this.config || !this._hass) return
     handleAction(
@@ -49,6 +81,10 @@ export class ScBarsCard extends LitElement {
   render() {
     if (!this.config) {
       return nothing
+    }
+
+    if (this.isStubPreview) {
+      return this.renderStubPreview()
     }
 
     const classes = {
@@ -77,7 +113,21 @@ export class ScBarsCard extends LitElement {
   // card configuration
   static getStubConfig() {
     return {
-      entities: [],
+      _stubPreview: true,
+      entities: [
+        {
+          entity: 'sensor.preview_temperature',
+          name: 'Temperature',
+          icon: 'mdi:thermometer',
+          color: '#ff7043',
+        },
+        {
+          entity: 'sensor.preview_humidity',
+          name: 'Humidity',
+          icon: 'mdi:water-percent',
+          color: '#42a5f5',
+        },
+      ],
       max: 100,
     }
   }
@@ -87,11 +137,51 @@ export class ScBarsCard extends LitElement {
   }
 
   static styles = css`
-    .bars-card__content {
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-  `
+     .bars-card__content {
+       padding: 10px;
+       display: flex;
+       flex-direction: column;
+       gap: 10px;
+     }
+
+     .bars-card--preview {
+       padding: 4px;
+     }
+
+     .preview-bar {
+       display: flex;
+       flex-direction: column;
+       gap: 6px;
+     }
+
+     .preview-bar__row {
+       align-items: center;
+       display: flex;
+       font-size: 13px;
+       justify-content: space-between;
+     }
+
+     .preview-bar__name {
+       color: var(--primary-text-color);
+     }
+
+     .preview-bar__value {
+       color: var(--secondary-text-color);
+       font-size: 12px;
+     }
+
+     .preview-bar__track {
+       background: color-mix(in srgb, var(--secondary-text-color) 16%, transparent);
+       border-radius: 999px;
+       height: 10px;
+       overflow: hidden;
+     }
+
+     .preview-bar__fill {
+       background: linear-gradient(90deg, var(--preview-color), color-mix(in srgb, var(--preview-color) 60%, white));
+       border-radius: inherit;
+       display: block;
+       height: 100%;
+     }
+   `
 }

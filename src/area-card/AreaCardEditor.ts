@@ -19,9 +19,21 @@ export class ScAreaCardEditor extends LitElement {
   @state() private _editingSummaryIndex: number | null = null
 
   public setConfig(config: ScAreaCardConfig): void {
+    const sanitizedConfig = this._sanitizeConfig(config)
     // Migrate deprecated preset fields to summaries
-    const migratedConfig = this._migratePresetsToSummaries(config)
+    const migratedConfig = this._migratePresetsToSummaries(sanitizedConfig)
     this._config = migratedConfig
+
+    if (config._stubPreview) {
+      queueMicrotask(() => {
+        fireEvent(this, 'config-changed', { config: migratedConfig })
+      })
+    }
+  }
+
+  private _sanitizeConfig(config: ScAreaCardConfig): ScAreaCardConfig {
+    const { _stubPreview, ...sanitizedConfig } = config
+    return sanitizedConfig
   }
 
   private _migratePresetsToSummaries(config: ScAreaCardConfig): ScAreaCardConfig {
@@ -76,7 +88,7 @@ export class ScAreaCardEditor extends LitElement {
   }
 
   private _valueChanged(ev: CustomEvent): void {
-    const config = { ...this._config, ...ev.detail.value }
+    const config = this._sanitizeConfig({ ...this._config, ...ev.detail.value } as ScAreaCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -92,7 +104,7 @@ export class ScAreaCardEditor extends LitElement {
     if (this._editingSummaryIndex === null) return
     const summary = [...this._summaryList]
     summary[this._editingSummaryIndex] = ev.detail.value
-    const config = { ...this._config, summary }
+    const config = this._sanitizeConfig({ ...this._config, summary } as ScAreaCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -103,7 +115,7 @@ export class ScAreaCardEditor extends LitElement {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
       const newSummaries = [...this._summaryList]
       newSummaries.splice(index, 1)
-      const config = { ...this._config, summary: newSummaries }
+      const config = this._sanitizeConfig({ ...this._config, summary: newSummaries } as ScAreaCardConfig)
       fireEvent(this, 'config-changed', { config })
     }
   }
@@ -113,7 +125,7 @@ export class ScAreaCardEditor extends LitElement {
       ...this._summaryList,
       { name: 'New Summary', icon: 'mdi:help-circle', entities: [], alarm_entities: [] },
     ]
-    const config = { ...this._config, summary }
+    const config = this._sanitizeConfig({ ...this._config, summary } as ScAreaCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -136,7 +148,7 @@ export class ScAreaCardEditor extends LitElement {
         isAlarm: preset.isAlarm,
       },
     ]
-    const config = { ...this._config, summary }
+    const config = this._sanitizeConfig({ ...this._config, summary } as ScAreaCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 
@@ -144,7 +156,7 @@ export class ScAreaCardEditor extends LitElement {
     const summary = [...this._summaryList]
     const [moved] = summary.splice(oldIndex, 1)
     summary.splice(newIndex, 0, moved)
-    const config = { ...this._config, summary }
+    const config = this._sanitizeConfig({ ...this._config, summary } as ScAreaCardConfig)
     fireEvent(this, 'config-changed', { config })
   }
 

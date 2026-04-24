@@ -1,74 +1,24 @@
-import type { TemplateResult } from 'lit'
-import { html, LitElement } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
-import type { HomeAssistant } from 'custom-card-helpers'
-import '../echarts-wrapper'
-import { EChartsOption, graphic } from 'echarts'
 import { getBaseColor } from '@/utils'
-import { cache } from '@/cache'
+import { EChartsOption, graphic } from 'echarts'
+import type { TemplateResult } from 'lit'
+import { css, html, LitElement, nothing } from 'lit'
+import { customElement, property, state } from 'lit/decorators.js'
+import '../echarts-wrapper'
+import { TempHumStats, TempHumStatsResult } from './types'
 
 @customElement('temp-hum-chart')
 export class TempHumChart extends LitElement {
-  @property({ type: Object }) public hass!: HomeAssistant
+  @property({ type: Object }) public stats: Promise<TempHumStatsResult> | null = null
+
   @property({ type: String }) public temperatureEntityId: string | null = null
   @property({ type: String }) public humidityEntityId: string | null = null
   @property({ type: String }) public color: string = '#666' // Default color
   @property({ type: Number }) public height: number = 90
+  @property({ type: Boolean }) public preview: boolean = false
 
-  @state() private tempHumStats: {
-    time: Date
-    temp: number | undefined
-    humidity: number | undefined
-  }[] = []
-
-  private get cacheKey() {
-    return `temp-hum-chart-${this.temperatureEntityId}-${this.humidityEntityId}`
-  }
-
-  private getTempHumStats() {
-    // Check if we have already retrieved the statistics
-    const cachedStats = cache.get<typeof this.tempHumStats>(this.cacheKey)
-    if (cachedStats) {
-      this.tempHumStats = cachedStats
-      return
-    }
-    // Issue statistics retrieval call
-    const tempEntityId = this.temperatureEntityId
-    const humidityEntityId = this.humidityEntityId
-
-    const d = {
-      type: 'recorder/statistics_during_period',
-      start_time: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-      end_time: new Date().toISOString(),
-      period: '5minute',
-      statistic_ids: [tempEntityId, humidityEntityId].filter(Boolean),
-    }
-
-    type Result = { [x: string]: { start: string; mean: number }[] }
-    this.hass.callWS(d).then(
-      (result) => {
-        const id = tempEntityId || humidityEntityId
-        if (id) {
-          const stats = (result as Result)[id].map((d, index) => {
-            return {
-              time: new Date(d.start),
-              temp: tempEntityId ? (result as Result)[tempEntityId][index].mean : undefined,
-              humidity: humidityEntityId
-                ? (result as Result)[humidityEntityId][index].mean
-                : undefined,
-            }
-          })
-
-          this.tempHumStats = cache.set(this.cacheKey, stats)
-        } else {
-          this.tempHumStats = cache.set(this.cacheKey, [])
-        }
-      },
-      (error) => {
-        console.error(error)
-      },
-    )
-  }
+  @state() private tempHumStats: TempHumStats = []
+  @state() private chartMessage: string | null = null
+  private statsRequestId: number = 0
 
   private get chartOptions() {
     const baseColor = getBaseColor(this, this.color)
@@ -144,16 +94,73 @@ export class TempHumChart extends LitElement {
     }
   }
 
-  public connectedCallback() {
-    super.connectedCallback()
-    this.getTempHumStats()
+  protected updated(changedProperties: Map<string | number | symbol, unknown>) {
+    if (!changedProperties.has('stats')) {
+      return
+    }
+
+    void this.resolveStats()
   }
 
-  render(): TemplateResult | false {
-    return html`${this.tempHumStats.length > 0 &&
-    html`<echarts-wrapper
-      .options=${this.chartOptions as EChartsOption}
-      height=${this.height}
-    ></echarts-wrapper>`}`
+  private async resolveStats() {
+    const requestId = ++this.statsRequestId
+    const statsPromise = this.stats
+
+    if (!statsPromise) {
+      this.tempHumStats = []
+      this.chartMessage = null
+      return
+    }
+
+    try {
+      const { tempHumStats, chartMessage } = await statsPromise
+      if (requestId !== this.statsRequestId) {
+        return
+      }
+
+      this.tempHumStats = tempHumStats
+      this.chartMessage = chartMessage
+    } catch {
+      if (requestId !== this.statsRequestId) {
+        return
+      }
+
+      this.tempHumStats = []
+      this.chartMessage = 'Error retrieving historical data.'
+    }
   }
+
+  render(): TemplateResult | typeof nothing {
+    if (this.tempHumStats.length > 0) {
+      return html`<echarts-wrapper
+        .options=${this.chartOptions as EChartsOption}
+        height=${this.height}
+      ></echarts-wrapper>`
+    }
+
+    if (this.preview && this.chartMessage) {
+      return html`<div class="preview-message">${this.chartMessage}</div>`
+    }
+
+    return nothing
+  }
+
+  static styles = css`
+    :host {
+      display: block;
+      height: 100%;
+    }
+
+    .preview-message {
+      align-items: flex-end;
+      color: var(--secondary-text-color);
+      display: flex;
+      font-size: 0.75rem;
+      height: 100%;
+      justify-content: flex-end;
+      line-height: 1.3;
+      padding: 0 0.75rem 0.5rem 4.5rem;
+      text-align: right;
+    }
+  `
 }

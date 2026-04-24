@@ -20,6 +20,7 @@ export interface EntityBarConfig {
 }
 
 export interface ScBarsCardConfig extends LovelaceCardConfig {
+  _stubPreview?: boolean
   entities: EntityBarConfig[]
   max: number
   thresholds?: Threshold[]

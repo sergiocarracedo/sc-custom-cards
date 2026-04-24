@@ -228,6 +228,29 @@ describe('ScAreaCard', () => {
       expect(shadow?.textContent).toContain('Office')
     })
 
+    it('should pass preview mode to temp-hum-chart inside card edit mode', async () => {
+      const wrapper = document.createElement('hui-card-edit-mode')
+      const previewElement = document.createElement('sc-area-card') as ScAreaCard
+      wrapper.appendChild(previewElement)
+      document.body.appendChild(wrapper)
+
+      const config = createMockAreaCardConfig({ area: 'office' })
+      const hassWithAreaSensors = createMockHassWithAreas({
+        office: {
+          ...mockHass.areas.office,
+          temperature_entity_id: 'sensor.office_temperature',
+          humidity_entity_id: 'sensor.office_humidity',
+        },
+      })
+
+      previewElement.setConfig(config)
+      previewElement.hass = hassWithAreaSensors
+      await previewElement.updateComplete
+
+      const chart = previewElement.shadowRoot?.querySelector('temp-hum-chart') as any
+      expect(chart.preview).toBe(true)
+    })
+
     it('should render full style by default', async () => {
       const config = createMockAreaCardConfig({ style: 'full' })
       element.setConfig(config)
@@ -306,6 +329,7 @@ describe('ScAreaCard', () => {
       expect(stubConfig).toBeDefined()
       expect(stubConfig.type).toBe('custom:sc-area-card')
       expect(stubConfig.area).toBeDefined()
+      expect(stubConfig._stubPreview).toBe(true)
     })
 
     it('should provide config element', () => {

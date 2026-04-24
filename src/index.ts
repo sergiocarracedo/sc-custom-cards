@@ -4,6 +4,7 @@ import './history-bars-card'
 import './history-bars-card/BarsCardEditor'
 
 import { loadHaComponents } from '@kipk/load-ha-components'
+import { logger } from './logger'
 
 declare const __SC_CUSTOM_CARDS_VERSION__: string
 declare const __SC_CUSTOM_CARDS_BUILD_DATE__: string
@@ -29,12 +30,10 @@ const REQUIRED_HA_COMPONENTS = [
 try {
   await loadHaComponents(REQUIRED_HA_COMPONENTS)
 } catch (error) {
-  console.warn('[SC Custom Cards] Error loading Home Assistant form components:', error)
+  logger.warn('Error loading Home Assistant form components:', error)
 }
 
-console.info(
-  `[SC Custom Cards] v${__SC_CUSTOM_CARDS_VERSION__} Build: ${__SC_CUSTOM_CARDS_BUILD_DATE__}`,
-)
+logger.info(`v${__SC_CUSTOM_CARDS_VERSION__} Build: ${__SC_CUSTOM_CARDS_BUILD_DATE__}`)
 
 declare global {
   interface Window {
@@ -46,6 +45,7 @@ window.customCards = window.customCards || []
 window.customCards.push({
   type: 'sc-area-card',
   name: 'Area card',
+  preview: true,
   description: 'Displays area information with temperature, humidity, and entity status summaries',
   documentationURL: 'https://github.com/sergiocarracedo/sc-custom-cards#sc-area-card',
 })
@@ -53,6 +53,7 @@ window.customCards.push({
 window.customCards.push({
   type: 'sc-bars-card',
   name: 'History bars card',
+  preview: true,
   description: 'Displays entity values as horizontal bars with color-coded thresholds',
   documentationURL: 'https://github.com/sergiocarracedo/sc-custom-cards#sc-bars-card',
 })
