@@ -1,0 +1,35 @@
+.release-please-manifest.json
+  9aa9f10d6e9dccf4 2
+package.json
+  9aa9f10d6e9dccf4 3
+.github/workflows/auto-merge-release.yml
+  9aa9f10d6e9dccf4 44
+.github/workflows/upload-release-assets.yml
+  9aa9f10d6e9dccf4 12
+.github/workflows/beta-release.yml
+  9aa9f10d6e9dccf4 1-181
+README.md
+  9aa9f10d6e9dccf4 10,21-23,26-28
+vite.config.ts
+  9aa9f10d6e9dccf4 21,83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "792667a69a7cc6817d3c88c012ee36f2a22e1ae6",
+  "prompts": {
+    "9aa9f10d6e9dccf4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_240f170cfffeDq3YyIij5ZKi2p",
+        "model": "github-copilot/gpt-5.4"
+      },
+      "human_author": "Sergio Carracedo",
+      "messages": [],
+      "total_additions": 199,
+      "total_deletions": 21,
+      "accepted_lines": 194,
+      "overriden_lines": 0
+    }
+  }
+}
