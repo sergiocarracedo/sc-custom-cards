@@ -1,0 +1,28 @@
+src/__tests__/area-card/AreaCard.test.ts
+  s_6a744191fe76db::t_2f2b14de3aff9a 82-132
+src/area-card/AreaCardEditor.ts
+  s_6a744191fe76db::t_e001a5567e2023 36-64
+src/__tests__/area-card/AreaCardEditor.test.ts
+  s_6a744191fe76db::t_2f2b14de3aff9a 48-92
+  s_6a744191fe76db::t_c3be5bd422adc8 430,450
+src/area-card/types.ts
+  s_6a744191fe76db::t_e001a5567e2023 8-12
+src/area-card/AreaCard.ts
+  s_6a744191fe76db::t_e001a5567e2023 85-92,152,158-161
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "a230136acaf176b629e1d49df8c51d3b97eb64ae",
+  "prompts": {},
+  "sessions": {
+    "s_6a744191fe76db": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e46958ffffe5yjZeu6lOcJVtl",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Sergio Carracedo <hi@sergiocarracedo.es>"
+    }
+  }
+}
