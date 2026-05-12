@@ -1,6 +1,6 @@
 {
   "name": "sc-custom-cards",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Configurable room card for Home Assistant",
   "main": "sergio-cards.js",
   "type": "module",
