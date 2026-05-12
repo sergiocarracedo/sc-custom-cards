@@ -33,7 +33,35 @@ export class ScAreaCardEditor extends LitElement {
 
   private _sanitizeConfig(config: ScAreaCardConfig): ScAreaCardConfig {
     const { _stubPreview, ...sanitizedConfig } = config
-    return sanitizedConfig
+
+    if (!sanitizedConfig.summary) {
+      return sanitizedConfig
+    }
+
+    const summary = this._toArray(sanitizedConfig.summary).map((item) => {
+      const actions = item.actions ??
+        (item.tap_action || item.hold_action || item.double_tap_action
+          ? {
+              tap_action: item.tap_action,
+              hold_action: item.hold_action,
+              double_tap_action: item.double_tap_action,
+            }
+          : undefined)
+
+      const {
+        tap_action: _tapAction,
+        hold_action: _holdAction,
+        double_tap_action: _doubleTapAction,
+        ...summaryWithoutLegacyActions
+      } = item
+
+      return actions ? { ...summaryWithoutLegacyActions, actions } : summaryWithoutLegacyActions
+    })
+
+    return {
+      ...sanitizedConfig,
+      summary: Array.isArray(sanitizedConfig.summary) ? summary : summary[0],
+    }
   }
 
   private _migratePresetsToSummaries(config: ScAreaCardConfig): ScAreaCardConfig {

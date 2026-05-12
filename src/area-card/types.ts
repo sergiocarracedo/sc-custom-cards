@@ -5,6 +5,11 @@ export type EntityTypeSummary = {
   icon: string
   entities: string | string[]
   alarm_entities?: string | string[]
+  actions?: {
+    tap_action?: ActionConfig
+    hold_action?: ActionConfig
+    double_tap_action?: ActionConfig
+  }
   tap_action?: ActionConfig
   hold_action?: ActionConfig
   double_tap_action?: ActionConfig

@@ -82,6 +82,14 @@ export class ScAreaCard extends LitElement {
     return Array.isArray(value) ? value : [value]
   }
 
+  private normalizeSummaryActions(type: EntityTypeSummary) {
+    return {
+      tap_action: type.actions?.tap_action ?? type.tap_action,
+      hold_action: type.actions?.hold_action ?? type.hold_action,
+      double_tap_action: type.actions?.double_tap_action ?? type.double_tap_action,
+    }
+  }
+
   // lifecycle interface
   setConfig(config: ScAreaCardConfig) {
     this._config = config
@@ -141,14 +149,16 @@ export class ScAreaCard extends LitElement {
     }
 
     const customSummaries: EntityTypeSummary[] = this.toArray(this._config?.summary).map((type) => {
+      const actions = this.normalizeSummaryActions(type)
       return {
         name: type.name,
         icon: type.icon || 'mdi:help-circle',
         entities: this.toArray(type.entities),
         alarm_entities: this.toArray(type.alarm_entities),
-        tap_action: type.tap_action,
-        hold_action: type.hold_action,
-        double_tap_action: type.double_tap_action,
+        actions,
+        tap_action: actions.tap_action,
+        hold_action: actions.hold_action,
+        double_tap_action: actions.double_tap_action,
       }
     })
 

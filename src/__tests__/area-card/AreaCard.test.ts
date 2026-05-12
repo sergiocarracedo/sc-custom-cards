@@ -79,6 +79,57 @@ describe('ScAreaCard', () => {
       const result = element['summaryTypes']
       expect(result.length).toBe(2)
     })
+
+    it('should read summary actions from nested actions config', () => {
+      const config = createMockAreaCardConfig({
+        summary: [
+          createMockEntitySummary({
+            actions: {
+              tap_action: { action: 'more-info' },
+            },
+            tap_action: undefined,
+          }),
+        ],
+      })
+
+      element.setConfig(config)
+      element.hass = mockHass
+
+      expect(element['summaryTypes'][0].tap_action).toEqual({ action: 'more-info' })
+    })
+
+    it('should keep legacy flat summary actions working', () => {
+      const config = createMockAreaCardConfig({
+        summary: [
+          createMockEntitySummary({
+            tap_action: { action: 'more-info' },
+          }),
+        ],
+      })
+
+      element.setConfig(config)
+      element.hass = mockHass
+
+      expect(element['summaryTypes'][0].tap_action).toEqual({ action: 'more-info' })
+    })
+
+    it('should prefer nested summary actions over legacy flat ones', () => {
+      const config = createMockAreaCardConfig({
+        summary: [
+          createMockEntitySummary({
+            actions: {
+              tap_action: { action: 'toggle' },
+            },
+            tap_action: { action: 'more-info' },
+          }),
+        ],
+      })
+
+      element.setConfig(config)
+      element.hass = mockHass
+
+      expect(element['summaryTypes'][0].tap_action).toEqual({ action: 'toggle' })
+    })
   })
 
   describe('Area Color', () => {
