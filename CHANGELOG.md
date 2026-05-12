@@ -19,6 +19,13 @@
 - Add TESTING.md with test suite documentation
 - Add Allium specification for complete domain modeling
 
+## [1.8.2](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.8.1...v1.8.2) (2026-05-12)
+
+
+### Bug Fixes
+
+* **area-card:** support migrated summary actions ([#26](https://github.com/sergiocarracedo/sc-custom-cards/issues/26)) ([a41d9a3](https://github.com/sergiocarracedo/sc-custom-cards/commit/a41d9a3feaf34258c24436bbb0d8f281a834dbb1))
+
 ## [1.8.1](https://github.com/sergiocarracedo/sc-custom-cards/compare/v1.8.0...v1.8.1) (2026-04-24)
 
 
