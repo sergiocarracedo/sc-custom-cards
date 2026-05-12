@@ -45,6 +45,51 @@ describe('ScAreaCardEditor', () => {
       expect(element['_config']?.presence).toBeUndefined()
       expect(element['_config']?.light).toBeUndefined()
     })
+
+    it('should migrate legacy flat summary actions to nested actions', () => {
+      const config = createMockAreaCardConfig({
+        summary: [
+          createMockEntitySummary({
+            tap_action: { action: 'more-info' },
+            hold_action: { action: 'toggle' },
+          }),
+        ],
+      })
+
+      element.setConfig(config)
+
+      expect(element['_config']?.summary).toEqual([
+        expect.objectContaining({
+          actions: {
+            tap_action: { action: 'more-info' },
+            hold_action: { action: 'toggle' },
+            double_tap_action: undefined,
+          },
+        }),
+      ])
+      expect((element['_summaryList'][0] as any).tap_action).toBeUndefined()
+      expect((element['_summaryList'][0] as any).hold_action).toBeUndefined()
+    })
+
+    it('should preserve nested summary actions when already present', () => {
+      const config = createMockAreaCardConfig({
+        summary: [
+          createMockEntitySummary({
+            actions: {
+              tap_action: { action: 'toggle' },
+            },
+            tap_action: { action: 'more-info' },
+          }),
+        ],
+      })
+
+      element.setConfig(config)
+
+      expect(element['_summaryList'][0].actions).toEqual({
+        tap_action: { action: 'toggle' },
+      })
+      expect((element['_summaryList'][0] as any).tap_action).toBeUndefined()
+    })
   })
 
   describe('Summary Management', () => {
@@ -382,6 +427,7 @@ describe('ScAreaCardEditor', () => {
   describe('Migration Logic', () => {
     it('should migrate all preset types', () => {
       const config = createMockAreaCardConfig({
+        summary: [],
         presence: 'sensor.presence',
         alarm: ['sensor.alarm1', 'sensor.alarm2'],
         door: 'sensor.door',
@@ -401,6 +447,7 @@ describe('ScAreaCardEditor', () => {
 
     it('should not create migration summaries for empty preset fields', () => {
       const config = createMockAreaCardConfig({
+        summary: [],
         presence: [],
         alarm: undefined,
       } as any)
